@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -13,15 +13,15 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
- * Test for \TYPO3\Fluid\ViewHelpers\Format\IdentifierViewHelper
+ * Test for \Neos\FluidAdaptor\ViewHelpers\Format\IdentifierViewHelper
  */
 class IdentifierViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Format\IdentifierViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Format\IdentifierViewHelper
      */
     protected $viewHelper;
 
@@ -36,7 +36,7 @@ class IdentifierViewHelperTest extends ViewHelperBaseTestcase
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Format\IdentifierViewHelper::class, array('renderChildren'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Format\IdentifierViewHelper::class, array('renderChildren'));
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->mockPersistenceManager = $this->createMock(\TYPO3\Flow\Persistence\PersistenceManagerInterface::class);
         $this->viewHelper->_set('persistenceManager', $this->mockPersistenceManager);
@@ -95,7 +95,7 @@ class IdentifierViewHelperTest extends ViewHelperBaseTestcase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function renderThrowsExceptionIfGivenValueIsNoObject()
     {

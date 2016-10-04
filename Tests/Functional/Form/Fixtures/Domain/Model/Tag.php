@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Functional\Form\Fixtures\Domain\Model;
+namespace Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model;
 
 /*
  * This file is part of the TYPO3.Fluid package.

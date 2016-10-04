@@ -6,4 +6,4 @@ TYPO3:
           chain:
             'ajaxWidget':
               position: 'before routing'
-              component: 'TYPO3\Fluid\Core\Widget\AjaxWidgetComponent'
+              component: 'Neos\FluidAdaptor\Core\Widget\AjaxWidgetComponent'

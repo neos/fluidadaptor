@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\View;
+namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -18,7 +18,7 @@ use TYPO3\Flow\Http\Request;
 use TYPO3\Flow\Http\Uri;
 use TYPO3\Flow\Mvc\Controller\ControllerContext;
 use TYPO3\Flow\Tests\UnitTestCase;
-use TYPO3\Fluid\View\TemplateView;
+use Neos\FluidAdaptor\View\TemplateView;
 
 /**
  * Testcase for the TemplateView

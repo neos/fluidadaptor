@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\Core\Widget;
+namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -21,17 +21,17 @@ use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\TextNode;
 class AbstractWidgetViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
 {
     /**
-     * @var \TYPO3\Fluid\Core\Widget\AbstractWidgetViewHelper
+     * @var \Neos\FluidAdaptor\Core\Widget\AbstractWidgetViewHelper
      */
     protected $viewHelper;
 
     /**
-     * @var \TYPO3\Fluid\Core\Widget\AjaxWidgetContextHolder
+     * @var \Neos\FluidAdaptor\Core\Widget\AjaxWidgetContextHolder
      */
     protected $ajaxWidgetContextHolder;
 
     /**
-     * @var \TYPO3\Fluid\Core\Widget\WidgetContext
+     * @var \Neos\FluidAdaptor\Core\Widget\WidgetContext
      */
     protected $widgetContext;
 
@@ -54,12 +54,12 @@ class AbstractWidgetViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
      */
     public function setUp()
     {
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\Core\Widget\AbstractWidgetViewHelper::class, array('validateArguments', 'initialize', 'callRenderMethod', 'getWidgetConfiguration', 'getRenderingContext'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\Core\Widget\AbstractWidgetViewHelper::class, array('validateArguments', 'initialize', 'callRenderMethod', 'getWidgetConfiguration', 'getRenderingContext'));
 
-        $this->ajaxWidgetContextHolder = $this->createMock(\TYPO3\Fluid\Core\Widget\AjaxWidgetContextHolder::class);
+        $this->ajaxWidgetContextHolder = $this->createMock(\Neos\FluidAdaptor\Core\Widget\AjaxWidgetContextHolder::class);
         $this->viewHelper->injectAjaxWidgetContextHolder($this->ajaxWidgetContextHolder);
 
-        $this->widgetContext = $this->createMock(\TYPO3\Fluid\Core\Widget\WidgetContext::class);
+        $this->widgetContext = $this->createMock(\Neos\FluidAdaptor\Core\Widget\WidgetContext::class);
         $this->viewHelper->injectWidgetContext($this->widgetContext);
 
         $this->objectManager = $this->createMock(\TYPO3\Flow\Object\ObjectManagerInterface::class);
@@ -129,7 +129,7 @@ class AbstractWidgetViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
      */
     public function setChildNodesAddsChildNodesToWidgetContext()
     {
-        $this->widgetContext = new \TYPO3\Fluid\Core\Widget\WidgetContext();
+        $this->widgetContext = new \Neos\FluidAdaptor\Core\Widget\WidgetContext();
         $this->viewHelper->injectWidgetContext($this->widgetContext);
 
         $node1 = $this->createMock(AbstractNode::class);
@@ -141,7 +141,7 @@ class AbstractWidgetViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
         $rootNode->addChildNode($node2);
         $rootNode->addChildNode($node3);
 
-        $renderingContext = $this->createMock(\TYPO3\Fluid\Core\Rendering\RenderingContextInterface::class);
+        $renderingContext = $this->createMock(\Neos\FluidAdaptor\Core\Rendering\RenderingContextInterface::class);
         $this->viewHelper->_set('renderingContext', $renderingContext);
 
         $this->viewHelper->setChildNodes(array($node1, $node2, $node3));
@@ -151,7 +151,7 @@ class AbstractWidgetViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\Widget\Exception\MissingControllerException
+     * @expectedException \Neos\FluidAdaptor\Core\Widget\Exception\MissingControllerException
      */
     public function initiateSubRequestThrowsExceptionIfControllerIsNoWidgetController()
     {

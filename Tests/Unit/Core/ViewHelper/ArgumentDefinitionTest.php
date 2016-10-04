@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\Core\ViewHelper;
+namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -12,7 +12,7 @@ namespace TYPO3\Fluid\Tests\Unit\Core\ViewHelper;
  */
 
 /**
- * Testcase for \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition
+ * Testcase for \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition
  */
 class ArgumentDefinitionTest extends \TYPO3\Flow\Tests\UnitTestCase
 {
@@ -26,7 +26,7 @@ class ArgumentDefinitionTest extends \TYPO3\Flow\Tests\UnitTestCase
         $type = 'string';
         $isRequired = true;
         $isMethodParameter = true;
-        $argumentDefinition = new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition($name, $type, $description, $isRequired, null, $isMethodParameter);
+        $argumentDefinition = new \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition($name, $type, $description, $isRequired, null, $isMethodParameter);
 
         $this->assertEquals($argumentDefinition->getName(), $name, 'Name could not be retrieved correctly.');
         $this->assertEquals($argumentDefinition->getDescription(), $description, 'Description could not be retrieved correctly.');

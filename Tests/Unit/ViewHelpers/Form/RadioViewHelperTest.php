@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Form;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -16,21 +16,21 @@ require_once(__DIR__ . '/FormFieldViewHelperBaseTestcase.php');
 /**
  * Test for the "Radio" Form view helper
  */
-class RadioViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
+class RadioViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Form\RadioViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Form\RadioViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\RadioViewHelper::class, array('setErrorClassAttribute', 'getName', 'getValueAttribute', 'isObjectAccessorMode', 'getPropertyValue', 'registerFieldNameForFormTokenGeneration'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\RadioViewHelper::class, array('setErrorClassAttribute', 'getName', 'getValueAttribute', 'isObjectAccessorMode', 'getPropertyValue', 'registerFieldNameForFormTokenGeneration'));
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
 
-        $this->mockTagBuilder = $this->getMockBuilder(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(array('setTagName', 'addAttribute'))->getMock();
+        $this->mockTagBuilder = $this->getMockBuilder(\Neos\FluidAdaptor\Core\ViewHelper\TagBuilder::class)->setMethods(array('setTagName', 'addAttribute'))->getMock();
     }
 
     /**

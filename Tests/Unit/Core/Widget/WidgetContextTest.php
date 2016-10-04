@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\Core\Widget;
+namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -19,7 +19,7 @@ use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\RootNode;
 class WidgetContextTest extends \TYPO3\Flow\Tests\UnitTestCase
 {
     /**
-     * @var \TYPO3\Fluid\Core\Widget\WidgetContext
+     * @var \Neos\FluidAdaptor\Core\Widget\WidgetContext
      */
     protected $widgetContext;
 
@@ -27,7 +27,7 @@ class WidgetContextTest extends \TYPO3\Flow\Tests\UnitTestCase
      */
     public function setUp()
     {
-        $this->widgetContext = new \TYPO3\Fluid\Core\Widget\WidgetContext();
+        $this->widgetContext = new \Neos\FluidAdaptor\Core\Widget\WidgetContext();
     }
 
     /**
@@ -85,7 +85,7 @@ class WidgetContextTest extends \TYPO3\Flow\Tests\UnitTestCase
     public function viewHelperChildNodesCanBeReadAgain()
     {
         $viewHelperChildNodes = $this->createMock(RootNode::class);
-        $renderingContext = $this->createMock(\TYPO3\Fluid\Core\Rendering\RenderingContextInterface::class);
+        $renderingContext = $this->createMock(\Neos\FluidAdaptor\Core\Rendering\RenderingContextInterface::class);
 
         $this->widgetContext->setViewHelperChildNodes($viewHelperChildNodes, $renderingContext);
         $this->assertSame($viewHelperChildNodes, $this->widgetContext->getViewHelperChildNodes());

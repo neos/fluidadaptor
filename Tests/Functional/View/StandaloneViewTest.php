@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Functional\View;
+namespace Neos\FluidAdaptor\Tests\Functional\View;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -16,7 +16,7 @@ use TYPO3\Flow\Http\Request;
 use TYPO3\Flow\Http\Uri;
 use TYPO3\Flow\Mvc\ActionRequest;
 use TYPO3\Flow\Tests\FunctionalTestCase;
-use TYPO3\Fluid\Tests\Functional\View\Fixtures\View\StandaloneView;
+use Neos\FluidAdaptor\Tests\Functional\View\Fixtures\View\StandaloneView;
 
 /**
  * Testcase for Standalone View
@@ -79,7 +79,7 @@ class StandaloneViewTest extends FunctionalTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function renderThrowsExceptionIfNeitherTemplateSourceNorTemplatePathAndFilenameAreSpecified()
     {
@@ -92,7 +92,7 @@ class StandaloneViewTest extends FunctionalTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function renderThrowsExceptionSpecifiedTemplatePathAndFilenameDoesNotExist()
     {
@@ -106,7 +106,7 @@ class StandaloneViewTest extends FunctionalTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function renderThrowsExceptionIfSpecifiedTemplatePathAndFilenamePointsToADirectory()
     {
@@ -235,7 +235,7 @@ class StandaloneViewTest extends FunctionalTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\Parser\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\Parser\Exception
      */
     public function viewThrowsExceptionWhenUnknownViewHelperIsCalled()
     {

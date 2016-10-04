@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Form;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -20,6 +20,6 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
  * we also introduce it here.
  *
  */
-class FormFieldViewHelperBaseTestcase extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase
+class FormFieldViewHelperBaseTestcase extends \Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase
 {
 }

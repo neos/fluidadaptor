@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\ViewHelpers\Fixtures;
+namespace Neos\FluidAdaptor\ViewHelpers\Fixtures;
 
 /*
  * This file is part of the TYPO3.Fluid package.

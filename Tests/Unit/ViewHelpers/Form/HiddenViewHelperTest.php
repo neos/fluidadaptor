@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Form;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -16,17 +16,17 @@ require_once(__DIR__ . '/FormFieldViewHelperBaseTestcase.php');
 /**
  * Test for the "Hidden" Form view helper
  */
-class HiddenViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
+class HiddenViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Form\HiddenViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Form\HiddenViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\HiddenViewHelper::class, array('setErrorClassAttribute', 'getName', 'getValueAttribute', 'registerFieldNameForFormTokenGeneration'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\HiddenViewHelper::class, array('setErrorClassAttribute', 'getName', 'getValueAttribute', 'registerFieldNameForFormTokenGeneration'));
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }
@@ -36,7 +36,7 @@ class HiddenViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
      */
     public function renderCorrectlySetsTagNameAndDefaultAttributes()
     {
-        $mockTagBuilder = $this->getMockBuilder(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(array('setTagName', 'addAttribute'))->getMock();
+        $mockTagBuilder = $this->getMockBuilder(\Neos\FluidAdaptor\Core\ViewHelper\TagBuilder::class)->setMethods(array('setTagName', 'addAttribute'))->getMock();
         $mockTagBuilder->expects($this->once())->method('setTagName')->with('input');
         $mockTagBuilder->expects($this->at(1))->method('addAttribute')->with('type', 'hidden');
         $mockTagBuilder->expects($this->at(2))->method('addAttribute')->with('name', 'foo');

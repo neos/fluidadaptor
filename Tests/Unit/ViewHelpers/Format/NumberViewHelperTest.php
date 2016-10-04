@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -12,19 +12,19 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
  */
 
 /**
- * Test for \TYPO3\Fluid\ViewHelpers\Format\NumberViewHelper
+ * Test for \Neos\FluidAdaptor\ViewHelpers\Format\NumberViewHelper
  */
 class NumberViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
 {
 
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Format\NumberViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Format\NumberViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
-        $this->viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\NumberViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\NumberViewHelper::class)->setMethods(array('renderChildren'))->getMock();
     }
 
     /**
@@ -82,7 +82,7 @@ class NumberViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function viewHelperConvertsI18nExceptionsIntoViewHelperExceptions()
     {

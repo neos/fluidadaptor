@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -13,22 +13,22 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
- * Test for \TYPO3\Fluid\ViewHelpers\Format\JsonViewHelper
+ * Test for \Neos\FluidAdaptor\ViewHelpers\Format\JsonViewHelper
  */
 class JsonViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Format\JsonViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Format\JsonViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\JsonViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\JsonViewHelper::class)->setMethods(array('renderChildren'))->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }

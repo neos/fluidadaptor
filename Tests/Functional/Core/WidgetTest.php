@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Functional\Core;
+namespace Neos\FluidAdaptor\Tests\Functional\Core;
 
 /*
  * This file is part of the TYPO3.Fluid package.

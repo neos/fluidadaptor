@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -18,10 +18,10 @@ require_once(__DIR__ . '/ViewHelperBaseTestcase.php');
 /**
  * Testcase for FlashMessagesViewHelper
  */
-class FlashMessagesViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase
+class FlashMessagesViewHelperTest extends \Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\FlashMessagesViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\FlashMessagesViewHelper
      */
     protected $viewHelper;
 
@@ -31,7 +31,7 @@ class FlashMessagesViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBas
     protected $mockFlashMessageContainer;
 
     /**
-     * @var \TYPO3\Fluid\Core\ViewHelper\TagBuilder
+     * @var \Neos\FluidAdaptor\Core\ViewHelper\TagBuilder
      */
     protected $mockTagBuilder;
 
@@ -47,7 +47,7 @@ class FlashMessagesViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBas
         $mockControllerContext->expects($this->any())->method('getFlashMessageContainer')->will($this->returnValue($this->mockFlashMessageContainer));
 
         $this->mockTagBuilder = $this->createMock(TagBuilder::class);
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\FlashMessagesViewHelper::class, array('dummy'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\FlashMessagesViewHelper::class, array('dummy'));
         $this->viewHelper->_set('controllerContext', $mockControllerContext);
         $this->viewHelper->_set('tag', $this->mockTagBuilder);
         $this->viewHelper->initialize();

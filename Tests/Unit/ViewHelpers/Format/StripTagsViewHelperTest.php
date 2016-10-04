@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -15,24 +15,24 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 require_once(__DIR__ . '/../Fixtures/UserWithoutToString.php');
 require_once(__DIR__ . '/../Fixtures/UserWithToString.php');
 
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
-use TYPO3\Fluid\ViewHelpers\Fixtures\UserWithoutToString;
-use TYPO3\Fluid\ViewHelpers\Fixtures\UserWithToString;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Fixtures\UserWithoutToString;
+use Neos\FluidAdaptor\ViewHelpers\Fixtures\UserWithToString;
 
 /**
- * Test for \TYPO3\Fluid\ViewHelpers\Format\StripTagsViewHelper
+ * Test for \Neos\FluidAdaptor\ViewHelpers\Format\StripTagsViewHelper
  */
 class StripTagsViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Format\StripTagsViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Format\StripTagsViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\StripTagsViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\StripTagsViewHelper::class)->setMethods(array('renderChildren'))->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }

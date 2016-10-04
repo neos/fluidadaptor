@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\View;
+namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -10,9 +10,9 @@ namespace TYPO3\Fluid\Tests\Unit\View;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-use TYPO3\Fluid\Core\Rendering\RenderingContext;
-use TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer;
-use TYPO3\Fluid\View\AbstractTemplateView;
+use Neos\FluidAdaptor\Core\Rendering\RenderingContext;
+use Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer;
+use Neos\FluidAdaptor\View\AbstractTemplateView;
 use TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer;
 
 /**
@@ -31,12 +31,12 @@ class AbstractTemplateViewTest extends \TYPO3\Flow\Tests\UnitTestCase
     protected $renderingContext;
 
     /**
-     * @var \TYPO3\Fluid\Core\ViewHelper\ViewHelperVariableContainer
+     * @var \Neos\FluidAdaptor\Core\ViewHelper\ViewHelperVariableContainer
      */
     protected $viewHelperVariableContainer;
 
     /**
-     * @var \TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer
+     * @var \Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer
      */
     protected $templateVariableContainer;
 

@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -14,11 +14,11 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 use TYPO3\Flow\Http\Uri;
-use TYPO3\Fluid\ViewHelpers\Format\UrlencodeViewHelper;
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Format\UrlencodeViewHelper;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
- * Test for \TYPO3\Fluid\ViewHelpers\Format\UrlencodeViewHelper
+ * Test for \Neos\FluidAdaptor\ViewHelpers\Format\UrlencodeViewHelper
  */
 class UrlencodeViewHelperTest extends ViewHelperBaseTestcase
 {
@@ -86,7 +86,7 @@ class UrlencodeViewHelperTest extends ViewHelperBaseTestcase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function renderThrowsExceptionIfItIsNoStringAndHasNoToStringMethod()
     {

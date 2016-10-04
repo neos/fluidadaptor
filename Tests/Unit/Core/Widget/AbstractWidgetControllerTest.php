@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\Core\Widget;
+namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -14,7 +14,7 @@ use TYPO3\Flow\Http\Request;
 use TYPO3\Flow\Http\Response;
 use TYPO3\Flow\Http\Uri;
 use TYPO3\Flow\Tests\UnitTestCase;
-use TYPO3\Fluid\Core\Widget\WidgetContext;
+use Neos\FluidAdaptor\Core\Widget\WidgetContext;
 
 /**
  * Test case for AbstractWidgetController
@@ -23,7 +23,7 @@ class AbstractWidgetControllerTest extends UnitTestCase
 {
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\Widget\Exception\WidgetContextNotFoundException
+     * @expectedException \Neos\FluidAdaptor\Core\Widget\Exception\WidgetContextNotFoundException
      */
     public function processRequestShouldThrowExceptionIfWidgetContextNotFound()
     {
@@ -32,8 +32,8 @@ class AbstractWidgetControllerTest extends UnitTestCase
         $mockActionRequest->expects($this->atLeastOnce())->method('getInternalArgument')->with('__widgetContext')->will($this->returnValue(null));
         $response = new Response();
 
-        /** @var \TYPO3\Fluid\Core\Widget\AbstractWidgetController $abstractWidgetController */
-        $abstractWidgetController = $this->getMockForAbstractClass(\TYPO3\Fluid\Core\Widget\AbstractWidgetController::class);
+        /** @var \Neos\FluidAdaptor\Core\Widget\AbstractWidgetController $abstractWidgetController */
+        $abstractWidgetController = $this->getMockForAbstractClass(\Neos\FluidAdaptor\Core\Widget\AbstractWidgetController::class);
         $abstractWidgetController->processRequest($mockActionRequest, $response);
     }
 
@@ -56,7 +56,7 @@ class AbstractWidgetControllerTest extends UnitTestCase
 
         $mockActionRequest->expects($this->atLeastOnce())->method('getInternalArgument')->with('__widgetContext')->will($this->returnValue($widgetContext));
 
-        $abstractWidgetController = $this->getAccessibleMock(\TYPO3\Fluid\Core\Widget\AbstractWidgetController::class, array('resolveActionMethodName', 'initializeActionMethodArguments', 'initializeActionMethodValidators', 'mapRequestArgumentsToControllerArguments', 'detectFormat', 'resolveView', 'callActionMethod'));
+        $abstractWidgetController = $this->getAccessibleMock(\Neos\FluidAdaptor\Core\Widget\AbstractWidgetController::class, array('resolveActionMethodName', 'initializeActionMethodArguments', 'initializeActionMethodValidators', 'mapRequestArgumentsToControllerArguments', 'detectFormat', 'resolveView', 'callActionMethod'));
         $abstractWidgetController->_set('mvcPropertyMappingConfigurationService', $this->createMock(\TYPO3\Flow\Mvc\Controller\MvcPropertyMappingConfigurationService::class));
 
         $abstractWidgetController->processRequest($mockActionRequest, $mockResponse);

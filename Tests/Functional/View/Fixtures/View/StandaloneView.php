@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Functional\View\Fixtures\View;
+namespace Neos\FluidAdaptor\Tests\Functional\View\Fixtures\View;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -14,7 +14,7 @@ namespace TYPO3\Fluid\Tests\Functional\View\Fixtures\View;
 /**
  * Extended StandaloneView for testing purposes
  */
-class StandaloneView extends \TYPO3\Fluid\View\StandaloneView
+class StandaloneView extends \Neos\FluidAdaptor\View\StandaloneView
 {
     protected $fileIdentifierPrefix = '';
 

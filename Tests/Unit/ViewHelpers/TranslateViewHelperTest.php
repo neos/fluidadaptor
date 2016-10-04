@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -13,8 +13,8 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers;
 
 use TYPO3\Flow\I18n\Locale;
 use TYPO3\Flow\I18n\Translator;
-use TYPO3\Fluid\ViewHelpers\TranslateViewHelper;
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\TranslateViewHelper;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
 
 require_once(__DIR__ . '/ViewHelperBaseTestcase.php');
 
@@ -42,7 +42,7 @@ class TranslateViewHelperTest extends ViewHelperBaseTestcase
     {
         parent::setUp();
 
-        $this->translateViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\TranslateViewHelper::class, array('renderChildren'));
+        $this->translateViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\TranslateViewHelper::class, array('renderChildren'));
 
         $this->request->expects($this->any())->method('getControllerPackageKey')->will($this->returnValue('TYPO3.Fluid'));
 
@@ -115,7 +115,7 @@ class TranslateViewHelperTest extends ViewHelperBaseTestcase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function renderThrowsExceptionIfGivenLocaleIdentifierIsInvalid()
     {
@@ -124,7 +124,7 @@ class TranslateViewHelperTest extends ViewHelperBaseTestcase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function renderThrowsExceptionIfNoPackageCouldBeResolved()
     {

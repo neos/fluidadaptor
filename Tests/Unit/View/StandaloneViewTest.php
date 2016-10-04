@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\View;
+namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -16,7 +16,7 @@ use org\bovigo\vfs\vfsStreamWrapper;
 use TYPO3\Flow\Mvc\ActionRequest;
 use TYPO3\Flow\Mvc\Controller\ControllerContext;
 use TYPO3\Flow\Tests\UnitTestCase;
-use TYPO3\Fluid\View\StandaloneView;
+use Neos\FluidAdaptor\View\StandaloneView;
 
 /**
  * Testcase for the StandaloneView
@@ -40,7 +40,7 @@ class StandaloneViewTest extends UnitTestCase
 
     public function setUp()
     {
-        $this->standaloneView = $this->getAccessibleMock(\TYPO3\Fluid\View\StandaloneView::class, array('dummy'));
+        $this->standaloneView = $this->getAccessibleMock(\Neos\FluidAdaptor\View\StandaloneView::class, array('dummy'));
 
         $this->mockRequest = $this->getMockBuilder(\TYPO3\Flow\Mvc\ActionRequest::class)->disableOriginalConstructor()->getMock();
         $this->mockControllerContext = $this->getMockBuilder(\TYPO3\Flow\Mvc\Controller\ControllerContext::class)->disableOriginalConstructor()->getMock();
@@ -50,7 +50,7 @@ class StandaloneViewTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getLayoutPathAndFilenameThrowsExceptionIfSpecifiedLayoutRootPathIsNoDirectory()
     {
@@ -63,7 +63,7 @@ class StandaloneViewTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getLayoutPathAndFilenameThrowsExceptionIfLayoutFileIsADirectory()
     {
@@ -75,7 +75,7 @@ class StandaloneViewTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getPartialPathAndFilenameThrowsExceptionIfSpecifiedPartialRootPathIsNoDirectory()
     {
@@ -88,7 +88,7 @@ class StandaloneViewTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getPartialPathAndFilenameThrowsExceptionIfPartialFileIsADirectory()
     {

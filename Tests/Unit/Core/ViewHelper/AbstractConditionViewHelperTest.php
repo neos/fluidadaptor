@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\Core\ViewHelper;
+namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -11,8 +11,8 @@ namespace TYPO3\Fluid\Tests\Unit\Core\ViewHelper;
  * source code.
  */
 
-use TYPO3\Fluid\Core\ViewHelper\AbstractConditionViewHelper;
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\Core\ViewHelper\AbstractConditionViewHelper;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 use TYPO3Fluid\Fluid\ViewHelpers\ElseViewHelper;
 use TYPO3Fluid\Fluid\ViewHelpers\ThenViewHelper;

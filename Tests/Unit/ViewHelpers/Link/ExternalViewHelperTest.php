@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Link;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Link;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -14,19 +14,19 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Link;
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
- * Test for \TYPO3\Fluid\ViewHelpers\Link\EmailViewHelper
+ * Test for \Neos\FluidAdaptor\ViewHelpers\Link\EmailViewHelper
  */
-class ExternalViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase
+class ExternalViewHelperTest extends \Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Link\EmailViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Link\EmailViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Link\ExternalViewHelper::class, array('renderChildren'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Link\ExternalViewHelper::class, array('renderChildren'));
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }
@@ -36,7 +36,7 @@ class ExternalViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTest
      */
     public function renderCorrectlySetsTagNameAndAttributesAndContent()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class, array('setTagName', 'addAttribute', 'setContent'));
+        $mockTagBuilder = $this->createMock(\Neos\FluidAdaptor\Core\ViewHelper\TagBuilder::class, array('setTagName', 'addAttribute', 'setContent'));
         $mockTagBuilder->expects($this->once())->method('setTagName')->with('a');
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('href', 'http://www.some-domain.tld');
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some content');
@@ -53,7 +53,7 @@ class ExternalViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTest
      */
     public function renderAddsHttpPrefixIfSpecifiedUriDoesNotContainScheme()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class, array('setTagName', 'addAttribute', 'setContent'));
+        $mockTagBuilder = $this->createMock(\Neos\FluidAdaptor\Core\ViewHelper\TagBuilder::class, array('setTagName', 'addAttribute', 'setContent'));
         $mockTagBuilder->expects($this->once())->method('setTagName')->with('a');
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('href', 'http://www.some-domain.tld');
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some content');
@@ -70,7 +70,7 @@ class ExternalViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTest
      */
     public function renderAddsSpecifiedSchemeIfUriDoesNotContainScheme()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class, array('setTagName', 'addAttribute', 'setContent'));
+        $mockTagBuilder = $this->createMock(\Neos\FluidAdaptor\Core\ViewHelper\TagBuilder::class, array('setTagName', 'addAttribute', 'setContent'));
         $mockTagBuilder->expects($this->once())->method('setTagName')->with('a');
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('href', 'ftp://some-domain.tld');
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some content');
@@ -87,7 +87,7 @@ class ExternalViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTest
      */
     public function renderDoesNotAddEmptyScheme()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class, array('setTagName', 'addAttribute', 'setContent'));
+        $mockTagBuilder = $this->createMock(\Neos\FluidAdaptor\Core\ViewHelper\TagBuilder::class, array('setTagName', 'addAttribute', 'setContent'));
         $mockTagBuilder->expects($this->once())->method('setTagName')->with('a');
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('href', 'some-domain.tld');
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some content');

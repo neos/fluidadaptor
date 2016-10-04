@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\ViewHelpers;
+namespace Neos\FluidAdaptor\ViewHelpers;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -11,10 +11,10 @@ namespace TYPO3\Fluid\ViewHelpers;
  * source code.
  */
 
-use TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer;
-use TYPO3\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper;
-use TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\Fluid\View\StandaloneView;
+use Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer;
+use Neos\FluidAdaptor\Core\ViewHelper\AbstractTagBasedViewHelper;
+use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
+use Neos\FluidAdaptor\View\StandaloneView;
 
 /**
  * Base test class for testing view helpers
@@ -22,7 +22,7 @@ use TYPO3\Fluid\View\StandaloneView;
 abstract class ViewHelperBaseTestcase extends \TYPO3\Flow\Tests\UnitTestCase
 {
     /**
-     * @var \TYPO3\Fluid\Core\ViewHelper\ViewHelperVariableContainer
+     * @var \Neos\FluidAdaptor\Core\ViewHelper\ViewHelperVariableContainer
      */
     protected $viewHelperVariableContainer;
 
@@ -37,7 +37,7 @@ abstract class ViewHelperBaseTestcase extends \TYPO3\Flow\Tests\UnitTestCase
     protected $viewHelperVariableContainerData = array();
 
     /**
-     * @var \TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer
+     * @var \Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer
      */
     protected $templateVariableContainer;
 
@@ -52,7 +52,7 @@ abstract class ViewHelperBaseTestcase extends \TYPO3\Flow\Tests\UnitTestCase
     protected $controllerContext;
 
     /**
-     * @var \TYPO3\Fluid\Core\ViewHelper\TagBuilder
+     * @var \Neos\FluidAdaptor\Core\ViewHelper\TagBuilder
      */
     protected $tagBuilder;
 
@@ -67,7 +67,7 @@ abstract class ViewHelperBaseTestcase extends \TYPO3\Flow\Tests\UnitTestCase
     protected $request;
 
     /**
-     * @var \TYPO3\Fluid\Core\Rendering\RenderingContext
+     * @var \Neos\FluidAdaptor\Core\Rendering\RenderingContext
      */
     protected $renderingContext;
 
@@ -95,9 +95,9 @@ abstract class ViewHelperBaseTestcase extends \TYPO3\Flow\Tests\UnitTestCase
         $this->controllerContext = $this->getMockBuilder(\TYPO3\Flow\Mvc\Controller\ControllerContext::class)->disableOriginalConstructor()->getMock();
         $this->controllerContext->expects($this->any())->method('getUriBuilder')->will($this->returnValue($this->uriBuilder));
         $this->controllerContext->expects($this->any())->method('getRequest')->will($this->returnValue($this->request));
-        $this->tagBuilder = $this->createMock(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class);
+        $this->tagBuilder = $this->createMock(\Neos\FluidAdaptor\Core\ViewHelper\TagBuilder::class);
         $this->arguments = array();
-        $this->renderingContext = new \TYPO3\Fluid\Core\Rendering\RenderingContext(new StandaloneView(), []);
+        $this->renderingContext = new \Neos\FluidAdaptor\Core\Rendering\RenderingContext(new StandaloneView(), []);
         $this->renderingContext->setVariableProvider($this->templateVariableContainer);
         $this->renderingContext->setViewHelperVariableContainer($this->viewHelperVariableContainer);
         $this->renderingContext->setControllerContext($this->controllerContext);

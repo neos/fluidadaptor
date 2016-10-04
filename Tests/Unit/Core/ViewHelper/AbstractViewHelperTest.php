@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\Core\ViewHelper;
+namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -12,9 +12,9 @@ namespace TYPO3\Fluid\Tests\Unit\Core\ViewHelper;
  */
 
 use TYPO3\Flow\Mvc\Controller\ControllerContext;
-use TYPO3\Fluid\Core\ViewHelper\TemplateVariableContainer;
-use TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\Fluid\View\TemplateView;
+use Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer;
+use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
+use Neos\FluidAdaptor\View\TemplateView;
 use TYPO3Fluid\Fluid\Core\ViewHelper\ArgumentDefinition;
 use TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer;
 
@@ -101,7 +101,7 @@ class AbstractViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function registeringTheSameArgumentNameAgainThrowsException()
     {
@@ -139,7 +139,7 @@ class AbstractViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function overrideArgumentThrowsExceptionWhenTryingToOverwriteAnNonexistingArgument()
     {
@@ -171,16 +171,16 @@ class AbstractViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
         $dataCacheMock->expects($this->any())->method('has')->will($this->returnValue(true));
         $dataCacheMock->expects($this->any())->method('get')->will($this->returnValue(array()));
 
-        $viewHelper = new \TYPO3\Fluid\Core\Fixtures\TestViewHelper();
+        $viewHelper = new \Neos\FluidAdaptor\Core\Fixtures\TestViewHelper();
 
-        $this->mockReflectionService->expects($this->once())->method('getMethodParameters')->with(\TYPO3\Fluid\Core\Fixtures\TestViewHelper::class, 'render')->will($this->returnValue($this->fixtureMethodParameters));
-        $this->mockReflectionService->expects($this->once())->method('getMethodTagsValues')->with(\TYPO3\Fluid\Core\Fixtures\TestViewHelper::class, 'render')->will($this->returnValue($this->fixtureMethodTags));
+        $this->mockReflectionService->expects($this->once())->method('getMethodParameters')->with(\Neos\FluidAdaptor\Core\Fixtures\TestViewHelper::class, 'render')->will($this->returnValue($this->fixtureMethodParameters));
+        $this->mockReflectionService->expects($this->once())->method('getMethodTagsValues')->with(\Neos\FluidAdaptor\Core\Fixtures\TestViewHelper::class, 'render')->will($this->returnValue($this->fixtureMethodTags));
         $viewHelper->injectObjectManager($this->mockObjectManager);
 
         $expected = array(
-            'param1' => new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition('param1', 'integer', 'P1 Stuff', true, null, true),
-            'param2' => new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition('param2', 'array', 'P2 Stuff', true, null, true),
-            'param3' => new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition('param3', 'string', 'P3 Stuff', false, 'default', true)
+            'param1' => new \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition('param1', 'integer', 'P1 Stuff', true, null, true),
+            'param2' => new \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition('param2', 'array', 'P2 Stuff', true, null, true),
+            'param3' => new \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition('param3', 'string', 'P3 Stuff', false, 'default', true)
         );
 
         $this->assertEquals($expected, $viewHelper->prepareArguments(), 'Annotation based arguments were not registered.');
@@ -195,16 +195,16 @@ class AbstractViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
         $dataCacheMock->expects($this->any())->method('has')->will($this->returnValue(true));
         $dataCacheMock->expects($this->any())->method('get')->will($this->returnValue(array()));
 
-        $viewHelper = new \TYPO3\Fluid\Core\Fixtures\TestViewHelper2();
+        $viewHelper = new \Neos\FluidAdaptor\Core\Fixtures\TestViewHelper2();
 
-        $this->mockReflectionService->expects($this->once())->method('getMethodParameters')->with(\TYPO3\Fluid\Core\Fixtures\TestViewHelper2::class, 'render')->will($this->returnValue($this->fixtureMethodParameters));
+        $this->mockReflectionService->expects($this->once())->method('getMethodParameters')->with(\Neos\FluidAdaptor\Core\Fixtures\TestViewHelper2::class, 'render')->will($this->returnValue($this->fixtureMethodParameters));
         $this->mockReflectionService->expects($this->once())->method('getMethodTagsValues');
         $viewHelper->injectObjectManager($this->mockObjectManager);
 
         $expected = array(
-            'param1' => new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition('param1', 'integer', '', true, null, true),
-            'param2' => new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition('param2', 'array', '', true, null, true),
-            'param3' => new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition('param3', 'string', '', false, 'default', true),
+            'param1' => new \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition('param1', 'integer', '', true, null, true),
+            'param2' => new \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition('param2', 'array', '', true, null, true),
+            'param3' => new \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition('param3', 'string', '', false, 'default', true),
         );
 
         $this->assertEquals($expected, $viewHelper->prepareArguments(), 'Annotation based arguments were not registered.');
@@ -231,7 +231,7 @@ class AbstractViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
         $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, array('render', 'prepareArguments'), array(), '', false);
 
         $viewHelper->setArguments(array('test' => new \ArrayObject));
-        $viewHelper->expects($this->once())->method('prepareArguments')->will($this->returnValue(array('test' => new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition('test', 'array', false, 'documentation'))));
+        $viewHelper->expects($this->once())->method('prepareArguments')->will($this->returnValue(array('test' => new \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition('test', 'array', false, 'documentation'))));
         $viewHelper->validateArguments();
     }
 
@@ -246,7 +246,7 @@ class AbstractViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
         $viewHelper->setArguments(array('test' => 'Value of argument'));
 
         $viewHelper->expects($this->once())->method('prepareArguments')->will($this->returnValue(array(
-            'test' => new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition('test', 'string', false, 'documentation')
+            'test' => new \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition('test', 'string', false, 'documentation')
         )));
 
         $viewHelper->validateArguments();
@@ -264,7 +264,7 @@ class AbstractViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
         $viewHelper->setArguments(array('test' => 'test'));
 
         $viewHelper->expects($this->once())->method('prepareArguments')->will($this->returnValue(array(
-            'test' => new \TYPO3\Fluid\Core\ViewHelper\ArgumentDefinition('test', 'stdClass', false, 'documentation')
+            'test' => new \Neos\FluidAdaptor\Core\ViewHelper\ArgumentDefinition('test', 'stdClass', false, 'documentation')
         )));
 
         $viewHelper->validateArguments();

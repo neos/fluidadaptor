@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Form;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -18,17 +18,17 @@ require_once(__DIR__ . '/FormFieldViewHelperBaseTestcase.php');
 /**
  * Test for the "Textfield" Form view helper
  */
-class TextfieldViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
+class TextfieldViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Form\TextfieldViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Form\TextfieldViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\TextfieldViewHelper::class, array('setErrorClassAttribute', 'registerFieldNameForFormTokenGeneration'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\TextfieldViewHelper::class, array('setErrorClassAttribute', 'registerFieldNameForFormTokenGeneration'));
         $this->arguments['name'] = '';
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
@@ -39,7 +39,7 @@ class TextfieldViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\F
      */
     public function renderCorrectlySetsTagName()
     {
-        $mockTagBuilder = $this->getMockBuilder(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(array('setTagName'))->getMock();
+        $mockTagBuilder = $this->getMockBuilder(\Neos\FluidAdaptor\Core\ViewHelper\TagBuilder::class)->setMethods(array('setTagName'))->getMock();
         $mockTagBuilder->expects($this->once())->method('setTagName')->with('input');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
@@ -52,7 +52,7 @@ class TextfieldViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\F
      */
     public function renderCorrectlySetsTypeNameAndValueAttributes()
     {
-        $mockTagBuilder = $this->getMockBuilder(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(array('setContent', 'render', 'addAttribute'))->getMock();
+        $mockTagBuilder = $this->getMockBuilder(\Neos\FluidAdaptor\Core\ViewHelper\TagBuilder::class)->setMethods(array('setContent', 'render', 'addAttribute'))->getMock();
         $mockTagBuilder->expects($this->at(0))->method('addAttribute')->with('type', 'text');
         $mockTagBuilder->expects($this->at(1))->method('addAttribute')->with('name', 'NameOfTextfield');
         $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextfield');
@@ -66,7 +66,7 @@ class TextfieldViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\F
         );
         $this->viewHelper->setArguments($arguments);
 
-        $this->viewHelper->setViewHelperNode(new \TYPO3\Fluid\ViewHelpers\Fixtures\EmptySyntaxTreeNode());
+        $this->viewHelper->setViewHelperNode(new \Neos\FluidAdaptor\ViewHelpers\Fixtures\EmptySyntaxTreeNode());
         $this->viewHelper->initialize();
         $this->viewHelper->render();
     }

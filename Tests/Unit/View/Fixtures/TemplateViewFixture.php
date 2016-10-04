@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\View\Fixture;
+namespace Neos\FluidAdaptor\View\Fixture;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -14,7 +14,7 @@ namespace TYPO3\Fluid\View\Fixture;
 /**
  * Template view fixture
  */
-class TemplateViewFixture extends \TYPO3\Fluid\View\TemplateView
+class TemplateViewFixture extends \Neos\FluidAdaptor\View\TemplateView
 {
     public $syntaxTree;
 

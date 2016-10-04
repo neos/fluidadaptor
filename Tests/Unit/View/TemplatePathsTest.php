@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\View;
+namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 use org\bovigo\vfs\vfsStreamWrapper;
 use TYPO3\Flow\Http\Request;
@@ -8,7 +8,7 @@ use TYPO3\Flow\Mvc\ActionRequest;
 use TYPO3\Flow\Mvc\Controller\ControllerContext;
 use TYPO3\Flow\Tests\Functional\Mvc\ViewsConfiguration\Fixtures\TemplateView;
 use TYPO3\Flow\Tests\UnitTestCase;
-use TYPO3\Fluid\View\TemplatePaths;
+use Neos\FluidAdaptor\View\TemplatePaths;
 
 /**
  *
@@ -643,7 +643,7 @@ class TemplatePathsTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getTemplatePathAndFilenameThrowsExceptionIfNoPathCanBeResolved()
     {
@@ -670,7 +670,7 @@ class TemplatePathsTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getTemplatePathAndFilenameThrowsExceptionIfResolvedPathPointsToADirectory()
     {
@@ -712,7 +712,7 @@ class TemplatePathsTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getLayoutPathAndFilenameThrowsExceptionIfNoPathCanBeResolved()
     {
@@ -739,7 +739,7 @@ class TemplatePathsTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getLayoutPathAndFilenameThrowsExceptionIfResolvedPathPointsToADirectory()
     {
@@ -767,7 +767,7 @@ class TemplatePathsTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getPartialPathAndFilenameThrowsExceptionIfNoPathCanBeResolved()
     {
@@ -794,7 +794,7 @@ class TemplatePathsTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getPartialPathAndFilenameThrowsExceptionIfResolvedPathPointsToADirectory()
     {

@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Security;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
 
 /*
  * This file is part of the TYPO3.Fluid package.
@@ -14,8 +14,8 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Security;
 use TYPO3\Flow\Http\Request;
 use TYPO3\Flow\Http\Uri;
 use TYPO3\Flow\Security\Policy\Role;
-use TYPO3\Fluid\ViewHelpers\Security\IfHasRoleViewHelper;
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Security\IfHasRoleViewHelper;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
@@ -29,7 +29,7 @@ class IfHasRoleViewHelperTest extends ViewHelperBaseTestcase
     {
         parent::setUp();
 
-        $this->mockViewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Security\IfHasRoleViewHelper::class)->setMethods(array('renderThenChild', 'renderElseChild', 'hasAccessToPrivilege'))->getMock();
+        $this->mockViewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Security\IfHasRoleViewHelper::class)->setMethods(array('renderThenChild', 'renderElseChild', 'hasAccessToPrivilege'))->getMock();
     }
 
     /**
