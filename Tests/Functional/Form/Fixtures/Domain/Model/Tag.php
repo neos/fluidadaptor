@@ -20,53 +20,34 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @Flow\Entity
  */
-class User
+class Tag
 {
     /**
      * @var string
-     * @Flow\Validate(type="EmailAddress")
      */
-    protected $emailAddress;
+    protected $name;
 
     /**
-     * @var Location
+     * @param string $name
      */
-    protected $location;
-
-    public function __construct()
+    public function __construct($name = '')
     {
-        $this->location = new Location();
+        $this->name = $name;
     }
 
     /**
      * @return string
      */
-    public function getEmailAddress()
+    public function getName()
     {
-        return $this->emailAddress;
+        return $this->name;
     }
 
     /**
-     * @param string $email
+     * @param string $name
      */
-    public function setEmailAddress($email)
+    public function setName($name)
     {
-        $this->emailAddress = $email;
-    }
-
-    /**
-     * @return Location
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    /**
-     * @param Location $location
-     */
-    public function setLocation(Location $location)
-    {
-        $this->location = $location;
+        $this->name = $name;
     }
 }
