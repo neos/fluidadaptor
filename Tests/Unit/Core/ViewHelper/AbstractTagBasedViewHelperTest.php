@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\Core\ViewHelper;
+namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -10,6 +10,7 @@ namespace TYPO3\Fluid\Tests\Unit\Core\ViewHelper;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 /**
  * Testcase for TagBasedViewHelper
@@ -18,7 +19,7 @@ class AbstractTagBasedViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
 {
     public function setUp()
     {
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper::class, array('dummy'), array(), '', false);
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\Core\ViewHelper\AbstractTagBasedViewHelper::class, array('dummy'), array(), '', false);
     }
 
     /**
@@ -26,7 +27,7 @@ class AbstractTagBasedViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
      */
     public function initializeResetsUnderlyingTagBuilder()
     {
-        $mockTagBuilder = $this->getMockBuilder(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(array('reset'))->disableOriginalConstructor()->getMock();
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(array('reset'))->disableOriginalConstructor()->getMock();
         $mockTagBuilder->expects($this->once())->method('reset');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
@@ -38,7 +39,7 @@ class AbstractTagBasedViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
      */
     public function oneTagAttributeIsRenderedCorrectly()
     {
-        $mockTagBuilder = $this->getMockBuilder(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(array('addAttribute'))->disableOriginalConstructor()->getMock();
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(array('addAttribute'))->disableOriginalConstructor()->getMock();
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('foo', 'bar');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
@@ -53,7 +54,7 @@ class AbstractTagBasedViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
      */
     public function additionalTagAttributesAreRenderedCorrectly()
     {
-        $mockTagBuilder = $this->getMockBuilder(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(array('addAttribute'))->disableOriginalConstructor()->getMock();
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(array('addAttribute'))->disableOriginalConstructor()->getMock();
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('foo', 'bar');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
@@ -68,7 +69,7 @@ class AbstractTagBasedViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
      */
     public function dataAttributesAreRenderedCorrectly()
     {
-        $mockTagBuilder = $this->getMockBuilder(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(array('addAttribute'))->disableOriginalConstructor()->getMock();
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(array('addAttribute'))->disableOriginalConstructor()->getMock();
         $mockTagBuilder->expects($this->at(0))->method('addAttribute')->with('data-foo', 'bar');
         $mockTagBuilder->expects($this->at(1))->method('addAttribute')->with('data-baz', 'foos');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
@@ -83,7 +84,7 @@ class AbstractTagBasedViewHelperTest extends \TYPO3\Flow\Tests\UnitTestCase
      */
     public function standardTagAttributesAreRegistered()
     {
-        $mockTagBuilder = $this->getMockBuilder(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(array('addAttribute'))->disableOriginalConstructor()->getMock();
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(array('addAttribute'))->disableOriginalConstructor()->getMock();
         $mockTagBuilder->expects($this->at(0))->method('addAttribute')->with('class', 'classAttribute');
         $mockTagBuilder->expects($this->at(1))->method('addAttribute')->with('dir', 'dirAttribute');
         $mockTagBuilder->expects($this->at(2))->method('addAttribute')->with('id', 'idAttribute');

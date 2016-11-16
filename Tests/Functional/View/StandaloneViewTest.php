@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Functional\View;
+namespace Neos\FluidAdaptor\Tests\Functional\View;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -11,12 +11,13 @@ namespace TYPO3\Fluid\Tests\Functional\View;
  * source code.
  */
 
+use Neos\FluidAdaptor\View\TemplatePaths;
 use TYPO3\Flow\Cache\CacheManager;
 use TYPO3\Flow\Http\Request;
 use TYPO3\Flow\Http\Uri;
 use TYPO3\Flow\Mvc\ActionRequest;
 use TYPO3\Flow\Tests\FunctionalTestCase;
-use TYPO3\Fluid\Tests\Functional\View\Fixtures\View\StandaloneView;
+use Neos\FluidAdaptor\Tests\Functional\View\Fixtures\View\StandaloneView;
 
 /**
  * Testcase for Standalone View
@@ -79,7 +80,7 @@ class StandaloneViewTest extends FunctionalTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function renderThrowsExceptionIfNeitherTemplateSourceNorTemplatePathAndFilenameAreSpecified()
     {
@@ -92,7 +93,7 @@ class StandaloneViewTest extends FunctionalTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function renderThrowsExceptionSpecifiedTemplatePathAndFilenameDoesNotExist()
     {
@@ -106,7 +107,7 @@ class StandaloneViewTest extends FunctionalTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function renderThrowsExceptionIfSpecifiedTemplatePathAndFilenamePointsToADirectory()
     {
@@ -235,7 +236,7 @@ class StandaloneViewTest extends FunctionalTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\Parser\Exception
+     * @expectedException \TYPO3Fluid\Fluid\Core\Parser\UnknownNamespaceException
      */
     public function viewThrowsExceptionWhenUnknownViewHelperIsCalled()
     {
@@ -281,7 +282,6 @@ class StandaloneViewTest extends FunctionalTestCase
         $actionRequest->setFormat('html');
 
         $standaloneView = new StandaloneView($actionRequest, $this->standaloneViewNonce);
-
         $standaloneView->assign('hack', '<h1>HACK</h1>');
         $standaloneView->setTemplatePathAndFilename(__DIR__ . '/Fixtures/NestedRenderingConfiguration/TemplateWithSection.txt');
 
@@ -289,11 +289,13 @@ class StandaloneViewTest extends FunctionalTestCase
         $actual = trim($standaloneView->renderSection('test'));
         $this->assertSame($expected, $actual, 'First rendering was not escaped.');
 
-        // To avoid any side effects we create a separate accessible mock to find the cache identifier for the partial
-        $dummyTemplateView = $this->getAccessibleMock(StandaloneView::class, null, array($actionRequest, $this->standaloneViewNonce));
-        $partialCacheIdentifier = $dummyTemplateView->_call('createIdentifierForFile', __DIR__ . '/Fixtures/NestedRenderingConfiguration/Partials/Test.html', 'partial_Test');
+        $partialCacheIdentifier = $standaloneView->getTemplatePaths()->getPartialIdentifier('Test');
         $templateCache = $this->objectManager->get(CacheManager::class)->getCache('Fluid_TemplateCache');
         $templateCache->remove($partialCacheIdentifier);
+
+        $standaloneView = new StandaloneView($actionRequest, $this->standaloneViewNonce);
+        $standaloneView->assign('hack', '<h1>HACK</h1>');
+        $standaloneView->setTemplatePathAndFilename(__DIR__ . '/Fixtures/NestedRenderingConfiguration/TemplateWithSection.txt');
 
         $expected = 'Christian uses &lt;h1&gt;HACK&lt;/h1&gt;';
         $actual = trim($standaloneView->renderSection('test'));

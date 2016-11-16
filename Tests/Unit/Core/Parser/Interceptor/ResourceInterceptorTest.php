@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\Core\Parser\Interceptor;
+namespace Neos\FluidAdaptor\Tests\Unit\Core\Parser\Interceptor;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -11,18 +11,14 @@ namespace TYPO3\Fluid\Tests\Unit\Core\Parser\Interceptor;
  * source code.
  */
 
-use TYPO3\Flow\ObjectManagement\ObjectManagerInterface;
+use Neos\FluidAdaptor\Core\Parser\Interceptor\ResourceInterceptor;
+use Neos\FluidAdaptor\Core\Parser\SyntaxTree\ResourceUriNode;
 use TYPO3\Flow\Tests\UnitTestCase;
-use TYPO3\Fluid\Core\Parser\Interceptor\ResourceInterceptor;
-use TYPO3\Fluid\Core\Parser\InterceptorInterface;
-use TYPO3\Fluid\Core\Parser\ParsingState;
-use TYPO3\Fluid\Core\Parser\SyntaxTree\NodeInterface;
-use TYPO3\Fluid\Core\Parser\SyntaxTree\RootNode;
-use TYPO3\Fluid\Core\Parser\SyntaxTree\TextNode;
-use TYPO3\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
-use TYPO3\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper;
-use TYPO3\Fluid\ViewHelpers\Uri\ResourceViewHelper;
+use TYPO3Fluid\Fluid\Core\Parser\InterceptorInterface;
+use TYPO3Fluid\Fluid\Core\Parser\ParsingState;
+use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\RootNode;
+use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\TextNode;
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
 /**
  * Testcase for Interceptor\ResourceInterceptor
@@ -35,10 +31,6 @@ class ResourceInterceptorTest extends UnitTestCase
      */
     public function resourcesInCssUrlsAreReplacedCorrectly()
     {
-        $mockDummyNode = $this->createMock(NodeInterface::class);
-        $mockPathNode = $this->createMock(NodeInterface::class);
-        $mockViewHelper = $this->createMock(AbstractViewHelper::class);
-
         $originalText1 = '<style type="text/css">
 			#loginscreen {
 				height: 768px;
@@ -52,17 +44,17 @@ class ResourceInterceptorTest extends UnitTestCase
         $mockTextNode = $this->getMockBuilder(TextNode::class)->setMethods(array('evaluateChildNodes'))->setConstructorArgs(array($originalText))->getMock();
         $this->assertEquals($originalText, $mockTextNode->evaluate($this->createMock(RenderingContextInterface::class)));
 
-        $mockObjectManager = $this->createMock(ObjectManagerInterface::class);
-        $mockObjectManager->expects($this->at(0))->method('get')->with(RootNode::class)->will($this->returnValue($mockDummyNode));
-        $mockObjectManager->expects($this->at(1))->method('get')->with(TextNode::class, $originalText1)->will($this->returnValue($mockDummyNode));
-        $mockObjectManager->expects($this->at(2))->method('get')->with(TextNode::class, $path)->will($this->returnValue($mockPathNode));
-        $mockObjectManager->expects($this->at(3))->method('get')->with(ResourceViewHelper::class)->will($this->returnValue($mockViewHelper));
-        $mockObjectManager->expects($this->at(4))->method('get')->with(ViewHelperNode::class, $mockViewHelper, array('path' => $mockPathNode))->will($this->returnValue($mockDummyNode));
-        $mockObjectManager->expects($this->at(5))->method('get')->with(TextNode::class, $originalText3)->will($this->returnValue($mockDummyNode));
-
         $interceptor = new ResourceInterceptor();
-        $interceptor->injectObjectManager($mockObjectManager);
-        $interceptor->process($mockTextNode, InterceptorInterface::INTERCEPT_TEXT, $this->createMock(ParsingState::class));
+        $resultingNodeTree = $interceptor->process($mockTextNode, InterceptorInterface::INTERCEPT_TEXT, $this->createMock(ParsingState::class));
+        $this->assertInstanceOf(RootNode::class, $resultingNodeTree);
+        $this->assertCount(3, $resultingNodeTree->getChildNodes());
+        foreach ($resultingNodeTree->getChildNodes() as $parserNode) {
+            if ($parserNode instanceof ResourceUriNode) {
+                $this->assertEquals([
+                    'path' => $path
+                ], $parserNode->getArguments());
+            }
+        }
     }
 
     /**
@@ -118,27 +110,23 @@ class ResourceInterceptorTest extends UnitTestCase
      */
     public function supportedUrlsAreDetected($part1, $part2, $part3, $expectedPath, $expectedPackageKey)
     {
-        $mockDummyNode = $this->createMock(NodeInterface::class);
-        $mockPathNode = $this->createMock(NodeInterface::class);
-        $mockPackageKeyNode = $this->createMock(NodeInterface::class);
-        $mockViewHelper = $this->createMock(AbstractViewHelper::class);
-
         $originalText = $part1 . $part2 . $part3;
         $mockTextNode = $this->getMockBuilder(TextNode::class)->setMethods(array('evaluateChildNodes'))->setConstructorArgs(array($originalText))->getMock();
         $this->assertEquals($originalText, $mockTextNode->evaluate($this->createMock(RenderingContextInterface::class)));
 
-        $mockObjectManager = $this->createMock(ObjectManagerInterface::class);
-        $mockObjectManager->expects($this->at(0))->method('get')->with(RootNode::class)->will($this->returnValue($mockDummyNode));
-        $mockObjectManager->expects($this->at(1))->method('get')->with(TextNode::class, $part1)->will($this->returnValue($mockDummyNode));
-        $mockObjectManager->expects($this->at(2))->method('get')->with(TextNode::class, $expectedPath)->will($this->returnValue($mockPathNode));
-        $mockObjectManager->expects($this->at(3))->method('get')->with(TextNode::class, $expectedPackageKey)->will($this->returnValue($mockPackageKeyNode));
-        $mockObjectManager->expects($this->at(4))->method('get')->with(ResourceViewHelper::class)->will($this->returnValue($mockViewHelper));
-        $mockObjectManager->expects($this->at(5))->method('get')->with(ViewHelperNode::class, $mockViewHelper, array('path' => $mockPathNode, 'package' => $mockPackageKeyNode))->will($this->returnValue($mockDummyNode));
-        $mockObjectManager->expects($this->at(6))->method('get')->with(TextNode::class, $part3)->will($this->returnValue($mockDummyNode));
-
         $interceptor = new ResourceInterceptor();
-        $interceptor->injectObjectManager($mockObjectManager);
         $interceptor->setDefaultPackageKey('Acme.Demo');
-        $interceptor->process($mockTextNode, InterceptorInterface::INTERCEPT_TEXT, $this->createMock(ParsingState::class));
+        $resultingNodeTree = $interceptor->process($mockTextNode, InterceptorInterface::INTERCEPT_TEXT, $this->createMock(ParsingState::class));
+
+        $this->assertInstanceOf(RootNode::class, $resultingNodeTree);
+        $this->assertCount(3, $resultingNodeTree->getChildNodes());
+        foreach ($resultingNodeTree->getChildNodes() as $parserNode) {
+            if ($parserNode instanceof ResourceUriNode) {
+                $this->assertEquals([
+                    'path' => $expectedPath,
+                    'package' => $expectedPackageKey
+                ], $parserNode->getArguments());
+            }
+        }
     }
 }

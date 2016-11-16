@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -13,8 +13,8 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers;
 
 use TYPO3\Flow\Http\Request;
 use TYPO3\Flow\Http\Uri;
-use TYPO3\Fluid\ViewHelpers\BaseViewHelper;
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\BaseViewHelper;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
 
 require_once(__DIR__ . '/ViewHelperBaseTestcase.php');
 

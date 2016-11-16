@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\Core\Widget;
+namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -18,8 +18,8 @@ use TYPO3\Flow\ObjectManagement\ObjectManagerInterface;
 use TYPO3\Flow\Security\Context;
 use TYPO3\Flow\Security\Cryptography\HashService;
 use TYPO3\Flow\Tests\UnitTestCase;
-use TYPO3\Fluid\Core\Widget\AjaxWidgetComponent;
-use TYPO3\Fluid\Core\Widget\AjaxWidgetContextHolder;
+use Neos\FluidAdaptor\Core\Widget\AjaxWidgetComponent;
+use Neos\FluidAdaptor\Core\Widget\AjaxWidgetContextHolder;
 
 /**
  * Testcase for AjaxWidgetComponent
@@ -100,7 +100,7 @@ class AjaxWidgetComponentTest extends UnitTestCase
         $this->mockHttpResponse = $this->getMockBuilder(\TYPO3\Flow\Http\Response::class)->disableOriginalConstructor()->getMock();
         $this->mockComponentContext->expects($this->any())->method('getHttpResponse')->will($this->returnValue($this->mockHttpResponse));
 
-        $this->mockAjaxWidgetContextHolder = $this->getMockBuilder(\TYPO3\Fluid\Core\Widget\AjaxWidgetContextHolder::class)->getMock();
+        $this->mockAjaxWidgetContextHolder = $this->getMockBuilder(\Neos\FluidAdaptor\Core\Widget\AjaxWidgetContextHolder::class)->getMock();
         $this->inject($this->ajaxWidgetComponent, 'ajaxWidgetContextHolder', $this->mockAjaxWidgetContextHolder);
 
         $this->mockHashService = $this->getMockBuilder(\TYPO3\Flow\Security\Cryptography\HashService::class)->getMock();
@@ -139,7 +139,7 @@ class AjaxWidgetComponentTest extends UnitTestCase
         $mockControllerObjectName = 'SomeControllerObjectName';
         $this->mockHttpRequest->expects($this->at(0))->method('hasArgument')->with('__widgetId')->will($this->returnValue(true));
         $this->mockHttpRequest->expects($this->atLeastOnce())->method('getArgument')->with('__widgetId')->will($this->returnValue($mockWidgetId));
-        $mockWidgetContext = $this->getMockBuilder(\TYPO3\Fluid\Core\Widget\WidgetContext::class)->getMock();
+        $mockWidgetContext = $this->getMockBuilder(\Neos\FluidAdaptor\Core\Widget\WidgetContext::class)->getMock();
         $mockWidgetContext->expects($this->atLeastOnce())->method('getControllerObjectName')->will($this->returnValue($mockControllerObjectName));
         $this->mockAjaxWidgetContextHolder->expects($this->atLeastOnce())->method('get')->with($mockWidgetId)->will($this->returnValue($mockWidgetContext));
         $mockActionRequest = $this->getMockBuilder(\TYPO3\Flow\Mvc\ActionRequest::class)->disableOriginalConstructor()->getMock();
@@ -160,7 +160,7 @@ class AjaxWidgetComponentTest extends UnitTestCase
         $mockControllerObjectName = 'SomeControllerObjectName';
         $this->mockHttpRequest->expects($this->at(0))->method('hasArgument')->with('__widgetId')->will($this->returnValue(true));
         $this->mockHttpRequest->expects($this->atLeastOnce())->method('getArgument')->with('__widgetId')->will($this->returnValue($mockWidgetId));
-        $mockWidgetContext = $this->getMockBuilder(\TYPO3\Fluid\Core\Widget\WidgetContext::class)->getMock();
+        $mockWidgetContext = $this->getMockBuilder(\Neos\FluidAdaptor\Core\Widget\WidgetContext::class)->getMock();
         $mockWidgetContext->expects($this->atLeastOnce())->method('getControllerObjectName')->will($this->returnValue($mockControllerObjectName));
         $this->mockAjaxWidgetContextHolder->expects($this->atLeastOnce())->method('get')->with($mockWidgetId)->will($this->returnValue($mockWidgetContext));
         $mockActionRequest = $this->getMockBuilder(\TYPO3\Flow\Mvc\ActionRequest::class)->disableOriginalConstructor()->getMock();
@@ -180,7 +180,7 @@ class AjaxWidgetComponentTest extends UnitTestCase
         $mockControllerObjectName = 'SomeControllerObjectName';
         $this->mockHttpRequest->expects($this->at(0))->method('hasArgument')->with('__widgetId')->will($this->returnValue(true));
         $this->mockHttpRequest->expects($this->atLeastOnce())->method('getArgument')->with('__widgetId')->will($this->returnValue($mockWidgetId));
-        $mockWidgetContext = $this->getMockBuilder(\TYPO3\Fluid\Core\Widget\WidgetContext::class)->getMock();
+        $mockWidgetContext = $this->getMockBuilder(\Neos\FluidAdaptor\Core\Widget\WidgetContext::class)->getMock();
         $mockWidgetContext->expects($this->atLeastOnce())->method('getControllerObjectName')->will($this->returnValue($mockControllerObjectName));
         $this->mockAjaxWidgetContextHolder->expects($this->atLeastOnce())->method('get')->with($mockWidgetId)->will($this->returnValue($mockWidgetContext));
         $mockActionRequest = $this->getMockBuilder(\TYPO3\Flow\Mvc\ActionRequest::class)->disableOriginalConstructor()->getMock();
@@ -200,7 +200,7 @@ class AjaxWidgetComponentTest extends UnitTestCase
         $mockControllerObjectName = 'SomeControllerObjectName';
         $this->mockHttpRequest->expects($this->at(0))->method('hasArgument')->with('__widgetId')->will($this->returnValue(true));
         $this->mockHttpRequest->expects($this->atLeastOnce())->method('getArgument')->with('__widgetId')->will($this->returnValue($mockWidgetId));
-        $mockWidgetContext = $this->getMockBuilder(\TYPO3\Fluid\Core\Widget\WidgetContext::class)->getMock();
+        $mockWidgetContext = $this->getMockBuilder(\Neos\FluidAdaptor\Core\Widget\WidgetContext::class)->getMock();
         $mockWidgetContext->expects($this->atLeastOnce())->method('getControllerObjectName')->will($this->returnValue($mockControllerObjectName));
         $this->mockAjaxWidgetContextHolder->expects($this->atLeastOnce())->method('get')->with($mockWidgetId)->will($this->returnValue($mockWidgetContext));
         $mockActionRequest = $this->getMockBuilder(\TYPO3\Flow\Mvc\ActionRequest::class)->disableOriginalConstructor()->getMock();
@@ -217,7 +217,7 @@ class AjaxWidgetComponentTest extends UnitTestCase
      */
     public function extractWidgetContextDecodesSerializedWidgetContextIfPresent()
     {
-        $ajaxWidgetComponent = $this->getAccessibleMock(\TYPO3\Fluid\Core\Widget\AjaxWidgetComponent::class, array('dummy'));
+        $ajaxWidgetComponent = $this->getAccessibleMock(\Neos\FluidAdaptor\Core\Widget\AjaxWidgetComponent::class, array('dummy'));
         $this->inject($ajaxWidgetComponent, 'hashService', $this->mockHashService);
 
         $mockWidgetContext = 'SomeWidgetContext';

@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\View;
+namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -16,7 +16,7 @@ use org\bovigo\vfs\vfsStreamWrapper;
 use TYPO3\Flow\Mvc\ActionRequest;
 use TYPO3\Flow\Mvc\Controller\ControllerContext;
 use TYPO3\Flow\Tests\UnitTestCase;
-use TYPO3\Fluid\View\StandaloneView;
+use Neos\FluidAdaptor\View\StandaloneView;
 
 /**
  * Testcase for the StandaloneView
@@ -40,7 +40,7 @@ class StandaloneViewTest extends UnitTestCase
 
     public function setUp()
     {
-        $this->standaloneView = $this->getAccessibleMock(\TYPO3\Fluid\View\StandaloneView::class, array('dummy'));
+        $this->standaloneView = $this->getAccessibleMock(\Neos\FluidAdaptor\View\StandaloneView::class, array('dummy'));
 
         $this->mockRequest = $this->getMockBuilder(\TYPO3\Flow\Mvc\ActionRequest::class)->disableOriginalConstructor()->getMock();
         $this->mockControllerContext = $this->getMockBuilder(\TYPO3\Flow\Mvc\Controller\ControllerContext::class)->disableOriginalConstructor()->getMock();
@@ -50,27 +50,7 @@ class StandaloneViewTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
-     */
-    public function getTemplateSourceThrowsExceptionIfSpecifiedTemplatePathAndFilenameDoesNotExist()
-    {
-        $this->standaloneView->setTemplatePathAndFilename(__DIR__ . '/NonExistingTemplate.txt');
-        $this->standaloneView->_call('getTemplateSource');
-    }
-
-    /**
-     * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
-     */
-    public function getTemplateSourceThrowsExceptionIfSpecifiedTemplatePathAndFilenamePointsToADirectory()
-    {
-        $this->standaloneView->setTemplatePathAndFilename(__DIR__);
-        $this->standaloneView->_call('getTemplateSource');
-    }
-
-    /**
-     * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getLayoutPathAndFilenameThrowsExceptionIfSpecifiedLayoutRootPathIsNoDirectory()
     {
@@ -78,24 +58,24 @@ class StandaloneViewTest extends UnitTestCase
         mkdir('vfs://MyLayouts');
         \file_put_contents('vfs://MyLayouts/NotAFolder', 'foo');
         $this->standaloneView->setLayoutRootPath('vfs://MyLayouts/NotAFolder');
-        $this->standaloneView->_call('getLayoutPathAndFilename');
+        $this->standaloneView->getTemplatePaths()->getLayoutSource();
     }
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getLayoutPathAndFilenameThrowsExceptionIfLayoutFileIsADirectory()
     {
         vfsStreamWrapper::register();
         mkdir('vfs://MyLayouts/NotAFile');
         $this->standaloneView->setLayoutRootPath('vfs://MyLayouts');
-        $this->standaloneView->_call('getLayoutPathAndFilename', 'NotAFile');
+        $this->standaloneView->getTemplatePaths()->getLayoutSource('NotAFile');
     }
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getPartialPathAndFilenameThrowsExceptionIfSpecifiedPartialRootPathIsNoDirectory()
     {
@@ -103,18 +83,18 @@ class StandaloneViewTest extends UnitTestCase
         mkdir('vfs://MyPartials');
         \file_put_contents('vfs://MyPartials/NotAFolder', 'foo');
         $this->standaloneView->setPartialRootPath('vfs://MyPartials/NotAFolder');
-        $this->standaloneView->_call('getPartialPathAndFilename', 'SomePartial');
+        $this->standaloneView->getTemplatePaths()->getPartialSource('SomePartial');
     }
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\View\Exception\InvalidTemplateResourceException
+     * @expectedException \Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException
      */
     public function getPartialPathAndFilenameThrowsExceptionIfPartialFileIsADirectory()
     {
         vfsStreamWrapper::register();
         mkdir('vfs://MyPartials/NotAFile');
         $this->standaloneView->setPartialRootPath('vfs://MyPartials');
-        $this->standaloneView->_call('getPartialPathAndFilename', 'NotAFile');
+        $this->standaloneView->getTemplatePaths()->getPartialSource('NotAFile');
     }
 }

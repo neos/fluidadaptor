@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Form;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -12,6 +12,7 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Form;
  */
 
 use TYPO3\Flow\Persistence\PersistenceManagerInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 require_once(__DIR__ . '/Fixtures/EmptySyntaxTreeNode.php');
 require_once(__DIR__ . '/Fixtures/Fixture_UserDomainClass.php');
@@ -20,10 +21,10 @@ require_once(__DIR__ . '/FormFieldViewHelperBaseTestcase.php');
 /**
  * Test for the "Select" Form view helper
  */
-class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
+class SelectViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Form\SelectViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Form\SelectViewHelper
      */
     protected $viewHelper;
 
@@ -32,7 +33,7 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
         parent::setUp();
         $this->arguments['name'] = '';
         $this->arguments['sortByOptionLabel'] = false;
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\SelectViewHelper::class, array('setErrorClassAttribute', 'registerFieldNameForFormTokenGeneration'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\SelectViewHelper::class, array('setErrorClassAttribute', 'registerFieldNameForFormTokenGeneration'));
     }
 
     /**
@@ -40,7 +41,7 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
      */
     public function selectCorrectlySetsTagName()
     {
-        $this->tagBuilder->expects($this->once())->method('setTagName')->with('select');
+        $this->tagBuilder->expects($this->any())->method('setTagName')->with('select');
 
         $this->arguments['options'] = array();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
@@ -146,7 +147,7 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
      */
     public function multipleSelectCreatesExpectedOptions()
     {
-        $this->tagBuilder = new \TYPO3\Fluid\Core\ViewHelper\TagBuilder();
+        $this->tagBuilder = new TagBuilder();
 
         $this->arguments['options'] = array(
             'value1' => 'label1',
@@ -175,12 +176,12 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
      */
     public function multipleSelectCreatesExpectedOptionsInObjectAccessorMode()
     {
-        $this->tagBuilder = new \TYPO3\Fluid\Core\ViewHelper\TagBuilder();
+        $this->tagBuilder = new TagBuilder();
 
-        $user = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(1, 'Sebastian', 'Düvel');
+        $user = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(1, 'Sebastian', 'Düvel');
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => 'someFormObjectName',
                 'formObject' => $user,
             )
@@ -226,9 +227,9 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
         $this->tagBuilder->expects($this->once())->method('setContent')->with('<option value="1">Ingmar</option>' . chr(10) . '<option value="2" selected="selected">Sebastian</option>' . chr(10) . '<option value="3">Robert</option>' . chr(10));
         $this->tagBuilder->expects($this->once())->method('render');
 
-        $user_is = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
-        $user_sk = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(2, 'Sebastian', 'Kurfuerst');
-        $user_rl = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(3, 'Robert', 'Lemke');
+        $user_is = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
+        $user_sk = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(2, 'Sebastian', 'Kurfuerst');
+        $user_rl = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(3, 'Robert', 'Lemke');
 
         $this->arguments['options'] = array(
             $user_is,
@@ -251,12 +252,12 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
      */
     public function multipleSelectOnDomainObjectsCreatesExpectedOptions()
     {
-        $this->tagBuilder = new \TYPO3\Fluid\Core\ViewHelper\TagBuilder();
+        $this->tagBuilder = new TagBuilder();
         $this->viewHelper->expects($this->exactly(3))->method('registerFieldNameForFormTokenGeneration')->with('myName[]');
 
-        $user_is = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
-        $user_sk = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(2, 'Sebastian', 'Kurfuerst');
-        $user_rl = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(3, 'Robert', 'Lemke');
+        $user_is = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
+        $user_sk = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(2, 'Sebastian', 'Kurfuerst');
+        $user_rl = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(3, 'Robert', 'Lemke');
 
         $this->arguments['options'] = array(
             $user_is,
@@ -295,12 +296,12 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
         ));
         $this->viewHelper->injectPersistenceManager($mockPersistenceManager);
 
-        $this->tagBuilder = new \TYPO3\Fluid\Core\ViewHelper\TagBuilder();
+        $this->tagBuilder = new TagBuilder();
         $this->viewHelper->expects($this->exactly(3))->method('registerFieldNameForFormTokenGeneration')->with('myName[]');
 
-        $user_is = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
-        $user_sk = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(2, 'Sebastian', 'Kurfuerst');
-        $user_rl = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(3, 'Robert', 'Lemke');
+        $user_is = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
+        $user_sk = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(2, 'Sebastian', 'Kurfuerst');
+        $user_rl = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(3, 'Robert', 'Lemke');
 
         $this->arguments['options'] = array($user_is,$user_sk,$user_rl);
         $this->arguments['value'] = array($user_rl, $user_is);
@@ -336,7 +337,7 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
         $this->tagBuilder->expects($this->once())->method('setContent')->with('<option value="fakeUUID">fakeUUID</option>' . chr(10));
         $this->tagBuilder->expects($this->once())->method('render');
 
-        $user = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
+        $user = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
 
         $this->arguments['options'] = array(
             $user
@@ -362,7 +363,7 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
         $this->tagBuilder->expects($this->once())->method('setContent')->with('<option value="fakeUUID">toStringResult</option>' . chr(10));
         $this->tagBuilder->expects($this->once())->method('render');
 
-        $user = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass::class)->setMethods(array('__toString'))->setConstructorArgs(array(1, 'Ingmar', 'Schlecht'))->getMock();
+        $user = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass::class)->setMethods(array('__toString'))->setConstructorArgs(array(1, 'Ingmar', 'Schlecht'))->getMock();
         $user->expects($this->atLeastOnce())->method('__toString')->will($this->returnValue('toStringResult'));
 
         $this->arguments['options'] = array(
@@ -377,7 +378,7 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function selectOnDomainObjectsThrowsExceptionIfNoValueCanBeFound()
     {
@@ -385,7 +386,7 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
         $mockPersistenceManager->expects($this->any())->method('getIdentifierByObject')->will($this->returnValue(null));
         $this->viewHelper->injectPersistenceManager($mockPersistenceManager);
 
-        $user = new \TYPO3\Fluid\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
+        $user = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
 
         $this->arguments['options'] = array(
             $user
@@ -462,7 +463,7 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
     {
         $this->arguments['options'] = array('foo' => 'bar');
         $this->arguments['translate'] = array('by' => 'id');
-        $viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\SelectViewHelper::class, array('getTranslatedLabel', 'setErrorClassAttribute', 'registerFieldNameForFormTokenGeneration'));
+        $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\SelectViewHelper::class, array('getTranslatedLabel', 'setErrorClassAttribute', 'registerFieldNameForFormTokenGeneration'));
         $this->injectDependenciesIntoViewHelper($viewHelper);
 
         $viewHelper->expects($this->once())->method('getTranslatedLabel')->with('foo', 'bar');
@@ -541,7 +542,7 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function getTranslatedLabelThrowsExceptionForInvalidLocales()
     {
@@ -553,7 +554,7 @@ class SelectViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Form
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function getTranslatedLabelThrowsExceptionForUnknownTranslateBy()
     {

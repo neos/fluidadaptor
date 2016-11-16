@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Security;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -13,8 +13,8 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Security;
 
 use TYPO3\Flow\Error\Error;
 use TYPO3\Flow\Error\Result;
-use TYPO3\Fluid\ViewHelpers\Validation\IfHasErrorsViewHelper;
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Validation\IfHasErrorsViewHelper;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
@@ -32,7 +32,7 @@ class IfHasErrorsViewHelperTest extends ViewHelperBaseTestcase
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Validation\IfHasErrorsViewHelper::class, array('renderThenChild', 'renderElseChild'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Validation\IfHasErrorsViewHelper::class, array('renderThenChild', 'renderElseChild'));
         $this->inject($this->viewHelper, 'controllerContext', $this->controllerContext);
         //$this->inject($this->ifAccessViewHelper, 'accessDecisionManager', $this->mockAccessDecisionManager);
     }

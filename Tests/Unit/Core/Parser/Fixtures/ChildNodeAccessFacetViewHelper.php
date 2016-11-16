@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Core\Parser\Fixtures;
+namespace Neos\FluidAdaptor\Core\Parser\Fixtures;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -14,6 +14,6 @@ namespace TYPO3\Fluid\Core\Parser\Fixtures;
 /**
  * Test fixture for the child node access facet.
  */
-abstract class ChildNodeAccessFacetViewHelper extends \TYPO3\Fluid\Core\ViewHelper\AbstractViewHelper implements \TYPO3\Fluid\Core\ViewHelper\Facets\ChildNodeAccessInterface
+abstract class ChildNodeAccessFacetViewHelper extends \Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper implements \Neos\FluidAdaptor\Core\ViewHelper\Facets\ChildNodeAccessInterface
 {
 }

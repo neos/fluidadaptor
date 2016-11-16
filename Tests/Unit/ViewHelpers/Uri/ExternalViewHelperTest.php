@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Uri;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Uri;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -17,17 +17,17 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
  * Testcase for the external uri view helper
  *
  */
-class ExternalViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase
+class ExternalViewHelperTest extends \Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
-     * var \TYPO3\Fluid\ViewHelpers\Uri\ExternalViewHelper
+     * var \Neos\FluidAdaptor\ViewHelpers\Uri\ExternalViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = new \TYPO3\Fluid\ViewHelpers\Uri\ExternalViewHelper();
+        $this->viewHelper = new \Neos\FluidAdaptor\ViewHelpers\Uri\ExternalViewHelper();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }

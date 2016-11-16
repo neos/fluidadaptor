@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Security;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -11,11 +11,11 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Security;
  * source code.
  */
 
+use Neos\FluidAdaptor\Core\Rendering\RenderingContext;
+use TYPO3\Flow\Object\ObjectManagerInterface;
 use TYPO3\Flow\Security\Authorization\PrivilegeManagerInterface;
-use TYPO3\Fluid\ViewHelpers\Security\IfAccessViewHelper;
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
-
-require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
+use Neos\FluidAdaptor\ViewHelpers\Security\IfAccessViewHelper;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
  * Testcase for IfAccessViewHelper
@@ -35,10 +35,22 @@ class IfAccessViewHelperTest extends ViewHelperBaseTestcase
 
     public function setUp()
     {
-        $this->mockPrivilegeManager = $this->createMock(\TYPO3\Flow\Security\Authorization\PrivilegeManagerInterface::class);
+        $this->mockPrivilegeManager = $this->getMockBuilder(\TYPO3\Flow\Security\Authorization\PrivilegeManagerInterface::class)->disableOriginalConstructor()->getMock();
 
-        $this->ifAccessViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Security\IfAccessViewHelper::class, array('renderThenChild', 'renderElseChild'));
-        $this->inject($this->ifAccessViewHelper, 'privilegeManager', $this->mockPrivilegeManager);
+        $objectManager = $this->getMockBuilder(ObjectManagerInterface::class)->disableOriginalConstructor()->getMock();
+        $objectManager->expects($this->any())->method('get')->willReturnCallback(function ($objectName) {
+            switch ($objectName) {
+                case PrivilegeManagerInterface::class:
+                    return $this->mockPrivilegeManager;
+                    break;
+            }
+        });
+
+        $renderingContext = $this->getMockBuilder(RenderingContext::class)->disableOriginalConstructor()->getMock();
+        $renderingContext->expects($this->any())->method('getObjectManager')->willReturn($objectManager);
+
+        $this->ifAccessViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Security\IfAccessViewHelper::class, array('renderThenChild', 'renderElseChild'));
+        $this->inject($this->ifAccessViewHelper, 'renderingContext', $renderingContext);
     }
 
     /**
@@ -49,7 +61,12 @@ class IfAccessViewHelperTest extends ViewHelperBaseTestcase
         $this->mockPrivilegeManager->expects($this->once())->method('isPrivilegeTargetGranted')->with('somePrivilegeTarget')->will($this->returnValue(true));
         $this->ifAccessViewHelper->expects($this->once())->method('renderThenChild')->will($this->returnValue('foo'));
 
-        $actualResult = $this->ifAccessViewHelper->render('somePrivilegeTarget');
+        $arguments = [
+            'privilegeTarget' => 'somePrivilegeTarget',
+            'parameters' => []
+        ];
+        $this->ifAccessViewHelper->setArguments($arguments);
+        $actualResult = $this->ifAccessViewHelper->render();
         $this->assertEquals('foo', $actualResult);
     }
 
@@ -61,7 +78,12 @@ class IfAccessViewHelperTest extends ViewHelperBaseTestcase
         $this->mockPrivilegeManager->expects($this->once())->method('isPrivilegeTargetGranted')->with('somePrivilegeTarget')->will($this->returnValue(false));
         $this->ifAccessViewHelper->expects($this->once())->method('renderElseChild')->will($this->returnValue('ElseViewHelperResults'));
 
-        $actualResult = $this->ifAccessViewHelper->render('somePrivilegeTarget');
+        $arguments = [
+            'privilegeTarget' => 'somePrivilegeTarget',
+            'parameters' => []
+        ];
+        $this->ifAccessViewHelper->setArguments($arguments);
+        $actualResult = $this->ifAccessViewHelper->render();
         $this->assertEquals('ElseViewHelperResults', $actualResult);
     }
 }

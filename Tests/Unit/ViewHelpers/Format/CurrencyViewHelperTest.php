@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -14,14 +14,14 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
 use TYPO3\Flow\Tests\UnitTestCase;
 
 /**
- * Test for \TYPO3\Fluid\ViewHelpers\Format\CurrencyViewHelper
+ * Test for \Neos\FluidAdaptor\ViewHelpers\Format\CurrencyViewHelper
  */
 class CurrencyViewHelperTest extends UnitTestCase
 {
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\CurrencyViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\CurrencyViewHelper::class)->setMethods(array('renderChildren'))->getMock();
     }
 
     /**
@@ -120,7 +120,7 @@ class CurrencyViewHelperTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception\InvalidVariableException
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception\InvalidVariableException
      */
     public function viewHelperThrowsExceptionIfLocaleIsUsedWithoutExplicitCurrencySign()
     {
@@ -137,7 +137,7 @@ class CurrencyViewHelperTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function viewHelperConvertsI18nExceptionsIntoViewHelperExceptions()
     {

@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Functional\Core\Fixtures\ViewHelpers;
+namespace Neos\FluidAdaptor\Tests\Functional\Core\Fixtures\ViewHelpers;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -12,7 +12,7 @@ namespace TYPO3\Fluid\Tests\Functional\Core\Fixtures\ViewHelpers;
  */
 
 use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Fluid\Core\Widget\AbstractWidgetViewHelper;
+use Neos\FluidAdaptor\Core\Widget\AbstractWidgetViewHelper;
 
 /**
  * A view helper for the redirect test widget
@@ -21,7 +21,7 @@ class RedirectViewHelper extends AbstractWidgetViewHelper
 {
     /**
      * @Flow\Inject
-     * @var \TYPO3\Fluid\Tests\Functional\Core\Fixtures\ViewHelpers\Controller\RedirectController
+     * @var \Neos\FluidAdaptor\Tests\Functional\Core\Fixtures\ViewHelpers\Controller\RedirectController
      */
     protected $controller;
 

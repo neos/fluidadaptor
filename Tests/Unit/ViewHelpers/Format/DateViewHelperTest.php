@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -12,11 +12,11 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
  */
 
 use TYPO3\Flow\Tests\UnitTestCase;
-use TYPO3\Fluid\ViewHelpers\Format;
+use Neos\FluidAdaptor\ViewHelpers\Format;
 use TYPO3\Flow\I18n;
 
 /**
- * Test for date view helper \TYPO3\Fluid\ViewHelpers\Format\DateViewHelper
+ * Test for date view helper \Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper
  */
 class DateViewHelperTest extends UnitTestCase
 {
@@ -56,7 +56,7 @@ class DateViewHelperTest extends UnitTestCase
     public function viewHelperReturnsEmptyStringIfNULLIsGiven()
     {
         /** @var $viewHelper Format\DateViewHelper|\PHPUnit_Framework_MockObject_MockObject */
-        $viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
         $viewHelper->expects($this->once())->method('renderChildren')->will($this->returnValue(null));
         $actualResult = $viewHelper->render();
         $this->assertEquals('', $actualResult);
@@ -64,7 +64,7 @@ class DateViewHelperTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function viewHelperThrowsExceptionIfDateStringCantBeParsed()
     {
@@ -78,7 +78,7 @@ class DateViewHelperTest extends UnitTestCase
     public function viewHelperUsesChildNodesIfDateAttributeIsNotSpecified()
     {
         /** @var $viewHelper Format\DateViewHelper|\PHPUnit_Framework_MockObject_MockObject */
-        $viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
         $viewHelper->expects($this->once())->method('renderChildren')->will($this->returnValue(new \DateTime('1980-12-13')));
         $actualResult = $viewHelper->render();
         $this->assertEquals('1980-12-13', $actualResult);
@@ -90,7 +90,7 @@ class DateViewHelperTest extends UnitTestCase
     public function dateArgumentHasPriorityOverChildNodes()
     {
         /** @var $viewHelper Format\DateViewHelper|\PHPUnit_Framework_MockObject_MockObject */
-        $viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
         $viewHelper->expects($this->never())->method('renderChildren');
         $actualResult = $viewHelper->render('1980-12-12');
         $this->assertEquals('1980-12-12', $actualResult);
@@ -98,12 +98,12 @@ class DateViewHelperTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception\InvalidVariableException
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception\InvalidVariableException
      */
     public function viewHelperThrowsExceptionIfInvalidLocaleIdentifierIsGiven()
     {
         /** @var $viewHelper Format\DateViewHelper|\PHPUnit_Framework_MockObject_MockObject */
-        $viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
         $viewHelper->setArguments(array('forceLocale' => '123-not-existing-locale'));
         $viewHelper->render(new \DateTime());
     }
@@ -114,7 +114,7 @@ class DateViewHelperTest extends UnitTestCase
     public function viewHelperCallsDateTimeFormatterWithCorrectlyBuiltConfigurationArguments()
     {
         /** @var $viewHelper Format\DateViewHelper|\PHPUnit_Framework_MockObject_MockObject */
-        $viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
 
         $dateTime = new \DateTime();
         $locale = new I18n\Locale('de');
@@ -137,7 +137,7 @@ class DateViewHelperTest extends UnitTestCase
     public function viewHelperFetchesCurrentLocaleViaI18nService()
     {
         /** @var $viewHelper Format\DateViewHelper|\PHPUnit_Framework_MockObject_MockObject */
-        $viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
 
         $localizationConfiguration = new I18n\Configuration('de_DE');
 
@@ -155,12 +155,12 @@ class DateViewHelperTest extends UnitTestCase
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function viewHelperConvertsI18nExceptionsIntoViewHelperExceptions()
     {
         /** @var $viewHelper Format\DateViewHelper|\PHPUnit_Framework_MockObject_MockObject */
-        $viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
 
         $localizationConfiguration = new I18n\Configuration('de_DE');
 
@@ -182,7 +182,7 @@ class DateViewHelperTest extends UnitTestCase
     public function viewHelperCallsDateTimeFormatterWithCustomFormat()
     {
         /** @var $viewHelper Format\DateViewHelper|\PHPUnit_Framework_MockObject_MockObject */
-        $viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper::class)->setMethods(array('renderChildren'))->getMock();
 
         $dateTime = new \DateTime();
         $locale = new I18n\Locale('de');
