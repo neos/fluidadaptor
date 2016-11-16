@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Uri;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Uri;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -16,17 +16,17 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 /**
  * Testcase for the email uri view helper
  */
-class EmailViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase
+class EmailViewHelperTest extends \Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Uri\EmailViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Uri\EmailViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = new \TYPO3\Fluid\ViewHelpers\Uri\EmailViewHelper();
+        $this->viewHelper = new \Neos\FluidAdaptor\ViewHelpers\Uri\EmailViewHelper();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }

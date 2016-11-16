@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Form;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -33,7 +33,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
 		}');
         $object = $this->createMock($fullClassName);
 
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->injectPersistenceManager($mockPersistenceManager);
 
@@ -50,13 +50,13 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getNameBuildsNameFromFieldNamePrefixFormObjectNameAndPropertyIfInObjectAccessorMode()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(true));
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => 'myObjectName',
                 'fieldNamePrefix' => 'formPrefix'
             )
@@ -74,13 +74,13 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getNameBuildsNameFromFieldNamePrefixFormObjectNameAndHierarchicalPropertyIfInObjectAccessorMode()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(true));
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => 'myObjectName',
                 'fieldNamePrefix' => 'formPrefix'
             )
@@ -98,12 +98,12 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getNameBuildsNameFromFieldNamePrefixAndPropertyIfInObjectAccessorModeAndNoFormObjectNameIsSpecified()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(true));
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => null,
                 'fieldNamePrefix' => 'formPrefix'
             )
@@ -121,12 +121,12 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getNameResolvesPropertyPathIfInObjectAccessorModeAndNoFormObjectNameIsSpecified()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(true));
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => null,
                 'fieldNamePrefix' => 'formPrefix'
             )
@@ -144,12 +144,12 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getNameBuildsNameFromFieldNamePrefixAndFieldNameIfNotInObjectAccessorMode()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(false));
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'fieldNamePrefix' => 'formPrefix'
             )
         );
@@ -191,12 +191,12 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getValueAttributeBuildsValueFromPropertyAndFormObjectIfInObjectAccessorMode($formObject)
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode', 'addAdditionalIdentityPropertiesIfNeeded'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode', 'addAdditionalIdentityPropertiesIfNeeded'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(true));
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObject' => $formObject,
             )
         );
@@ -213,7 +213,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getValueAttributeReturnsNullIfNotInObjectAccessorModeAndValueArgumentIsNoSet()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(false));
 
@@ -228,7 +228,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getValueAttributeReturnsValueArgumentIfSpecified()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(false));
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
@@ -248,7 +248,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
         $mockPersistenceManager = $this->createMock(\TYPO3\Flow\Persistence\PersistenceManagerInterface::class);
         $mockPersistenceManager->expects($this->atLeastOnce())->method('getIdentifierByObject')->with($mockObject)->will($this->returnValue('6f487e40-4483-11de-8a39-0800200c9a66'));
 
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(false));
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->injectPersistenceManager($mockPersistenceManager);
@@ -269,7 +269,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
         $mockPersistenceManager = $this->createMock(\TYPO3\Flow\Persistence\PersistenceManagerInterface::class);
         $mockPersistenceManager->expects($this->atLeastOnce())->method('getIdentifierByObject')->with($mockObject)->will($this->returnValue(null));
 
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(false));
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->injectPersistenceManager($mockPersistenceManager);
@@ -285,11 +285,11 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function isObjectAccessorModeReturnsTrueIfPropertyIsSetAndFormObjectIsGiven()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('dummy'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('dummy'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => 'SomeFormObjectName'
             )
         );
@@ -306,13 +306,13 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getMappingResultsForPropertyReturnsErrorsFromRequestIfPropertyIsSet()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->once())->method('isObjectAccessorMode')->will($this->returnValue(true));
         $formViewHelper->_set('arguments', array('property' => 'bar'));
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => 'foo'
             )
         );
@@ -333,13 +333,13 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getMappingResultsForPropertyReturnsErrorsFromRequestIfFormObjectNameIsNotSet()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->once())->method('isObjectAccessorMode')->will($this->returnValue(true));
         $formViewHelper->_set('arguments', array('property' => 'bar'));
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => null,
             )
         );
@@ -360,7 +360,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getMappingResultsForPropertyReturnsEmptyResultIfNoErrorOccurredInObjectAccessorMode()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(true));
 
@@ -373,7 +373,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getMappingResultsForPropertyReturnsEmptyResultIfNoErrorOccurredInNonObjectAccessorMode()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(false));
 
@@ -386,13 +386,13 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getMappingResultsForPropertyReturnsValidationResultsIfErrorsHappenedInObjectAccessorMode()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(true));
         $formViewHelper->_set('arguments', array('property' => 'propertyName'));
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => 'someObject'
             )
         );
@@ -408,13 +408,13 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getMappingResultsForSubPropertyReturnsValidationResultsIfErrorsHappenedInObjectAccessorMode()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(true));
         $formViewHelper->_set('arguments', array('property' => 'propertyName.subPropertyName'));
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => 'someObject'
             )
         );
@@ -430,7 +430,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getMappingResultsForPropertyReturnsValidationResultsIfErrorsHappenedInNonObjectAccessorMode()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(false));
         $formViewHelper->_set('arguments', array('name' => 'propertyName'));
@@ -446,7 +446,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function getMappingResultsForSubPropertyReturnsValidationResultsIfErrorsHappenedInNonObjectAccessorMode()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('isObjectAccessorMode'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->will($this->returnValue(false));
         $formViewHelper->_set('arguments', array('name' => 'propertyName[subPropertyName]'));
@@ -463,7 +463,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function setErrorClassAttributeDoesNotSetClassAttributeIfNoErrorOccurred()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('hasArgument', 'getErrorsForProperty'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('hasArgument', 'getErrorsForProperty'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $this->tagBuilder->expects($this->never())->method('addAttribute');
@@ -476,7 +476,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function setErrorClassAttributeSetsErrorClassIfAnErrorOccurred()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('hasArgument', 'getMappingResultsForProperty'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('hasArgument', 'getMappingResultsForProperty'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->at(0))->method('hasArgument')->with('class')->will($this->returnValue(false));
         $formViewHelper->expects($this->at(2))->method('hasArgument')->with('errorClass')->will($this->returnValue(false));
@@ -495,7 +495,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function setErrorClassAttributeAppendsErrorClassToExistingClassesIfAnErrorOccurred()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('hasArgument', 'getMappingResultsForProperty'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('hasArgument', 'getMappingResultsForProperty'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->at(0))->method('hasArgument')->with('class')->will($this->returnValue(true));
         $formViewHelper->expects($this->at(2))->method('hasArgument')->with('errorClass')->will($this->returnValue(false));
@@ -515,7 +515,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function setErrorClassAttributeSetsCustomErrorClassIfAnErrorOccurred()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('hasArgument', 'getMappingResultsForProperty'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('hasArgument', 'getMappingResultsForProperty'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->at(0))->method('hasArgument')->with('class')->will($this->returnValue(false));
         $formViewHelper->expects($this->at(2))->method('hasArgument')->with('errorClass')->will($this->returnValue(true));
@@ -535,7 +535,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function setErrorClassAttributeAppendsCustomErrorClassIfAnErrorOccurred()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('hasArgument', 'getMappingResultsForProperty'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('hasArgument', 'getMappingResultsForProperty'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $formViewHelper->expects($this->at(0))->method('hasArgument')->with('class')->will($this->returnValue(true));
         $formViewHelper->expects($this->at(2))->method('hasArgument')->with('errorClass')->will($this->returnValue(true));
@@ -555,12 +555,12 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function addAdditionalIdentityPropertiesIfNeededDoesNotTryToAccessObjectPropertiesIfFormObjectIsNotSet()
     {
-        $formFieldViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('renderHiddenIdentityField'), array(), '', false);
+        $formFieldViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('renderHiddenIdentityField'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formFieldViewHelper);
         $arguments = array('property' => 'some.property.name');
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => 'someFormObjectName',
             )
         );
@@ -575,12 +575,12 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function addAdditionalIdentityPropertiesIfNeededDoesNotCreateAnythingIfPropertyIsWithoutDot()
     {
-        $formFieldViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('renderHiddenIdentityField'), array(), '', false);
+        $formFieldViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('renderHiddenIdentityField'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formFieldViewHelper);
         $arguments = array('property' => 'simple');
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => 'someFormObjectName',
                 'formObject' => new \stdClass(),
             )
@@ -612,13 +612,13 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
         $objectName = 'myObject';
         $expectedProperty = 'myObject[value]';
 
-        $formFieldViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('renderHiddenIdentityField'), array(), '', false);
+        $formFieldViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('renderHiddenIdentityField'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formFieldViewHelper);
         $arguments = array('property' => $property);
         $formFieldViewHelper->_set('arguments', $arguments);
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => $objectName,
                 'formObject' => $mockFormObject,
                 'additionalIdentityProperties' => array()
@@ -652,13 +652,13 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
         $expectedProperty1 = 'myObject[value]';
         $expectedProperty2 = 'myObject[value][value]';
 
-        $formFieldViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('renderHiddenIdentityField'), array(), '', false);
+        $formFieldViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('renderHiddenIdentityField'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formFieldViewHelper);
         $arguments = array('property' => $property);
         $formFieldViewHelper->_set('arguments', $arguments);
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => $objectName,
                 'formObject' => $mockFormObject,
                 'additionalIdentityProperties' => array()
@@ -676,19 +676,19 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function renderHiddenFieldForEmptyValueAddsHiddenFieldNameToVariableContainer()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('getName'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('getName'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $formViewHelper->expects($this->any())->method('getName')->will($this->returnValue('NewFieldName'));
 
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'formObjectName' => 'someFormObjectName',
                 'formObject' => new \stdClass(),
                 'emptyHiddenFieldNames' => array('OldFieldName' => false)
             )
         );
-        $this->viewHelperVariableContainer->expects($this->atLeastOnce())->method('addOrUpdate')->with(\TYPO3\Fluid\ViewHelpers\FormViewHelper::class, 'emptyHiddenFieldNames', array('OldFieldName' => false, 'NewFieldName' => false));
+        $this->viewHelperVariableContainer->expects($this->atLeastOnce())->method('addOrUpdate')->with(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, 'emptyHiddenFieldNames', array('OldFieldName' => false, 'NewFieldName' => false));
 
         $formViewHelper->_call('renderHiddenFieldForEmptyValue');
     }
@@ -698,12 +698,12 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function renderHiddenFieldForEmptyValueDoesNotAddTheSameHiddenFieldNameMoreThanOnce()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('getName'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('getName'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $formViewHelper->expects($this->any())->method('getName')->will($this->returnValue('SomeFieldName'));
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'emptyHiddenFieldNames' => array('SomeFieldName' => false)
             )
         );
@@ -717,12 +717,12 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function renderHiddenFieldForEmptyValueRemovesEmptySquareBracketsFromHiddenFieldName()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('getName'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('getName'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $formViewHelper->expects($this->any())->method('getName')->will($this->returnValue('SomeFieldName[WithBrackets][]'));
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'emptyHiddenFieldNames' => array('SomeFieldName[WithBrackets]' => false)
             )
         );
@@ -738,12 +738,12 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function renderHiddenFieldForEmptyValueDoesNotRemoveNonEmptySquareBracketsFromHiddenFieldName()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('getName'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('getName'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $formViewHelper->expects($this->any())->method('getName')->will($this->returnValue('SomeFieldName[WithBrackets][foo]'));
         $this->viewHelperVariableContainerData = array(
-            \TYPO3\Fluid\ViewHelpers\FormViewHelper::class => array(
+            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => array(
                 'emptyHiddenFieldNames' => array('SomeFieldName[WithBrackets][foo]' => false)
             )
         );
@@ -759,7 +759,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
      */
     public function renderHiddenFieldForEmptyValueAddsHiddenFieldWithDisabledState()
     {
-        $formViewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('getName'), array(), '', false);
+        $formViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper::class, array('getName'), array(), '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
 
         $this->tagBuilder->expects($this->any())->method('hasAttribute')->with('disabled')->will($this->returnValue(true));
@@ -767,7 +767,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
 
         $formViewHelper->expects($this->any())->method('getName')->will($this->returnValue('SomeFieldName'));
 
-        $this->viewHelperVariableContainer->expects($this->atLeastOnce())->method('addOrUpdate')->with(\TYPO3\Fluid\ViewHelpers\FormViewHelper::class, 'emptyHiddenFieldNames', array('SomeFieldName' => 'disabledValue'));
+        $this->viewHelperVariableContainer->expects($this->atLeastOnce())->method('addOrUpdate')->with(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, 'emptyHiddenFieldNames', array('SomeFieldName' => 'disabledValue'));
         $formViewHelper->_call('renderHiddenFieldForEmptyValue');
     }
 }

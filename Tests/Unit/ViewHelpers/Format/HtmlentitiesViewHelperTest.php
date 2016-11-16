@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Format;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -15,24 +15,24 @@ require_once(__DIR__ . '/../Fixtures/UserWithoutToString.php');
 require_once(__DIR__ . '/../Fixtures/UserWithToString.php');
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
-use TYPO3\Fluid\ViewHelpers\Fixtures\UserWithoutToString;
-use TYPO3\Fluid\ViewHelpers\Fixtures\UserWithToString;
-use TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Fixtures\UserWithoutToString;
+use Neos\FluidAdaptor\ViewHelpers\Fixtures\UserWithToString;
+use Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
- * Test for \TYPO3\Fluid\ViewHelpers\Format\HtmlentitiesViewHelper
+ * Test for \Neos\FluidAdaptor\ViewHelpers\Format\HtmlentitiesViewHelper
  */
 class HtmlentitiesViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Format\HtmlentitiesViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Format\HtmlentitiesViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Format\HtmlentitiesViewHelper::class)->setMethods(array('renderChildren'))->getMock();
+        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\HtmlentitiesViewHelper::class)->setMethods(array('renderChildren'))->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }

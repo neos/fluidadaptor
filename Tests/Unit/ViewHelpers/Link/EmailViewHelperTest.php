@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Link;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Link;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -15,17 +15,17 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
  */
-class EmailViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase
+class EmailViewHelperTest extends \Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
-     * var \TYPO3\Fluid\ViewHelpers\Link\EmailViewHelper
+     * var \Neos\FluidAdaptor\ViewHelpers\Link\EmailViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Link\EmailViewHelper::class, array('renderChildren'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Link\EmailViewHelper::class, array('renderChildren'));
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }
@@ -35,8 +35,8 @@ class EmailViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcas
      */
     public function renderCorrectlySetsTagNameAndAttributesAndContent()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class);
-        $mockTagBuilder->expects($this->once())->method('setTagName')->with('a');
+        $mockTagBuilder = $this->createMock(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class);
+        $mockTagBuilder->expects($this->any())->method('setTagName')->with('a');
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('href', 'mailto:some@email.tld');
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some content');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
@@ -52,7 +52,7 @@ class EmailViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcas
      */
     public function renderSetsTagContentToEmailIfRenderChildrenReturnNull()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class);
+        $mockTagBuilder = $this->createMock(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class);
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some@email.tld');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 

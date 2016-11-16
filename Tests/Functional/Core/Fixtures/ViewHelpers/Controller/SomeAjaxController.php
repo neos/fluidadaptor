@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Functional\Core\Fixtures\ViewHelpers\Controller;
+namespace Neos\FluidAdaptor\Tests\Functional\Core\Fixtures\ViewHelpers\Controller;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -11,7 +11,7 @@ namespace TYPO3\Fluid\Tests\Functional\Core\Fixtures\ViewHelpers\Controller;
  * source code.
  */
 
-use TYPO3\Fluid\Core\Widget\AbstractWidgetController;
+use Neos\FluidAdaptor\Core\Widget\AbstractWidgetController;
 
 /**
  * Controller of the test AJAX widget

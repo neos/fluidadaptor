@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Validation;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Validation;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -11,24 +11,23 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Validation;
  * source code.
  */
 
-include_once(__DIR__ . '/../Fixtures/ConstraintSyntaxTreeNode.php');
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
  * Test for the Validation Results view helper
  *
  */
-class ResultsViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase
+class ResultsViewHelperTest extends \Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Validation\ResultsViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Validation\ResultsViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\TYPO3\Fluid\ViewHelpers\Validation\ResultsViewHelper::class)
+        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Validation\ResultsViewHelper::class)
             ->setMethods(array('renderChildren'))
             ->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);

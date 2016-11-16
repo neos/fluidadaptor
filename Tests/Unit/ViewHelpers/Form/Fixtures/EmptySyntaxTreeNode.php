@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\ViewHelpers\Fixtures;
+namespace Neos\FluidAdaptor\ViewHelpers\Fixtures;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -10,11 +10,12 @@ namespace TYPO3\Fluid\ViewHelpers\Fixtures;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
+use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
 
 /**
  * [Enter description here]
  */
-class EmptySyntaxTreeNode extends \TYPO3\Fluid\Core\Parser\SyntaxTree\ViewHelperNode
+class EmptySyntaxTreeNode extends ViewHelperNode
 {
     public function __construct()
     {

@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Functional\Form;
+namespace Neos\FluidAdaptor\Tests\Functional\Form;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -38,7 +38,7 @@ class FormObjectsTest extends \TYPO3\Flow\Tests\FunctionalTestCase
         $route = new \TYPO3\Flow\Mvc\Routing\Route();
         $route->setUriPattern('test/fluid/formobjects(/{@action})');
         $route->setDefaults(array(
-            '@package' => 'TYPO3.Fluid',
+            '@package' => 'Neos.FluidAdaptor',
             '@subpackage' => 'Tests\Functional\Form\Fixtures',
             '@controller' => 'Form',
             '@action' => 'index',
@@ -245,7 +245,7 @@ class FormObjectsTest extends \TYPO3\Flow\Tests\FunctionalTestCase
         $this->assertNotSame('Hello World|test_noValidEmail', $response->getContent());
 
         $this->persistenceManager->clearState();
-        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \TYPO3\Fluid\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
+        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
         $this->assertNotSame('test_noValidEmail', $post->getAuthor()->getEmailAddress(), 'The invalid email address "' . $post->getAuthor()->getEmailAddress() . '" was persisted!');
     }
 
@@ -270,7 +270,7 @@ class FormObjectsTest extends \TYPO3\Flow\Tests\FunctionalTestCase
         $response = $this->browser->submit($form);
         $this->assertSame('Hello World|foo@bar.org', $response->getContent());
 
-        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \TYPO3\Fluid\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
+        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
         $this->assertSame('foo@bar.org', $post->getAuthor()->getEmailAddress());
     }
 
@@ -436,7 +436,7 @@ class FormObjectsTest extends \TYPO3\Flow\Tests\FunctionalTestCase
     public function valueForDisabledCheckboxIsNotLost()
     {
         $postIdentifier = $this->setupDummyPost();
-        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \TYPO3\Fluid\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
+        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
         $this->assertEquals(true, $post->getPrivate());
 
         $this->browser->request('http://localhost/test/fluid/formobjects/edit?fooPost=' . $postIdentifier);
@@ -448,7 +448,7 @@ class FormObjectsTest extends \TYPO3\Flow\Tests\FunctionalTestCase
         $this->browser->submit($form);
 
         $this->persistenceManager->clearState();
-        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \TYPO3\Fluid\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
+        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
         // This will currently never fail, because DomCrawler\Form does not handle hidden checkbox fields correctly!
         // Hence this test currently only relies on the correctly set "disabled" attribute on the hidden field.
         $this->assertEquals(true, $post->getPrivate(), 'The value for the checkbox field "private" was lost on form submit!');

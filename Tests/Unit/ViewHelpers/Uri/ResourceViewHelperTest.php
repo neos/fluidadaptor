@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Uri;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Uri;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -20,10 +20,10 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 /**
  * Test case for the resource uri view helper
  */
-class ResourceViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase
+class ResourceViewHelperTest extends \Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Uri\ResourceViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Uri\ResourceViewHelper
      */
     protected $viewHelper;
 
@@ -43,7 +43,7 @@ class ResourceViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTest
         $this->mockResourceManager = $this->createMock(\TYPO3\Flow\Resource\ResourceManager::class);
         $this->mockI18nService = $this->createMock(\TYPO3\Flow\I18n\Service::class);
 
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Uri\ResourceViewHelper::class, array('renderChildren'), array(), '', false);
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Uri\ResourceViewHelper::class, array('renderChildren'), array(), '', false);
         $this->inject($this->viewHelper, 'resourceManager', $this->mockResourceManager);
         $this->inject($this->viewHelper, 'i18nService', $this->mockI18nService);
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
@@ -144,7 +144,7 @@ class ResourceViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTest
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception\InvalidVariableException
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception\InvalidVariableException
      */
     public function renderThrowsExceptionIfNeitherResourceNorPathWereGiven()
     {
@@ -153,7 +153,7 @@ class ResourceViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTest
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception\InvalidVariableException
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception\InvalidVariableException
      */
     public function renderThrowsExceptionIfResourceUriNotPointingToPublicWasGivenAsPath()
     {

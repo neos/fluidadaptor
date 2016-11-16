@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Functional\View\Fixtures\View;
+namespace Neos\FluidAdaptor\Tests\Functional\View\Fixtures\View;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -14,7 +14,7 @@ namespace TYPO3\Fluid\Tests\Functional\View\Fixtures\View;
 /**
  * Extended StandaloneView for testing purposes
  */
-class StandaloneView extends \TYPO3\Fluid\View\StandaloneView
+class StandaloneView extends \Neos\FluidAdaptor\View\StandaloneView
 {
     protected $fileIdentifierPrefix = '';
 
@@ -23,11 +23,12 @@ class StandaloneView extends \TYPO3\Fluid\View\StandaloneView
      *
      * @param \TYPO3\Flow\Mvc\ActionRequest $request The current action request. If none is specified it will be created from the environment.
      * @param string $fileIdentifierPrefix
+     * @param array $options
      */
-    public function __construct(\TYPO3\Flow\Mvc\ActionRequest $request = null, $fileIdentifierPrefix = '')
+    public function __construct(\TYPO3\Flow\Mvc\ActionRequest $request = null, $fileIdentifierPrefix = '', array $options = [])
     {
-        $this->request = $request;
         $this->fileIdentifierPrefix = $fileIdentifierPrefix;
+        parent::__construct($request, $options);
     }
 
 

@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Uri;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Uri;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -17,17 +17,17 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
  * Testcase for the action uri view helper
  *
  */
-class ActionViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestcase
+class ActionViewHelperTest extends \Neos\FluidAdaptor\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
-     * var \TYPO3\Fluid\ViewHelpers\Uri\ActionViewHelper
+     * var \Neos\FluidAdaptor\ViewHelpers\Uri\ActionViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = new \TYPO3\Fluid\ViewHelpers\Uri\ActionViewHelper();
+        $this->viewHelper = new \Neos\FluidAdaptor\ViewHelpers\Uri\ActionViewHelper();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }
@@ -88,14 +88,14 @@ class ActionViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestca
         $this->viewHelper->initialize();
         try {
             $this->viewHelper->render('someAction');
-        } catch (\TYPO3\Fluid\Core\ViewHelper\Exception $exception) {
+        } catch (\Neos\FluidAdaptor\Core\ViewHelper\Exception $exception) {
         }
         $this->assertEquals(12345, $exception->getPrevious()->getCode());
     }
 
     /**
      * @test
-     * @expectedException \TYPO3\Fluid\Core\ViewHelper\Exception
+     * @expectedException \Neos\FluidAdaptor\Core\ViewHelper\Exception
      */
     public function renderThrowsExceptionIfUseParentRequestIsSetAndTheCurrentRequestHasNoParentRequest()
     {
@@ -108,7 +108,7 @@ class ActionViewHelperTest extends \TYPO3\Fluid\ViewHelpers\ViewHelperBaseTestca
      */
     public function renderUsesParentRequestIfUseParentRequestIsSet()
     {
-        $viewHelper = new \TYPO3\Fluid\ViewHelpers\Uri\ActionViewHelper();
+        $viewHelper = new \Neos\FluidAdaptor\ViewHelpers\Uri\ActionViewHelper();
 
         $parentRequest = $this->getMockBuilder(\TYPO3\Flow\Mvc\ActionRequest::class)->disableOriginalConstructor()->getMock();
 

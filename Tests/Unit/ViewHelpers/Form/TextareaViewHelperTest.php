@@ -1,8 +1,8 @@
 <?php
-namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Form;
+namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
- * This file is part of the TYPO3.Fluid package.
+ * This file is part of the Neos.FluidAdaptor package.
  *
  * (c) Contributors of the Neos Project - www.neos.io
  *
@@ -11,6 +11,8 @@ namespace TYPO3\Fluid\Tests\Unit\ViewHelpers\Form;
  * source code.
  */
 
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
+
 require_once(__DIR__ . '/Fixtures/EmptySyntaxTreeNode.php');
 require_once(__DIR__ . '/Fixtures/Fixture_UserDomainClass.php');
 require_once(__DIR__ . '/FormFieldViewHelperBaseTestcase.php');
@@ -18,17 +20,17 @@ require_once(__DIR__ . '/FormFieldViewHelperBaseTestcase.php');
 /**
  * Test for the "Textarea" Form view helper
  */
-class TextareaViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
+class TextareaViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
 {
     /**
-     * @var \TYPO3\Fluid\ViewHelpers\Form\TextareaViewHelper
+     * @var \Neos\FluidAdaptor\ViewHelpers\Form\TextareaViewHelper
      */
     protected $viewHelper;
 
     public function setUp()
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\TYPO3\Fluid\ViewHelpers\Form\TextareaViewHelper::class, array('setErrorClassAttribute', 'registerFieldNameForFormTokenGeneration'));
+        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\TextareaViewHelper::class, array('setErrorClassAttribute', 'registerFieldNameForFormTokenGeneration'));
         $this->arguments['name'] = '';
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
@@ -39,8 +41,8 @@ class TextareaViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Fo
      */
     public function renderCorrectlySetsTagName()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class);
-        $mockTagBuilder->expects($this->once())->method('setTagName')->with('textarea');
+        $mockTagBuilder = $this->createMock(TagBuilder::class);
+        $mockTagBuilder->expects($this->any())->method('setTagName')->with('textarea');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
         $this->viewHelper->initialize();
@@ -52,7 +54,7 @@ class TextareaViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Fo
      */
     public function renderCorrectlySetsNameAttributeAndContent()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class);
+        $mockTagBuilder = $this->createMock(TagBuilder::class);
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('name', 'NameOfTextarea');
         $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextarea');
         $mockTagBuilder->expects($this->once())->method('setContent')->with('Current value');
@@ -65,7 +67,7 @@ class TextareaViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Fo
         );
         $this->viewHelper->setArguments($arguments);
 
-        $this->viewHelper->setViewHelperNode(new \TYPO3\Fluid\ViewHelpers\Fixtures\EmptySyntaxTreeNode());
+        $this->viewHelper->setViewHelperNode(new \Neos\FluidAdaptor\ViewHelpers\Fixtures\EmptySyntaxTreeNode());
         $this->viewHelper->initialize();
         $this->viewHelper->render();
     }
@@ -84,7 +86,7 @@ class TextareaViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Fo
      */
     public function renderEscapesTextareaContent()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3\Fluid\Core\ViewHelper\TagBuilder::class);
+        $mockTagBuilder = $this->createMock(TagBuilder::class);
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('name', 'NameOfTextarea');
         $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextarea');
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some &lt;tag&gt; &amp; &quot;quotes&quot;');
@@ -97,7 +99,7 @@ class TextareaViewHelperTest extends \TYPO3\Fluid\Tests\Unit\ViewHelpers\Form\Fo
         );
         $this->viewHelper->setArguments($arguments);
 
-        $this->viewHelper->setViewHelperNode(new \TYPO3\Fluid\ViewHelpers\Fixtures\EmptySyntaxTreeNode());
+        $this->viewHelper->setViewHelperNode(new \Neos\FluidAdaptor\ViewHelpers\Fixtures\EmptySyntaxTreeNode());
         $this->viewHelper->initialize();
         $this->viewHelper->render();
     }
