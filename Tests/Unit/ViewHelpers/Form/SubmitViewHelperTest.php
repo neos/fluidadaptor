@@ -39,8 +39,8 @@ class SubmitViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCorrectlySetsTagNameAndDefaultAttributes()
     {
-        $mockTagBuilder = $this->getMockBuilder(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(['setTagName', 'addAttribute'])->getMock();
-        $mockTagBuilder->expects(self::atLeastOnce())->method('setTagName')->with('input');
+        $mockTagBuilder = $this->getMockBuilder(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute'])->getMock();
+        $mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
         $matcher = self::atLeastOnce();
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
             if ($matcher->getInvocationCount() === 1) {

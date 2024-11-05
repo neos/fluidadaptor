@@ -42,8 +42,8 @@ class TextfieldViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCorrectlySetsTagName()
     {
-        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['setTagName'])->getMock();
-        $mockTagBuilder->expects(self::atLeastOnce())->method('setTagName')->with('input');
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setTagName'])->getMock();
+        $mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
         $this->viewHelper->initialize();
@@ -55,7 +55,7 @@ class TextfieldViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCorrectlySetsTypeNameAndValueAttributes()
     {
-        $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextfield');
+        $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextfield');
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setContent', 'render', 'addAttribute'])->getMock();
         $matcher = self::exactly(2);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
@@ -87,7 +87,7 @@ class TextfieldViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCallsSetErrorClassAttribute()
     {
-        $this->viewHelper->expects(self::once())->method('setErrorClassAttribute');
+        $this->viewHelper->expects($this->once())->method('setErrorClassAttribute');
         $this->viewHelper->render();
     }
 }

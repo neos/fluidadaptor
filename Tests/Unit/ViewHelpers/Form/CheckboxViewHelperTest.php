@@ -44,7 +44,7 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->arguments['property'] = '';
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
 
-        $this->mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['setTagName', 'addAttribute'])->getMock();
+        $this->mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute'])->getMock();
     }
 
     /**
@@ -52,7 +52,7 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCorrectlySetsTagNameAndDefaultAttributes()
     {
-        $this->mockTagBuilder->expects(self::atLeastOnce())->method('setTagName')->with('input');
+        $this->mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
         $matcher = self::exactly(3);
         $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
             if ($matcher->getInvocationCount() === 1) {
@@ -69,9 +69,9 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
-        $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
-        $this->viewHelper->expects(self::any())->method('getValueAttribute')->will(self::returnValue('bar'));
+        $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
+        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
+        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
@@ -103,8 +103,8 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
-        $this->viewHelper->expects(self::any())->method('getValueAttribute')->will(self::returnValue('bar'));
+        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
+        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['checked' => true]);
@@ -148,10 +148,10 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
-        $this->viewHelper->expects(self::any())->method('getValueAttribute')->will(self::returnValue('bar'));
-        $this->viewHelper->expects(self::any())->method('isObjectAccessorMode')->will(self::returnValue(true));
-        $this->viewHelper->expects(self::any())->method('getPropertyValue')->will(self::returnValue(true));
+        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
+        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn((true));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['checked' => true]);
@@ -186,10 +186,10 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
-        $this->viewHelper->expects(self::any())->method('getValueAttribute')->will(self::returnValue('bar'));
-        $this->viewHelper->expects(self::any())->method('isObjectAccessorMode')->will(self::returnValue(true));
-        $this->viewHelper->expects(self::any())->method('getPropertyValue')->will(self::returnValue(true));
+        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
+        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn((true));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
@@ -217,11 +217,11 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('foo[]');
-        $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
-        $this->viewHelper->expects(self::any())->method('getValueAttribute')->will(self::returnValue('bar'));
-        $this->viewHelper->expects(self::any())->method('isObjectAccessorMode')->will(self::returnValue(true));
-        $this->viewHelper->expects(self::any())->method('getPropertyValue')->will(self::returnValue([]));
+        $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('foo[]');
+        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
+        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn(([]));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
@@ -253,10 +253,10 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
-        $this->viewHelper->expects(self::any())->method('getValueAttribute')->will(self::returnValue('bar'));
-        $this->viewHelper->expects(self::any())->method('isObjectAccessorMode')->will(self::returnValue(true));
-        $this->viewHelper->expects(self::any())->method('getPropertyValue')->will(self::returnValue(['foo', 'bar', 'baz']));
+        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
+        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn((['foo', 'bar', 'baz']));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
@@ -288,10 +288,10 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
-        $this->viewHelper->expects(self::any())->method('getValueAttribute')->will(self::returnValue('bar'));
-        $this->viewHelper->expects(self::any())->method('isObjectAccessorMode')->will(self::returnValue(true));
-        $this->viewHelper->expects(self::any())->method('getPropertyValue')->will(self::returnValue(new \ArrayObject(['foo', 'bar', 'baz'])));
+        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
+        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn((new \ArrayObject(['foo', 'bar', 'baz'])));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
@@ -330,15 +330,15 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
 
         /** @var PersistenceManagerInterface|\PHPUnit\Framework\MockObject\MockObject $mockPersistenceManager */
         $mockPersistenceManager = $this->createMock(PersistenceManagerInterface::class);
-        $mockPersistenceManager->expects(self::any())->method('getIdentifierByObject')->willReturnCallback(function (UserDomainClass $user) {
+        $mockPersistenceManager->expects($this->any())->method('getIdentifierByObject')->willReturnCallback(function (UserDomainClass $user) {
             return (string)$user->getId();
         });
         $this->viewHelper->injectPersistenceManager($mockPersistenceManager);
 
-        $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
-        $this->viewHelper->expects(self::any())->method('getValueAttribute')->will(self::returnValue('1'));
-        $this->viewHelper->expects(self::any())->method('isObjectAccessorMode')->will(self::returnValue(true));
-        $this->viewHelper->expects(self::any())->method('getPropertyValue')->will(self::returnValue($userCollection));
+        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
+        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('1'));
+        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn(($userCollection));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['checked' => true]);
@@ -370,10 +370,10 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
-        $this->viewHelper->expects(self::any())->method('getValueAttribute')->will(self::returnValue('bar'));
-        $this->viewHelper->expects(self::any())->method('isObjectAccessorMode')->will(self::returnValue(true));
-        $this->viewHelper->expects(self::any())->method('getPropertyValue')->will(self::returnValue(new \stdClass()));
+        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
+        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn((new \stdClass()));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
@@ -385,7 +385,7 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCallsSetErrorClassAttribute()
     {
-        $this->viewHelper->expects(self::once())->method('setErrorClassAttribute');
+        $this->viewHelper->expects($this->once())->method('setErrorClassAttribute');
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
         $this->viewHelper->render();
     }

@@ -42,7 +42,7 @@ class PasswordViewHelperTest extends ViewHelperBaseTestcase
     public function renderCorrectlySetsTagName()
     {
         $mockTagBuilder = $this->createMock(TagBuilder::class);
-        $mockTagBuilder->expects(self::atLeastOnce())->method('setTagName')->with('input');
+        $mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
         $this->viewHelper->initialize();
@@ -54,7 +54,7 @@ class PasswordViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCorrectlySetsTypeNameAndValueAttributes()
     {
-        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['setContent', 'render', 'addAttribute'])->getMock();
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setContent', 'render', 'addAttribute'])->getMock();
         $matcher = self::exactly(3);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
             if ($matcher->getInvocationCount() === 1) {
@@ -70,8 +70,8 @@ class PasswordViewHelperTest extends ViewHelperBaseTestcase
                 $this->assertSame('Current value', $parameters[1]);
             }
         });
-        $mockTagBuilder->expects(self::once())->method('render');
-        $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextbox');
+        $mockTagBuilder->expects($this->once())->method('render');
+        $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextbox');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
         $arguments = [
@@ -90,7 +90,7 @@ class PasswordViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCorrectlySetsRequiredAttribute()
     {
-        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['addAttribute', 'setContent', 'render'])->disableOriginalConstructor()->getMock();
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['addAttribute', 'setContent', 'render'])->disableOriginalConstructor()->getMock();
         $matcher = self::exactly(3);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
             if ($matcher->getInvocationCount() === 1) {
@@ -106,8 +106,8 @@ class PasswordViewHelperTest extends ViewHelperBaseTestcase
                 $this->assertSame('Current value', $parameters[1]);
             }
         });
-        $mockTagBuilder->expects(self::once())->method('render');
-        $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextbox');
+        $mockTagBuilder->expects($this->once())->method('render');
+        $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextbox');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
         $arguments = [
@@ -127,7 +127,7 @@ class PasswordViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCallsSetErrorClassAttribute()
     {
-        $this->viewHelper->expects(self::once())->method('setErrorClassAttribute');
+        $this->viewHelper->expects($this->once())->method('setErrorClassAttribute');
         $this->viewHelper->render();
     }
 }

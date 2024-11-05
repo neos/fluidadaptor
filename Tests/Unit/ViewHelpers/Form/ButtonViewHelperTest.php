@@ -40,8 +40,8 @@ class ButtonViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCorrectlySetsTagNameAndDefaultAttributes(): void
     {
-        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['setTagName', 'addAttribute', 'setContent'])->getMock();
-        $mockTagBuilder->expects(self::any())->method('setTagName')->with('button');
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute', 'setContent'])->getMock();
+        $mockTagBuilder->expects($this->any())->method('setTagName')->with('button');
         $matcher = self::exactly(3);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
             if ($matcher->getInvocationCount() === 1) {
@@ -59,7 +59,7 @@ class ButtonViewHelperTest extends ViewHelperBaseTestcase
         });
         $mockTagBuilder->expects(self::once())->method('setContent')->with('Button Content');
 
-        $this->viewHelper->expects(self::atLeastOnce())->method('renderChildren')->willReturn('Button Content');
+        $this->viewHelper->expects($this->atLeastOnce())->method('renderChildren')->willReturn('Button Content');
 
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 

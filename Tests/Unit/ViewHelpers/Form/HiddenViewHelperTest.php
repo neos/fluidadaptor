@@ -39,8 +39,8 @@ class HiddenViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCorrectlySetsTagNameAndDefaultAttributes()
     {
-        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['setTagName', 'addAttribute'])->getMock();
-        $mockTagBuilder->expects(self::atLeastOnce())->method('setTagName')->with('input');
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute'])->getMock();
+        $mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
         $matcher = self::exactly(3);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
             if ($matcher->getInvocationCount() === 1) {
@@ -57,9 +57,9 @@ class HiddenViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
-        $this->viewHelper->expects(self::once())->method('getName')->will(self::returnValue('foo'));
-        $this->viewHelper->expects(self::once())->method('getValueAttribute')->will(self::returnValue('bar'));
+        $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
+        $this->viewHelper->expects($this->once())->method('getName')->willReturn(('foo'));
+        $this->viewHelper->expects($this->once())->method('getValueAttribute')->willReturn(('bar'));
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
         $this->viewHelper->initialize();
