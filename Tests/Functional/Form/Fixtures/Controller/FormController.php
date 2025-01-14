@@ -44,7 +44,7 @@ class FormController extends \Neos\Flow\Mvc\Controller\ActionController
      * @return void
      * @Flow\IgnoreValidation("$fooPost")
      */
-    public function editAction(\Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post $fooPost = null)
+    public function editAction(?\Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post $fooPost = null)
     {
         $this->view->assign('fooPost', $fooPost);
     }
