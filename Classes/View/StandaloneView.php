@@ -79,7 +79,7 @@ class StandaloneView extends AbstractTemplateView
      * @param array $options
      * @throws \Neos\FluidAdaptor\Exception
      */
-    public function __construct(ActionRequest $request = null, array $options = [])
+    public function __construct(?ActionRequest $request = null, array $options = [])
     {
         $this->request = $request;
         parent::__construct($options);

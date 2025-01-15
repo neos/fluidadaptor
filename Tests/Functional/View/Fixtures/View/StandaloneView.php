@@ -25,7 +25,7 @@ class StandaloneView extends \Neos\FluidAdaptor\View\StandaloneView
      * @param string $fileIdentifierPrefix
      * @param array $options
      */
-    public function __construct(\Neos\Flow\Mvc\ActionRequest $request = null, $fileIdentifierPrefix = '', array $options = [])
+    public function __construct(?\Neos\Flow\Mvc\ActionRequest $request = null, $fileIdentifierPrefix = '', array $options = [])
     {
         $this->fileIdentifierPrefix = $fileIdentifierPrefix;
         parent::__construct($request, $options);
