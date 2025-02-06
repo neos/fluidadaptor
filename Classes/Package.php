@@ -48,10 +48,6 @@ class Package extends BasePackage
                     $packageManager = $bootstrap->getEarlyInstance(PackageManager::class);
                     /** @var FlowPackageInterface $package */
                     foreach ($packageManager->getFlowPackages() as $packageKey => $package) {
-                        if ($packageManager->isPackageFrozen($packageKey)) {
-                            continue;
-                        }
-
                         foreach (['Templates', 'Partials', 'Layouts'] as $path) {
                             $templatesPath = $package->getResourcesPath() . 'Private/' . $path;
 
