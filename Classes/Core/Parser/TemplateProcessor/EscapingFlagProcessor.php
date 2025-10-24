@@ -29,8 +29,9 @@ class EscapingFlagProcessor implements TemplateProcessorInterface
 
     /**
      * @param RenderingContextInterface $renderingContext
+     * @return void
      */
-    public function setRenderingContext(RenderingContextInterface $renderingContext): void
+    public function setRenderingContext(RenderingContextInterface $renderingContext)
     {
         $this->renderingContext = $renderingContext;
     }

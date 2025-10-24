@@ -49,8 +49,9 @@ class CacheAdaptor implements FluidCacheInterface
      *
      * @param string $name
      * @param string $value
+     * @return void
      */
-    public function set($name, $value): void
+    public function set($name, $value)
     {
         // we need to strip the first line with the php header as the flow cache adds that again.
         $this->flowCache->set($name, substr($value, strpos($value, "\n") + 1));

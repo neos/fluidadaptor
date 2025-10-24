@@ -73,8 +73,9 @@ class TemplatePaths extends \TYPO3Fluid\Fluid\View\TemplatePaths
 
     /**
      * @param PackageManager $packageManager
+     * @return void
      */
-    public function injectPackageManager(PackageManager $packageManager): void
+    public function injectPackageManager(PackageManager $packageManager)
     {
         $this->packageManager = $packageManager;
     }
@@ -89,32 +90,36 @@ class TemplatePaths extends \TYPO3Fluid\Fluid\View\TemplatePaths
 
     /**
      * @param string $templateRootPathPattern
+     * @return void
      */
-    public function setTemplateRootPathPattern(string $templateRootPathPattern): void
+    public function setTemplateRootPathPattern(string $templateRootPathPattern)
     {
         $this->templateRootPathPattern = $templateRootPathPattern;
     }
 
     /**
      * @param string $layoutRootPathPattern
+     * @return void
      */
-    public function setLayoutRootPathPattern(string $layoutRootPathPattern): void
+    public function setLayoutRootPathPattern(string $layoutRootPathPattern)
     {
         $this->layoutRootPathPattern = $layoutRootPathPattern;
     }
 
     /**
      * @param string $partialRootPathPattern
+     * @return void
      */
-    public function setPartialRootPathPattern(string $partialRootPathPattern): void
+    public function setPartialRootPathPattern(string $partialRootPathPattern)
     {
         $this->partialRootPathPattern = $partialRootPathPattern;
     }
 
     /**
      * @param string $templateRootPath
+     * @return void
      */
-    public function setTemplateRootPath($templateRootPath): void
+    public function setTemplateRootPath($templateRootPath)
     {
         $this->templateRootPaths = [$templateRootPath];
     }
@@ -166,7 +171,7 @@ class TemplatePaths extends \TYPO3Fluid\Fluid\View\TemplatePaths
     /**
      * @return array<string>
      */
-    public function getPartialRootPaths(): array
+    public function getPartialRootPaths()
     {
         if ($this->partialRootPaths !== []) {
             return $this->partialRootPaths;
@@ -186,16 +191,18 @@ class TemplatePaths extends \TYPO3Fluid\Fluid\View\TemplatePaths
 
     /**
      * @param string $layoutRootPath
+     * @return void
      */
-    public function setLayoutRootPath($layoutRootPath): void
+    public function setLayoutRootPath($layoutRootPath)
     {
         $this->layoutRootPaths = [$layoutRootPath];
     }
 
     /**
      * @param string $partialRootPath
+     * @return void
      */
-    public function setPartialRootPath($partialRootPath): void
+    public function setPartialRootPath($partialRootPath)
     {
         $this->partialRootPaths = [$partialRootPath];
     }
@@ -210,8 +217,9 @@ class TemplatePaths extends \TYPO3Fluid\Fluid\View\TemplatePaths
 
     /**
      * @param string[] $patternReplacementVariables
+     * @return void
      */
-    public function setPatternReplacementVariables($patternReplacementVariables): void
+    public function setPatternReplacementVariables($patternReplacementVariables)
     {
         $this->patternReplacementVariables = $patternReplacementVariables;
     }

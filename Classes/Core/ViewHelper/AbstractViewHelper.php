@@ -59,7 +59,9 @@ abstract class AbstractViewHelper extends FluidAbstractViewHelper
         $this->renderingContext = $renderingContext;
         $this->templateVariableContainer = $renderingContext->getVariableProvider();
         $this->viewHelperVariableContainer = $renderingContext->getViewHelperVariableContainer();
-        $this->controllerContext = $renderingContext->getControllerContext();
+        if ($renderingContext instanceof FlowAwareRenderingContextInterface) {
+            $this->controllerContext = $renderingContext->getControllerContext();
+        }
     }
 
     /**

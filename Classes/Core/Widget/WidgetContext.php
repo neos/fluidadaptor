@@ -185,7 +185,10 @@ class WidgetContext
         return $this->viewHelperChildNodes;
     }
 
-    public function getViewHelperChildNodeRenderingContext(): ?RenderingContextInterface
+    /**
+     * @return RenderingContextInterface|null
+     */
+    public function getViewHelperChildNodeRenderingContext()
     {
         return $this->viewHelperChildNodeRenderingContext;
     }

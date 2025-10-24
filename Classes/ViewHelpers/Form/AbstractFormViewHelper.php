@@ -72,9 +72,9 @@ abstract class AbstractFormViewHelper extends AbstractTagBasedViewHelper
      * @return string A hidden field containing the Identity (UUID in Flow) of the given object or empty string if the object is unknown to the persistence framework
      * @see \Neos\Flow\Mvc\Controller\Argument::setValue()
      */
-    protected function renderHiddenIdentityField(object $object, $name)
+    protected function renderHiddenIdentityField($object, $name)
     {
-        if ($this->persistenceManager->isNewObject($object) || $name === null) {
+        if (!is_object($object) || $this->persistenceManager->isNewObject($object) || $name === null) {
             return '';
         }
         $identifier = $this->persistenceManager->getIdentifierByObject($object);

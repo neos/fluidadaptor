@@ -76,11 +76,10 @@ class StandaloneView extends AbstractTemplateView
      * Constructor
      *
      * @param ?ActionRequest $request The current action request. If none is specified it will be created from the environment.
-     * @param array<string,mixed>|null $options
+     * @param array<string,mixed> $options
      * @throws \Neos\FluidAdaptor\Exception
-     * @phpstan-ignore method.childParameterType (parameters are differently ordered and thus cannot match)
      */
-    public function __construct(?ActionRequest $request = null, ?array $options = [])
+    public function __construct(?ActionRequest $request = null, array $options = [])
     {
         $this->request = $request;
         parent::__construct($options);
@@ -116,8 +115,9 @@ class StandaloneView extends AbstractTemplateView
 
     /**
      * @param string $templateName
+     * @return void
      */
-    public function setTemplate($templateName): void
+    public function setTemplate($templateName)
     {
         $this->baseRenderingContext->setControllerAction($templateName);
     }

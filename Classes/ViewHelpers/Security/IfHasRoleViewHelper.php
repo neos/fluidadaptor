@@ -78,8 +78,9 @@ class IfHasRoleViewHelper extends AbstractConditionViewHelper
 {
     /**
      * Initializes the "then" and "else" arguments
+     * @return void
      */
-    public function initializeArguments(): void
+    public function initializeArguments()
     {
         parent::initializeArguments();
         $this->registerArgument('role', 'mixed', 'The role or role identifier.', true);

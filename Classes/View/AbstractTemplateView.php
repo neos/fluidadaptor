@@ -12,7 +12,6 @@ namespace Neos\FluidAdaptor\View;
  */
 
 use Neos\FluidAdaptor\Exception;
-use Neos\Flow\Mvc\ActionRequest;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\FluidAdaptor\Core\Rendering\RenderingContext;
@@ -252,7 +251,7 @@ abstract class AbstractTemplateView extends \TYPO3Fluid\Fluid\View\AbstractTempl
      * @param array<string,mixed> $options
      * @return void
      */
-    protected function setOptions(array $options): void
+    protected function setOptions(array $options)
     {
         $this->options = array_merge(
             array_map(

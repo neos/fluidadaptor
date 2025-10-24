@@ -100,8 +100,9 @@ class RenderingContext extends FluidRenderingContext implements FlowAwareRenderi
 
     /**
      * @param ObjectManagerInterface $objectManager
+     * @return void
      */
-    public function injectObjectManager(ObjectManagerInterface $objectManager): void
+    public function injectObjectManager(ObjectManagerInterface $objectManager)
     {
         $this->objectManager = $objectManager;
     }
@@ -121,7 +122,7 @@ class RenderingContext extends FluidRenderingContext implements FlowAwareRenderi
     {
         $this->controllerContext = $controllerContext;
         $request = $controllerContext->getRequest();
-        if (!$this->templatePaths instanceof TemplatePaths) {
+        if (!$this->templatePaths instanceof TemplatePaths || !$request instanceof ActionRequest) {
             return;
         }
 

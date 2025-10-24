@@ -60,7 +60,11 @@ class ViewHelperResolver extends \TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperRes
      */
     protected $namespacesFromConfiguration;
 
-    public function initializeObject(int $reason): void
+    /**
+     * @param int $reason
+     * @return void
+     */
+    public function initializeObject($reason)
     {
         if ($reason === ObjectManagerInterface::INITIALIZATIONCAUSE_RECREATED) {
             return;
@@ -150,8 +154,9 @@ class ViewHelperResolver extends \TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperRes
     /**
      * @param string $identifier
      * @param string $phpNamespace
+     * @return void
      */
-    protected function addNamespaceInternal($identifier, $phpNamespace): void
+    protected function addNamespaceInternal($identifier, $phpNamespace)
     {
         if (!isset($this->namespaces[$identifier])) {
             $this->namespaces[$identifier] = [];

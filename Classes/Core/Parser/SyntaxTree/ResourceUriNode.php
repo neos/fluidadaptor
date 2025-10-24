@@ -41,8 +41,9 @@ class ResourceUriNode extends ViewHelperNode
 
     /**
      * @param ViewHelperResolver $viewHelperResolver
+     * @return void
      */
-    public function injectViewHelperResolver(ViewHelperResolver $viewHelperResolver): void
+    public function injectViewHelperResolver(ViewHelperResolver $viewHelperResolver)
     {
         $this->viewHelperResolver = $viewHelperResolver;
         $this->uninitializedViewHelper = $this->viewHelperResolver->createViewHelperInstanceFromClassName($this->viewHelperClassName);

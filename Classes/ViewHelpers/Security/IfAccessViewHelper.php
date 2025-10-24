@@ -15,7 +15,6 @@ namespace Neos\FluidAdaptor\ViewHelpers\Security;
 use Neos\Flow\Security\Authorization\PrivilegeManagerInterface;
 use Neos\Flow\Security\Context;
 use Neos\FluidAdaptor\Core\Rendering\FlowAwareRenderingContextInterface;
-use Neos\FluidAdaptor\Core\Rendering\RenderingContext;
 use Neos\FluidAdaptor\Core\ViewHelper\AbstractConditionViewHelper;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 
@@ -56,8 +55,9 @@ class IfAccessViewHelper extends AbstractConditionViewHelper
 {
     /**
      * Initializes the "then" and "else" arguments
+     * @return void
      */
-    public function initializeArguments(): void
+    public function initializeArguments()
     {
         parent::initializeArguments();
         $this->registerArgument('privilegeTarget', 'string', 'Condition expression conforming to Fluid boolean rules', true);
@@ -98,16 +98,17 @@ class IfAccessViewHelper extends AbstractConditionViewHelper
     protected static function evaluateCondition($arguments, RenderingContextInterface $renderingContext)
     {
         $objectManager = $renderingContext->getObjectManager();
+        /** @var ?Context $securityContext */
         $securityContext = $objectManager->get(Context::class);
 
-        if (!$securityContext->canBeInitialized()) {
+        if ($securityContext !== null && !$securityContext->canBeInitialized()) {
             return false;
         }
-        $privilegeManager = static::getPrivilegeManager($renderingContext);
         $privilegeTarget = $arguments['privilegeTarget'] ?? null;
         if (!is_string($privilegeTarget)) {
             throw new \Exception('Missing privilegeTarget argument.', 1743848049);
         }
+        $privilegeManager = static::getPrivilegeManager($renderingContext);
         return $privilegeManager->isPrivilegeTargetGranted($privilegeTarget, $arguments['parameters'] ?? []);
     }
 
