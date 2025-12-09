@@ -692,7 +692,7 @@ class SelectViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\For
         $this->viewHelper->_call('getTranslatedLabel', 'value1', 'label1');
     }
 
-    public function getTranslatedLabelDataProvider()
+    public static function getTranslatedLabelDataProvider()
     {
         return [
 

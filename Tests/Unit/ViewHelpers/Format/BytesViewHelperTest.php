@@ -41,7 +41,7 @@ class BytesViewHelperTest extends ViewHelperBaseTestcase
     /**
      * @return array
      */
-    public function valueDataProvider()
+    public static function valueDataProvider()
     {
         return [
 

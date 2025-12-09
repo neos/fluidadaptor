@@ -75,7 +75,7 @@ class StripTagsViewHelperTest extends ViewHelperBaseTestcase
      *
      * @return array
      */
-    public function stringsTestDataProvider()
+    public static function stringsTestDataProvider()
     {
         return [
             ['This is a sample text without special characters.', 'This is a sample text without special characters.'],

@@ -65,7 +65,7 @@ class FlashMessagesViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelp
     /**
      * Data provider for renderTests()
      */
-    public function renderDataProvider()
+    public static function renderDataProvider()
     {
         return [
             [

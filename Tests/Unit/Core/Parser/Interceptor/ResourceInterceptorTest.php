@@ -63,7 +63,7 @@ class ResourceInterceptorTest extends UnitTestCase
      * @return array
      * @see supportedUrlsAreDetected
      */
-    public function supportedUrls()
+    public static function supportedUrls()
     {
         return [
             [ // mostly harmless

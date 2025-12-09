@@ -22,4 +22,8 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
  */
 class FormFieldViewHelperBaseTestcase extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
 {
+    public function __construct()
+    {
+        parent::__construct(static::class);
+    }
 }

@@ -15,9 +15,8 @@ use Neos\Flow\Mvc\Routing\Route;
 
 /**
  * Testcase for Standalone View
- *
- * @group large
  */
+#[\PHPUnit\Framework\Attributes\Group('large')]
 class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
 {
     /**

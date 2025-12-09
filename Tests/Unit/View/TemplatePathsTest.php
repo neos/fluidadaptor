@@ -43,7 +43,7 @@ class TemplatePathsTest extends UnitTestCase
         return $mockControllerContext;
     }
 
-    public function expandGenericPathPatternDataProvider()
+    public static function expandGenericPathPatternDataProvider()
     {
         return [
             // bubbling controller & subpackage parts and optional format

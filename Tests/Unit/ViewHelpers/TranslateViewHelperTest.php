@@ -152,7 +152,7 @@ class TranslateViewHelperTest extends ViewHelperBaseTestcase
     /**
      * @return array
      */
-    public function translationFallbackDataProvider()
+    public static function translationFallbackDataProvider()
     {
         return [
             # id & value specified with all 4 combinations of available translations for id/label

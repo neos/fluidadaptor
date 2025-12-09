@@ -74,7 +74,7 @@ class CaseViewHelperTest extends ViewHelperBaseTestcase
     /**
      *
      */
-    public function fixtureStringDataProvider()
+    public static function fixtureStringDataProvider()
     {
         return [
             ['', ''],
@@ -139,7 +139,7 @@ class CaseViewHelperTest extends ViewHelperBaseTestcase
     /**
      * Signature: $input, $mode, $expected
      */
-    public function conversionTestingDataProvider()
+    public static function conversionTestingDataProvider()
     {
         return [
             ['FooB4r', CaseViewHelper::CASE_LOWER, 'foob4r'],

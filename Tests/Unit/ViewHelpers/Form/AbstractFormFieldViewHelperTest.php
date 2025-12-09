@@ -172,7 +172,7 @@ class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
     /**
      * This is in order to proof that object access behaves similar to a plain array with the same structure
      */
-    public function formObjectVariantsDataProvider(): array
+    public static function formObjectVariantsDataProvider(): array
     {
         $className = 'test_' . uniqid();
         $mockObject = eval('
