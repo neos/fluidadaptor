@@ -11,13 +11,15 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
  * source code.
  */
 
+use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
  * Test for the Abstract Form view helper
  *
  */
-class AbstractFormViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
+class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @test

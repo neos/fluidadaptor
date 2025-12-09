@@ -11,15 +11,16 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
  * source code.
  */
 
+use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use Neos\FluidAdaptor\ViewHelpers\Form\ButtonViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
-require_once(__DIR__ . '/FormFieldViewHelperBaseTestcase.php');
+require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
  * Test for the "Button" Form view helper
  */
-class ButtonViewHelperTest extends FormFieldViewHelperBaseTestcase
+class ButtonViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var ButtonViewHelper

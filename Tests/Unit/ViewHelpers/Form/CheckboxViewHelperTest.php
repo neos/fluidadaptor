@@ -13,18 +13,19 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
+use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass;
 use Neos\FluidAdaptor\ViewHelpers\Form\CheckboxViewHelper;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 require_once(__DIR__ . '/Fixtures/Fixture_UserDomainClass.php');
-require_once(__DIR__ . '/FormFieldViewHelperBaseTestcase.php');
+require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
  * Test for the "Checkbox" Form view helper
  */
-class CheckboxViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form\FormFieldViewHelperBaseTestcase
+class CheckboxViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var CheckboxViewHelper|MockObject

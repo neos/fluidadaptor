@@ -13,16 +13,17 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 use Neos\Error\Messages\Result;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
+use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormFieldViewHelper;
 use Neos\FluidAdaptor\ViewHelpers\FormViewHelper;
 use PHPUnit\Framework\MockObject\MockObject;
 
-require_once(__DIR__ . '/FormFieldViewHelperBaseTestcase.php');
+require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
  * Test for the Abstract Form view helper
  */
-class AbstractFormFieldViewHelperTest extends FormFieldViewHelperBaseTestcase
+class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @test

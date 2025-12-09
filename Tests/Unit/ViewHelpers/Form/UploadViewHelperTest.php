@@ -15,6 +15,7 @@ use Neos\Error\Messages\Result;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\Flow\Property\PropertyMapper;
 use Neos\Flow\ResourceManagement\PersistentResource;
+use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 use Neos\FluidAdaptor\ViewHelpers\Fixtures\EmptySyntaxTreeNode;
 use Neos\FluidAdaptor\ViewHelpers\Form\UploadViewHelper;
@@ -22,12 +23,12 @@ use Neos\FluidAdaptor\ViewHelpers\FormViewHelper;
 
 require_once(__DIR__ . '/Fixtures/EmptySyntaxTreeNode.php');
 require_once(__DIR__ . '/Fixtures/Fixture_UserDomainClass.php');
-require_once(__DIR__ . '/FormFieldViewHelperBaseTestcase.php');
+require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
  * Test for the "Upload" Form view helper
  */
-class UploadViewHelperTest extends FormFieldViewHelperBaseTestcase
+class UploadViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var UploadViewHelper
