@@ -94,17 +94,40 @@ class FormViewHelperTest extends ViewHelperBaseTestcase
         $this->arguments['object'] = $formObject;
         $this->injectDependenciesIntoViewHelper($viewHelper);
         $this->securityContext->expects(self::any())->method('isInitialized')->will(self::returnValue(false));
+        $matcher = self::exactly(3);
 
-        $this->viewHelperVariableContainer->expects(self::exactly(3))->method('add')->withConsecutive(
-            [\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, 'formObject', $formObject],
-            [\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, 'additionalIdentityProperties', []],
-            [\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, 'emptyHiddenFieldNames', []]
-        );
-        $this->viewHelperVariableContainer->expects(self::exactly(3))->method('remove')->withConsecutive(
-            [\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, 'formObject'],
-            [\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, 'additionalIdentityProperties'],
-            [\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, 'emptyHiddenFieldNames']
-        );
+        $this->viewHelperVariableContainer->expects($matcher)->method('add')->willReturnCallback(function (...$parameters) use ($matcher, $formObject) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, $parameters[0]);
+                $this->assertSame('formObject', $parameters[1]);
+                $this->assertSame($formObject, $parameters[2]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, $parameters[0]);
+                $this->assertSame('additionalIdentityProperties', $parameters[1]);
+                $this->assertSame([], $parameters[2]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, $parameters[0]);
+                $this->assertSame('emptyHiddenFieldNames', $parameters[1]);
+                $this->assertSame([], $parameters[2]);
+            }
+        });
+        $matcher = self::exactly(3);
+        $this->viewHelperVariableContainer->expects($matcher)->method('remove')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, $parameters[0]);
+                $this->assertSame('formObject', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, $parameters[0]);
+                $this->assertSame('additionalIdentityProperties', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, $parameters[0]);
+                $this->assertSame('emptyHiddenFieldNames', $parameters[1]);
+            }
+        });
         $viewHelper->render('index');
     }
 

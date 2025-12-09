@@ -56,10 +56,17 @@ class TextfieldViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\
     {
         $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextfield');
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setContent', 'render', 'addAttribute'])->getMock();
-        $mockTagBuilder->expects(self::exactly(2))->method('addAttribute')->withConsecutive(
-            ['name', 'NameOfTextfield'],
-            ['value', 'Current value']
-        );
+        $matcher = self::exactly(2);
+        $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('NameOfTextfield', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('Current value', $parameters[1]);
+            }
+        });
         $mockTagBuilder->expects(self::once())->method('render');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 

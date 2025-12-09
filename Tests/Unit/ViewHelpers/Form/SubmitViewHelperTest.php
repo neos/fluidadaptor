@@ -39,11 +39,19 @@ class SubmitViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\For
     {
         $mockTagBuilder = $this->getMockBuilder(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class)->setMethods(['setTagName', 'addAttribute'])->getMock();
         $mockTagBuilder->expects(self::atLeastOnce())->method('setTagName')->with('input');
-        $mockTagBuilder->expects(self::atLeastOnce())->method('addAttribute')->withConsecutive(
-            ['type', 'submit'],
-            [self::anything()],
-            [self::anything()]
-        );
+        $matcher = self::atLeastOnce();
+        $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('submit', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame(self::anything(), $parameters[0]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame(self::anything(), $parameters[0]);
+            }
+        });
 
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 

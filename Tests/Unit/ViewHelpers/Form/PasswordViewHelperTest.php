@@ -54,12 +54,21 @@ class PasswordViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\F
     public function renderCorrectlySetsTypeNameAndValueAttributes()
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['setContent', 'render', 'addAttribute'])->getMock();
-        $mockTagBuilder->expects(self::exactly(3))->method('addAttribute')
-            ->withConsecutive(
-                ['type', 'password'],
-                ['name', 'NameOfTextbox'],
-                ['value', 'Current value']
-            );
+        $matcher = self::exactly(3);
+        $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('password', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('NameOfTextbox', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('Current value', $parameters[1]);
+            }
+        });
         $mockTagBuilder->expects(self::once())->method('render');
         $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextbox');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
@@ -81,12 +90,21 @@ class PasswordViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\F
     public function renderCorrectlySetsRequiredAttribute()
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['addAttribute', 'setContent', 'render'])->disableOriginalConstructor()->getMock();
-        $mockTagBuilder->expects(self::exactly(3))->method('addAttribute')
-            ->withConsecutive(
-                ['type', 'password'],
-                ['name', 'NameOfTextbox'],
-                ['value', 'Current value']
-            );
+        $matcher = self::exactly(3);
+        $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('password', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('NameOfTextbox', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('Current value', $parameters[1]);
+            }
+        });
         $mockTagBuilder->expects(self::once())->method('render');
         $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('NameOfTextbox');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);

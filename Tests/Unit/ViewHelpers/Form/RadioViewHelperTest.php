@@ -42,11 +42,21 @@ class RadioViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form
     public function renderCorrectlySetsTagNameAndDefaultAttributes()
     {
         $this->mockTagBuilder->expects(self::atLeastOnce())->method('setTagName')->with('input');
-        $this->mockTagBuilder->expects(self::exactly(3))->method('addAttribute')->withConsecutive(
-            ['type', 'radio'],
-            ['name', 'foo'],
-            ['value', 'bar']
-        );
+        $matcher = self::exactly(3);
+        $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('radio', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('foo', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('bar', $parameters[1]);
+            }
+        });
 
         $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
         $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
@@ -62,12 +72,25 @@ class RadioViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form
      */
     public function renderSetsCheckedAttributeIfSpecified()
     {
-        $this->mockTagBuilder->expects(self::exactly(4))->method('addAttribute')->withConsecutive(
-            ['type', 'radio'],
-            ['name', 'foo'],
-            ['value', 'bar'],
-            ['checked', '']
-        );
+        $matcher = self::exactly(4);
+        $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('radio', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('foo', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('bar', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 4) {
+                $this->assertSame('checked', $parameters[0]);
+                $this->assertSame('', $parameters[1]);
+            }
+        });
 
         $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
         $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
@@ -83,17 +106,37 @@ class RadioViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form
      */
     public function renderIgnoresBoundPropertyIfCheckedIsSet()
     {
-        $this->mockTagBuilder->expects(self::exactly(7))->method('addAttribute')->withConsecutive(
-            // first invocation below
-            ['type', 'radio'],
-            ['name', 'foo'],
-            ['value', 'bar'],
-            ['checked', ''],
-            // second invocation below
-            ['type', 'radio'],
-            ['name', 'foo'],
-            ['value', 'bar']
-        );
+        $matcher = self::exactly(7);
+        $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('radio', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('foo', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('bar', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 4) {
+                $this->assertSame('checked', $parameters[0]);
+                $this->assertSame('', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 5) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('radio', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 6) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('foo', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 7) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('bar', $parameters[1]);
+            }
+        });
 
         $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
         $this->viewHelper->expects(self::any())->method('getValueAttribute')->will(self::returnValue('bar'));
@@ -113,12 +156,25 @@ class RadioViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form
      */
     public function renderCorrectlySetsCheckedAttributeIfCheckboxIsBoundToAPropertyOfTypeBoolean()
     {
-        $this->mockTagBuilder->expects(self::exactly(4))->method('addAttribute')->withConsecutive(
-            ['type', 'radio'],
-            ['name', 'foo'],
-            ['value', 'bar'],
-            ['checked', '']
-        );
+        $matcher = self::exactly(4);
+        $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('radio', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('foo', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('bar', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 4) {
+                $this->assertSame('checked', $parameters[0]);
+                $this->assertSame('', $parameters[1]);
+            }
+        });
 
         $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
         $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
@@ -136,11 +192,21 @@ class RadioViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form
      */
     public function renderDoesNotAppendSquareBracketsToNameAttributeIfBoundToAPropertyOfTypeArray()
     {
-        $this->mockTagBuilder->expects(self::exactly(3))->method('addAttribute')->withConsecutive(
-            ['type', 'radio'],
-            ['name', 'foo'],
-            ['value', 'bar']
-        );
+        $matcher = self::exactly(3);
+        $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('radio', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('foo', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('bar', $parameters[1]);
+            }
+        });
 
         $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
         $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));
@@ -159,12 +225,25 @@ class RadioViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form
      */
     public function renderCorrectlySetsCheckedAttributeIfCheckboxIsBoundToAPropertyOfTypeString()
     {
-        $this->mockTagBuilder->expects(self::exactly(4))->method('addAttribute')->withConsecutive(
-            ['type', 'radio'],
-            ['name', 'foo'],
-            ['value', 'bar'],
-            ['checked', '']
-        );
+        $matcher = self::exactly(4);
+        $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('radio', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('foo', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('bar', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 4) {
+                $this->assertSame('checked', $parameters[0]);
+                $this->assertSame('', $parameters[1]);
+            }
+        });
 
         $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
         $this->viewHelper->expects(self::any())->method('getName')->will(self::returnValue('foo'));

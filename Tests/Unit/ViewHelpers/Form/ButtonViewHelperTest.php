@@ -41,11 +41,21 @@ class ButtonViewHelperTest extends FormFieldViewHelperBaseTestcase
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['setTagName', 'addAttribute', 'setContent'])->getMock();
         $mockTagBuilder->expects(self::any())->method('setTagName')->with('button');
-        $mockTagBuilder->expects(self::exactly(3))->method('addAttribute')->withConsecutive(
-            ['type', 'submit'],
-            ['name', ''],
-            ['value', '']
-        );
+        $matcher = self::exactly(3);
+        $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('submit', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('', $parameters[1]);
+            }
+        });
         $mockTagBuilder->expects(self::once())->method('setContent')->with('Button Content');
 
         $this->viewHelper->expects(self::atLeastOnce())->method('renderChildren')->willReturn('Button Content');

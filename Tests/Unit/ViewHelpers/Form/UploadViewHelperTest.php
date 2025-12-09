@@ -71,10 +71,17 @@ class UploadViewHelperTest extends FormFieldViewHelperBaseTestcase
     public function renderCorrectlySetsTypeNameAndValueAttributes(): void
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['setContent', 'render', 'addAttribute'])->getMock();
-        $mockTagBuilder->expects(self::exactly(2))->method('addAttribute')->withConsecutive(
-            ['type', 'file'],
-            ['name', 'someName']
-        );
+        $matcher = self::exactly(2);
+        $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('file', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('someName', $parameters[1]);
+            }
+        });
         $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('someName');
         $mockTagBuilder->expects(self::once())->method('render');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
@@ -151,13 +158,17 @@ class UploadViewHelperTest extends FormFieldViewHelperBaseTestcase
         /** @var Result|\PHPUnit\Framework\MockObject\MockObject $mockValidationResults */
         $mockValidationResults = $this->getMockBuilder(Result::class)->disableOriginalConstructor()->getMock();
         $mockValidationResults->expects(self::atLeastOnce())->method('hasErrors')->willReturn(true);
-        $this->request->expects(self::exactly(2))->method('getInternalArgument')->withConsecutive(
-            ['__submittedArgumentValidationResults'],
-            ['__submittedArguments']
-        )->willReturnOnConsecutiveCalls(
-            $mockValidationResults,
-            $submittedData
-        );
+        $matcher = self::exactly(2);
+        $this->request->expects($matcher)->method('getInternalArgument')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('__submittedArgumentValidationResults', $parameters[0]);
+                return $mockValidationResults;
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('__submittedArguments', $parameters[0]);
+                return $submittedData;
+            }
+        });
 
         /** @var PersistentResource|\PHPUnit\Framework\MockObject\MockObject $mockResource */
         $mockResource = $this->getMockBuilder(PersistentResource::class)->disableOriginalConstructor()->getMock();

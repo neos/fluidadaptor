@@ -77,7 +77,17 @@ class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
     public function dataAttributesAreRenderedCorrectly()
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['addAttribute'])->disableOriginalConstructor()->getMock();
-        $mockTagBuilder->expects(self::exactly(2))->method('addAttribute')->withConsecutive(['data-foo', 'bar'], ['data-baz', 'foos']);
+        $matcher = self::exactly(2);
+        $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('data-foo', $parameters[0]);
+                $this->assertSame('bar', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('data-baz', $parameters[0]);
+                $this->assertSame('foos', $parameters[1]);
+            }
+        });
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
         $arguments = ['data' => ['foo' => 'bar', 'baz' => 'foos']];
@@ -91,16 +101,41 @@ class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
     public function standardTagAttributesAreRegistered()
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['addAttribute'])->disableOriginalConstructor()->getMock();
-        $mockTagBuilder->expects(self::exactly(8))->method('addAttribute')->withConsecutive(
-            ['class', 'classAttribute'],
-            ['dir', 'dirAttribute'],
-            ['id', 'idAttribute'],
-            ['lang', 'langAttribute'],
-            ['style', 'styleAttribute'],
-            ['title', 'titleAttribute'],
-            ['accesskey', 'accesskeyAttribute'],
-            ['tabindex', 'tabindexAttribute']
-        );
+        $matcher = self::exactly(8);
+        $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('class', $parameters[0]);
+                $this->assertSame('classAttribute', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('dir', $parameters[0]);
+                $this->assertSame('dirAttribute', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('id', $parameters[0]);
+                $this->assertSame('idAttribute', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 4) {
+                $this->assertSame('lang', $parameters[0]);
+                $this->assertSame('langAttribute', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 5) {
+                $this->assertSame('style', $parameters[0]);
+                $this->assertSame('styleAttribute', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 6) {
+                $this->assertSame('title', $parameters[0]);
+                $this->assertSame('titleAttribute', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 7) {
+                $this->assertSame('accesskey', $parameters[0]);
+                $this->assertSame('accesskeyAttribute', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 8) {
+                $this->assertSame('tabindex', $parameters[0]);
+                $this->assertSame('tabindexAttribute', $parameters[1]);
+            }
+        });
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
         $arguments = [

@@ -70,7 +70,17 @@ class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
      */
     public function assignAddsValueToTemplateVariableContainer()
     {
-        $this->templateVariableContainer->expects(self::exactly(2))->method('add')->withConsecutive(['foo', 'FooValue'], ['bar', 'BarValue']);
+        $matcher = self::exactly(2);
+        $this->templateVariableContainer->expects($matcher)->method('add')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('foo', $parameters[0]);
+                $this->assertSame('FooValue', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('bar', $parameters[0]);
+                $this->assertSame('BarValue', $parameters[1]);
+            }
+        });
 
         $this->view
             ->assign('foo', 'FooValue')
@@ -82,7 +92,17 @@ class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
      */
     public function assignCanOverridePreviouslyAssignedValues()
     {
-        $this->templateVariableContainer->expects(self::exactly(2))->method('add')->withConsecutive(['foo', 'FooValue'], ['foo', 'FooValueOverridden']);
+        $matcher = self::exactly(2);
+        $this->templateVariableContainer->expects($matcher)->method('add')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('foo', $parameters[0]);
+                $this->assertSame('FooValue', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('foo', $parameters[0]);
+                $this->assertSame('FooValueOverridden', $parameters[1]);
+            }
+        });
 
         $this->view->assign('foo', 'FooValue');
         $this->view->assign('foo', 'FooValueOverridden');
@@ -93,7 +113,21 @@ class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
      */
     public function assignMultipleAddsValuesToTemplateVariableContainer()
     {
-        $this->templateVariableContainer->expects(self::exactly(3))->method('add')->withConsecutive(['foo', 'FooValue'], ['bar', 'BarValue'], ['baz', 'BazValue']);
+        $matcher = self::exactly(3);
+        $this->templateVariableContainer->expects($matcher)->method('add')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('foo', $parameters[0]);
+                $this->assertSame('FooValue', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('bar', $parameters[0]);
+                $this->assertSame('BarValue', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('baz', $parameters[0]);
+                $this->assertSame('BazValue', $parameters[1]);
+            }
+        });
 
         $this->view
             ->assignMultiple(['foo' => 'FooValue', 'bar' => 'BarValue'])
@@ -105,7 +139,21 @@ class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
      */
     public function assignMultipleCanOverridePreviouslyAssignedValues()
     {
-        $this->templateVariableContainer->expects(self::exactly(3))->method('add')->withConsecutive(['foo', 'FooValue'], ['foo', 'FooValueOverridden'], ['bar', 'BarValue']);
+        $matcher = self::exactly(3);
+        $this->templateVariableContainer->expects($matcher)->method('add')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('foo', $parameters[0]);
+                $this->assertSame('FooValue', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('foo', $parameters[0]);
+                $this->assertSame('FooValueOverridden', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('bar', $parameters[0]);
+                $this->assertSame('BarValue', $parameters[1]);
+            }
+        });
 
         $this->view->assign('foo', 'FooValue');
         $this->view->assignMultiple(['foo' => 'FooValueOverridden', 'bar' => 'BarValue']);

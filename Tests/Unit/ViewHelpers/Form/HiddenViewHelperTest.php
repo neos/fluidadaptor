@@ -40,11 +40,21 @@ class HiddenViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\For
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->setMethods(['setTagName', 'addAttribute'])->getMock();
         $mockTagBuilder->expects(self::atLeastOnce())->method('setTagName')->with('input');
-        $mockTagBuilder->expects(self::exactly(3))->method('addAttribute')->withConsecutive(
-            ['type', 'hidden'],
-            ['name', 'foo'],
-            ['value', 'bar']
-        );
+        $matcher = self::exactly(3);
+        $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
+            if ($matcher->getInvocationCount() === 1) {
+                $this->assertSame('type', $parameters[0]);
+                $this->assertSame('hidden', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 2) {
+                $this->assertSame('name', $parameters[0]);
+                $this->assertSame('foo', $parameters[1]);
+            }
+            if ($matcher->getInvocationCount() === 3) {
+                $this->assertSame('value', $parameters[0]);
+                $this->assertSame('bar', $parameters[1]);
+            }
+        });
 
         $this->viewHelper->expects(self::once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
         $this->viewHelper->expects(self::once())->method('getName')->will(self::returnValue('foo'));
