@@ -39,7 +39,7 @@ abstract class AbstractWidgetViewHelper extends AbstractViewHelper implements Ch
      * This needs to be filled by the individual subclass using
      * property injection.
      *
-     * @var AbstractWidgetController|DependencyProxy
+     * @var AbstractWidgetController
      * @api
      */
     protected $controller;
@@ -143,7 +143,12 @@ abstract class AbstractWidgetViewHelper extends AbstractViewHelper implements Ch
         $this->widgetContext->setNonAjaxWidgetConfiguration($this->getNonAjaxWidgetConfiguration());
         $this->initializeWidgetIdentifier();
 
-        $controllerObjectName = ($this->controller instanceof DependencyProxy) ? $this->controller->_getClassName() : get_class($this->controller);
+        /** @phpstan-ignore-next-line the mind of the great phpstan can and will not comprehend this */
+        if ($this->controller instanceof \Neos\Flow\ObjectManagement\DependencyInjection\DependencyProxy) {
+            $controllerObjectName = $this->controller->_getClassName();
+        } else {
+            $controllerObjectName = get_class($this->controller);
+        }
         $this->widgetContext->setControllerObjectName($controllerObjectName);
     }
 
@@ -211,6 +216,7 @@ abstract class AbstractWidgetViewHelper extends AbstractViewHelper implements Ch
      */
     protected function initiateSubRequest()
     {
+        /** @phpstan-ignore-next-line the mind of the great phpstan can and will not comprehend this */
         if ($this->controller instanceof DependencyProxy) {
             $this->controller->_activateDependency();
         }
@@ -232,9 +238,6 @@ abstract class AbstractWidgetViewHelper extends AbstractViewHelper implements Ch
             }
             $subRequest->setControllerObjectName($this->widgetContext->getControllerObjectName());
             try {
-                if (!($this->controller instanceof AbstractWidgetController)) {
-                    throw new Exception\MissingControllerException('initiateSubRequest() can not be called if there is no controller inside $this->controller. Make sure to add the @Neos\Flow\Annotations\Inject annotation in your widget class.', 1284401632);
-                }
                 $subResponse = $this->controller->processRequest($subRequest);
 
                 // We need to make sure to not merge content up into the parent ActionResponse because that _could_ break the parent response.
