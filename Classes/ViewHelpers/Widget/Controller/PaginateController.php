@@ -56,12 +56,12 @@ class PaginateController extends AbstractWidgetController
     protected $numberOfPages = 1;
 
     /**
-     * @var float
+     * @var integer
      */
     protected $displayRangeStart;
 
     /**
-     * @var float
+     * @var integer
      */
     protected $displayRangeEnd;
 
@@ -117,16 +117,16 @@ class PaginateController extends AbstractWidgetController
             $maximumNumberOfLinks = $this->numberOfPages;
         }
         $delta = floor($maximumNumberOfLinks / 2);
-        $this->displayRangeStart = $this->currentPage - $delta;
-        $this->displayRangeEnd = $this->currentPage + $delta + ($maximumNumberOfLinks % 2 === 0 ? 1 : 0);
-        if ($this->displayRangeStart < 1) {
-            $this->displayRangeEnd -= $this->displayRangeStart - 1;
+        $displayRangeStart = $this->currentPage - $delta;
+        $displayRangeEnd = $this->currentPage + $delta + ($maximumNumberOfLinks % 2 === 0 ? 1 : 0);
+        if ($displayRangeStart < 1) {
+            $displayRangeEnd -= $displayRangeStart - 1;
         }
-        if ($this->displayRangeEnd > $this->numberOfPages) {
-            $this->displayRangeStart -= ($this->displayRangeEnd - $this->numberOfPages);
+        if ($displayRangeEnd > $this->numberOfPages) {
+            $displayRangeStart -= ($displayRangeEnd - $this->numberOfPages);
         }
-        $this->displayRangeStart = (integer)max($this->displayRangeStart, 1);
-        $this->displayRangeEnd = (integer)min($this->displayRangeEnd, $this->numberOfPages);
+        $this->displayRangeStart = (integer)max($displayRangeStart, 1);
+        $this->displayRangeEnd = (integer)min($displayRangeEnd, $this->numberOfPages);
     }
 
     /**
@@ -147,7 +147,7 @@ class PaginateController extends AbstractWidgetController
         $this->calculateDisplayRange();
         $pages = [];
         for ($i = $this->displayRangeStart; $i <= $this->displayRangeEnd; $i++) {
-            $pages[] = ['number' => (int)$i, 'isCurrent' => ($i == $this->currentPage)];
+            $pages[] = ['number' => $i, 'isCurrent' => ($i === $this->currentPage)];
         }
         $pagination = [
             'pages' => $pages,
