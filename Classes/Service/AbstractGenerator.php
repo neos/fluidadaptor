@@ -65,9 +65,6 @@ abstract class AbstractGenerator
             if ($this->reflectionService->isClassAbstract($viewHelperClassName)) {
                 continue;
             }
-            if (!is_subclass_of($viewHelperClassName, AbstractViewHelper::class)) {
-                continue;
-            }
             if (strncmp($namespace, $viewHelperClassName, strlen($namespace)) === 0) {
                 $affectedViewHelperClassNames[] = $viewHelperClassName;
             }
