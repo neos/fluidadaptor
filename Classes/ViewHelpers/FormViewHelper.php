@@ -313,7 +313,6 @@ class FormViewHelper extends AbstractFormViewHelper
                 $referrerValue = $referrerValue ? htmlspecialchars($referrerValue) : '';
                 $result .= '<input type="hidden" name="' . $argumentNamespace . '[__referrer][' . $referrerKey . ']" value="' . $referrerValue . '" />' . chr(10);
             }
-            /** @var ActionRequest $request we know this since $request is not the main request */
             $request = $request->getParentRequest();
         }
 
