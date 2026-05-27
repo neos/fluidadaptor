@@ -72,11 +72,11 @@ class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
     {
         $matcher = self::exactly(2);
         $this->templateVariableContainer->expects($matcher)->method('add')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('foo', $parameters[0]);
                 $this->assertSame('FooValue', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('bar', $parameters[0]);
                 $this->assertSame('BarValue', $parameters[1]);
             }
@@ -94,11 +94,11 @@ class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
     {
         $matcher = self::exactly(2);
         $this->templateVariableContainer->expects($matcher)->method('add')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('foo', $parameters[0]);
                 $this->assertSame('FooValue', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('foo', $parameters[0]);
                 $this->assertSame('FooValueOverridden', $parameters[1]);
             }
@@ -115,15 +115,15 @@ class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
     {
         $matcher = self::exactly(3);
         $this->templateVariableContainer->expects($matcher)->method('add')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('foo', $parameters[0]);
                 $this->assertSame('FooValue', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('bar', $parameters[0]);
                 $this->assertSame('BarValue', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('baz', $parameters[0]);
                 $this->assertSame('BazValue', $parameters[1]);
             }
@@ -141,15 +141,15 @@ class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
     {
         $matcher = self::exactly(3);
         $this->templateVariableContainer->expects($matcher)->method('add')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('foo', $parameters[0]);
                 $this->assertSame('FooValue', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('foo', $parameters[0]);
                 $this->assertSame('FooValueOverridden', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('bar', $parameters[0]);
                 $this->assertSame('BarValue', $parameters[1]);
             }

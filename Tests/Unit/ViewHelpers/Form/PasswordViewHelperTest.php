@@ -57,15 +57,15 @@ class PasswordViewHelperTest extends ViewHelperBaseTestcase
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setContent', 'render', 'addAttribute'])->getMock();
         $matcher = self::exactly(3);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('password', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('NameOfTextbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('Current value', $parameters[1]);
             }
@@ -93,15 +93,15 @@ class PasswordViewHelperTest extends ViewHelperBaseTestcase
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['addAttribute', 'setContent', 'render'])->disableOriginalConstructor()->getMock();
         $matcher = self::exactly(3);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('password', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('NameOfTextbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('Current value', $parameters[1]);
             }

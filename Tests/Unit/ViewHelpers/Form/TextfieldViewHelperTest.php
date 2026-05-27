@@ -59,11 +59,11 @@ class TextfieldViewHelperTest extends ViewHelperBaseTestcase
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setContent', 'render', 'addAttribute'])->getMock();
         $matcher = self::exactly(2);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('NameOfTextfield', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('Current value', $parameters[1]);
             }

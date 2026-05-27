@@ -488,10 +488,10 @@ class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $matcher = self::exactly(2);
         $formViewHelper->expects($matcher)->method('hasArgument')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('class', $parameters[0]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('errorClass', $parameters[0]);
             }
             return false;
@@ -515,11 +515,11 @@ class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $matcher = self::exactly(2);
         $formViewHelper->expects($matcher)->method('hasArgument')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('class', $parameters[0]);
                 return true;
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('errorClass', $parameters[0]);
                 return false;
             }
@@ -544,11 +544,11 @@ class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $matcher = self::exactly(2);
         $formViewHelper->expects($matcher)->method('hasArgument')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('class', $parameters[0]);
                 return false;
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('errorClass', $parameters[0]);
                 return true;
             }
@@ -573,10 +573,10 @@ class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $this->injectDependenciesIntoViewHelper($formViewHelper);
         $matcher = self::exactly(2);
         $formViewHelper->expects($matcher)->method('hasArgument')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('class', $parameters[0]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('errorClass', $parameters[0]);
             }
             return true;
@@ -709,11 +709,11 @@ class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $matcher = self::exactly(2);
 
         $formFieldViewHelper->expects($matcher)->method('renderHiddenIdentityField')->willReturnCallback(function (...$parameters) use ($matcher, $mockFormObject, $expectedProperty1, $expectedProperty2) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame($mockFormObject, $parameters[0]);
                 $this->assertSame($expectedProperty1, $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame($mockFormObject, $parameters[0]);
                 $this->assertSame($expectedProperty2, $parameters[1]);
             }

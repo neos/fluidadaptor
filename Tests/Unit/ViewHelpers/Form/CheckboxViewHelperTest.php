@@ -55,15 +55,15 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
         $matcher = self::exactly(3);
         $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('checkbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }
@@ -85,19 +85,19 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
     {
         $matcher = self::exactly(4);
         $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('checkbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 4) {
+            if ($matcher->numberOfInvocations() === 4) {
                 $this->assertSame('checked', $parameters[0]);
                 $this->assertSame('', $parameters[1]);
             }
@@ -118,31 +118,31 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
     {
         $matcher = self::exactly(7);
         $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('checkbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 4) {
+            if ($matcher->numberOfInvocations() === 4) {
                 $this->assertSame('checked', $parameters[0]);
                 $this->assertSame('', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 5) {
+            if ($matcher->numberOfInvocations() === 5) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('checkbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 6) {
+            if ($matcher->numberOfInvocations() === 6) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 7) {
+            if ($matcher->numberOfInvocations() === 7) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }
@@ -168,19 +168,19 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
     {
         $matcher = self::exactly(4);
         $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('checkbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 4) {
+            if ($matcher->numberOfInvocations() === 4) {
                 $this->assertSame('checked', $parameters[0]);
                 $this->assertSame('', $parameters[1]);
             }
@@ -203,15 +203,15 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
     {
         $matcher = self::exactly(3);
         $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('checkbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo[]', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }
@@ -235,19 +235,19 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
     {
         $matcher = self::exactly(4);
         $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('checkbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo[]', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 4) {
+            if ($matcher->numberOfInvocations() === 4) {
                 $this->assertSame('checked', $parameters[0]);
                 $this->assertSame('', $parameters[1]);
             }
@@ -270,19 +270,19 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
     {
         $matcher = self::exactly(4);
         $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('checkbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo[]', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 4) {
+            if ($matcher->numberOfInvocations() === 4) {
                 $this->assertSame('checked', $parameters[0]);
                 $this->assertSame('', $parameters[1]);
             }
@@ -305,19 +305,19 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
     {
         $matcher = self::exactly(4);
         $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('checkbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('1', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 4) {
+            if ($matcher->numberOfInvocations() === 4) {
                 $this->assertSame('checked', $parameters[0]);
                 $this->assertSame('', $parameters[1]);
             }
@@ -352,19 +352,19 @@ class CheckboxViewHelperTest extends ViewHelperBaseTestcase
     {
         $matcher = self::exactly(4);
         $this->mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('checkbox', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 4) {
+            if ($matcher->numberOfInvocations() === 4) {
                 $this->assertSame('checked', $parameters[0]);
                 $this->assertSame('', $parameters[1]);
             }

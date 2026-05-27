@@ -79,11 +79,11 @@ class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['addAttribute'])->disableOriginalConstructor()->getMock();
         $matcher = self::exactly(2);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('data-foo', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('data-baz', $parameters[0]);
                 $this->assertSame('foos', $parameters[1]);
             }
@@ -103,35 +103,35 @@ class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['addAttribute'])->disableOriginalConstructor()->getMock();
         $matcher = self::exactly(8);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('class', $parameters[0]);
                 $this->assertSame('classAttribute', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('dir', $parameters[0]);
                 $this->assertSame('dirAttribute', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('id', $parameters[0]);
                 $this->assertSame('idAttribute', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 4) {
+            if ($matcher->numberOfInvocations() === 4) {
                 $this->assertSame('lang', $parameters[0]);
                 $this->assertSame('langAttribute', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 5) {
+            if ($matcher->numberOfInvocations() === 5) {
                 $this->assertSame('style', $parameters[0]);
                 $this->assertSame('styleAttribute', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 6) {
+            if ($matcher->numberOfInvocations() === 6) {
                 $this->assertSame('title', $parameters[0]);
                 $this->assertSame('titleAttribute', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 7) {
+            if ($matcher->numberOfInvocations() === 7) {
                 $this->assertSame('accesskey', $parameters[0]);
                 $this->assertSame('accesskeyAttribute', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 8) {
+            if ($matcher->numberOfInvocations() === 8) {
                 $this->assertSame('tabindex', $parameters[0]);
                 $this->assertSame('tabindexAttribute', $parameters[1]);
             }

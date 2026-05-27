@@ -74,11 +74,11 @@ class UploadViewHelperTest extends ViewHelperBaseTestcase
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setContent', 'render', 'addAttribute'])->getMock();
         $matcher = self::exactly(2);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('file', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('someName', $parameters[1]);
             }
@@ -161,11 +161,11 @@ class UploadViewHelperTest extends ViewHelperBaseTestcase
         $mockValidationResults->expects($this->atLeastOnce())->method('hasErrors')->willReturn(true);
         $matcher = self::exactly(2);
         $this->request->expects($matcher)->method('getInternalArgument')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('__submittedArgumentValidationResults', $parameters[0]);
                 return $mockValidationResults;
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('__submittedArguments', $parameters[0]);
                 return $submittedData;
             }

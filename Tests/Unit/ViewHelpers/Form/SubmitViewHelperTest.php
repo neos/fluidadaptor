@@ -43,14 +43,14 @@ class SubmitViewHelperTest extends ViewHelperBaseTestcase
         $mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
         $matcher = self::atLeastOnce();
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('submit', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame(self::anything(), $parameters[0]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame(self::anything(), $parameters[0]);
             }
         });

@@ -43,15 +43,15 @@ class HiddenViewHelperTest extends ViewHelperBaseTestcase
         $mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
         $matcher = self::exactly(3);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('hidden', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('foo', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('bar', $parameters[1]);
             }

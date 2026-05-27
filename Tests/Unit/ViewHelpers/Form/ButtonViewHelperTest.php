@@ -44,15 +44,15 @@ class ButtonViewHelperTest extends ViewHelperBaseTestcase
         $mockTagBuilder->expects($this->any())->method('setTagName')->with('button');
         $matcher = self::exactly(3);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
-            if ($matcher->getInvocationCount() === 1) {
+            if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('submit', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 2) {
+            if ($matcher->numberOfInvocations() === 2) {
                 $this->assertSame('name', $parameters[0]);
                 $this->assertSame('', $parameters[1]);
             }
-            if ($matcher->getInvocationCount() === 3) {
+            if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
                 $this->assertSame('', $parameters[1]);
             }
