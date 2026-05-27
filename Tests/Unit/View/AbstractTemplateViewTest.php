@@ -52,7 +52,7 @@ class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
         $this->renderingContext = $this->getMockBuilder(RenderingContext::class)->onlyMethods(['getViewHelperVariableContainer', 'getVariableProvider'])->disableOriginalConstructor()->getMock();
         $this->renderingContext->expects($this->any())->method('getViewHelperVariableContainer')->willReturn(($this->viewHelperVariableContainer));
         $this->renderingContext->expects($this->any())->method('getVariableProvider')->willReturn(($this->templateVariableContainer));
-        $this->view = $this->getMockBuilder(AbstractTemplateView::class)->onlyMethods(['getTemplateSource', 'getLayoutSource', 'getPartialSource', 'canRender', 'getTemplateIdentifier', 'getLayoutIdentifier', 'getPartialIdentifier'])->getMock();
+        $this->view = $this->getMockBuilder(AbstractTemplateView::class)->onlyMethods(['canRender'])->getMock();
         $this->view->setRenderingContext($this->renderingContext);
     }
 

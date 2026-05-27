@@ -41,43 +41,6 @@ class AbstractViewHelperTest extends UnitTestCase
      */
     protected $mockObjectManager;
 
-    /**
-     * @var array
-     */
-    protected $fixtureMethodParameters = [
-        'param1' => [
-            'position' => 0,
-            'optional' => false,
-            'type' => 'integer',
-            'defaultValue' => null
-        ],
-        'param2' => [
-            'position' => 1,
-            'optional' => false,
-            'type' => 'array',
-            'array' => true,
-            'defaultValue' => null
-        ],
-        'param3' => [
-            'position' => 2,
-            'optional' => true,
-            'type' => 'string',
-            'array' => false,
-            'defaultValue' => 'default'
-        ],
-    ];
-
-    /**
-     * @var array
-     */
-    protected $fixtureMethodTags = [
-        'param' => [
-            'integer $param1 P1 Stuff',
-            'array $param2 P2 Stuff',
-            'string $param3 P3 Stuff'
-        ]
-    ];
-
     protected function setUp(): void
     {
         $this->mockReflectionService = $this->getMockBuilder(ReflectionService::class)->disableOriginalConstructor()->getMock();
@@ -92,7 +55,7 @@ class AbstractViewHelperTest extends UnitTestCase
     {
         $this->mockReflectionService->expects($this->any())->method('getMethodParameters')->willReturn([]);
 
-        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, [], [], '', false);
         $viewHelper->injectObjectManager($this->mockObjectManager);
 
         $name = 'This is a name';
@@ -111,7 +74,7 @@ class AbstractViewHelperTest extends UnitTestCase
     public function registeringTheSameArgumentNameAgainThrowsException(): void
     {
         $this->expectException(Exception::class);
-        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, [], [], '', false);
 
         $name = 'shortName';
         $description = 'Example desc';
@@ -129,7 +92,7 @@ class AbstractViewHelperTest extends UnitTestCase
     {
         $this->mockReflectionService->expects($this->any())->method('getMethodParameters')->willReturn([]);
 
-        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, [], [], '', false);
         $viewHelper->injectObjectManager($this->mockObjectManager);
 
         $name = 'argumentName';
@@ -151,7 +114,7 @@ class AbstractViewHelperTest extends UnitTestCase
     public function overrideArgumentThrowsExceptionWhenTryingToOverwriteAnNonexistingArgument(): void
     {
         $this->expectException(Exception::class);
-        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, [], [], '', false);
         $viewHelper->injectObjectManager($this->mockObjectManager);
 
         $viewHelper->_call('overrideArgument', 'argumentName', 'string', 'description', true);
@@ -164,7 +127,7 @@ class AbstractViewHelperTest extends UnitTestCase
     {
         $this->mockReflectionService->expects($this->any())->method('getMethodParameters')->willReturn([]);
 
-        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render', 'initializeArguments'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['initializeArguments'], [], '', false);
         $viewHelper->injectObjectManager($this->mockObjectManager);
 
         $viewHelper->expects($this->once())->method('initializeArguments');
@@ -177,7 +140,7 @@ class AbstractViewHelperTest extends UnitTestCase
      */
     public function validateArgumentsCallsPrepareArguments(): void
     {
-        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render', 'prepareArguments'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['prepareArguments'], [], '', false);
         $viewHelper->injectObjectManager($this->mockObjectManager);
 
         $viewHelper->expects($this->once())->method('prepareArguments')->willReturn([]);
@@ -190,7 +153,7 @@ class AbstractViewHelperTest extends UnitTestCase
      */
     public function validateArgumentsAcceptsAllObjectsImplemtingArrayAccessAsAnArray(): void
     {
-        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render', 'prepareArguments'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['prepareArguments'], [], '', false);
 
         $viewHelper->setArguments(['test' => new \ArrayObject]);
         $viewHelper->expects($this->once())->method('prepareArguments')->willReturn(['test' => new ArgumentDefinition('test', 'array', false, 'documentation')]);
@@ -202,7 +165,7 @@ class AbstractViewHelperTest extends UnitTestCase
      */
     public function validateArgumentsCallsTheRightValidators(): void
     {
-        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render', 'prepareArguments'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['prepareArguments'], [], '', false);
         $viewHelper->injectObjectManager($this->mockObjectManager);
 
         $viewHelper->setArguments(['test' => 'Value of argument']);
@@ -220,7 +183,7 @@ class AbstractViewHelperTest extends UnitTestCase
     public function validateArgumentsCallsTheRightValidatorsAndThrowsExceptionIfValidationIsWrong(): void
     {
         $this->expectException(\InvalidArgumentException::class);
-        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render', 'prepareArguments'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['prepareArguments'], [], '', false);
         $viewHelper->injectObjectManager($this->mockObjectManager);
 
         $viewHelper->setArguments(['test' => 'test']);
@@ -271,7 +234,7 @@ class AbstractViewHelperTest extends UnitTestCase
         $renderingContext->setViewHelperVariableContainer($viewHelperVariableContainer);
         $renderingContext->setControllerContext($controllerContext);
 
-        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render', 'prepareArguments'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['prepareArguments'], [], '', false);
 
         $viewHelper->setRenderingContext($renderingContext);
 

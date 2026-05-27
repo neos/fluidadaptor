@@ -197,7 +197,7 @@ class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
      * @test
      * @dataProvider formObjectVariantsDataProvider
      */
-    public function getValueAttributeBuildsValueFromPropertyAndFormObjectIfInObjectAccessorMode($formObject): void
+    public function getValueAttributeBuildsValueFromPropertyAndFormObjectIfInObjectAccessorMode($value): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode', 'addAdditionalIdentityPropertiesIfNeeded'], [], '', false);
         $this->injectDependenciesIntoViewHelper($formViewHelper);
@@ -205,7 +205,7 @@ class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn(true);
         $this->viewHelperVariableContainerData = [
             FormViewHelper::class => [
-                'formObject' => $formObject,
+                'formObject' => $value,
             ]
         ];
 

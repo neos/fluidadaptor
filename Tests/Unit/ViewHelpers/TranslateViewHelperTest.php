@@ -187,13 +187,13 @@ class TranslateViewHelperTest extends ViewHelperBaseTestcase
      * @param string $id
      * @param string $value
      * @param string $translatedId
-     * @param string $translatedValue
+     * @param string $translatedLabel
      * @param string $expectedResult
      */
-    public function translationFallbackTests($id, $value, $translatedId, $translatedValue, $expectedResult)
+    public function translationFallbackTests($id, $value, $translatedId, $translatedLabel, $expectedResult)
     {
-        $this->mockTranslator->expects($this->any())->method('translateById', $id)->willReturn(($translatedId));
-        $this->mockTranslator->expects($this->any())->method('translateByOriginalLabel', $value)->willReturn(($translatedValue));
+        $this->mockTranslator->expects($this->any())->method('translateById')->with($id)->willReturn(($translatedId));
+        $this->mockTranslator->expects($this->any())->method('translateByOriginalLabel')->with($value)->willReturn(($translatedLabel));
 
         $this->translateViewHelper = $this->prepareArguments($this->translateViewHelper, ['id' => $id, 'value' => $value]);
         $actualResult = $this->translateViewHelper->render();
