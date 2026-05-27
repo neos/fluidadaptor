@@ -55,11 +55,7 @@ final class AbstractWidgetViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
         $objectManager = $this->createMock(\Neos\Flow\ObjectManagement\ObjectManagerInterface::class);
         $objectManager->method('get')->with(\Neos\FluidAdaptor\Core\Widget\WidgetContext::class)->willReturn(($this->widgetContext));
         $this->viewHelper->injectObjectManager($objectManager);
-
-        $controllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class);
-        $this->viewHelper->_set('controllerContext', $controllerContext);
-
-        $request = $this->createMock(\Neos\Flow\Mvc\ActionRequest::class);
+        $this->viewHelper->_set('controllerContext', $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class));
     }
 
     /**

@@ -101,9 +101,7 @@ final class AjaxWidgetMiddlewareTest extends UnitTestCase
 
         $this->mockDispatcher = $this->createMock(Dispatcher::class);
         $this->inject($this->ajaxWidgetMiddleware, 'dispatcher', $this->mockDispatcher);
-
-        $mockSecurityContext = $this->createMock(Context::class);
-        $this->inject($this->ajaxWidgetMiddleware, 'securityContext', $mockSecurityContext);
+        $this->inject($this->ajaxWidgetMiddleware, 'securityContext', $this->createStub(Context::class));
     }
 
     /**

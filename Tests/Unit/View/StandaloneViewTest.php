@@ -35,10 +35,8 @@ final class StandaloneViewTest extends UnitTestCase
     protected function setUp(): void
     {
         $this->standaloneView = $this->getAccessibleMock(\Neos\FluidAdaptor\View\StandaloneView::class, []);
-
-        $mockRequest = $this->createMock(\Neos\Flow\Mvc\ActionRequest::class);
         $mockControllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class);
-        $mockControllerContext->method('getRequest')->willReturn(($mockRequest));
+        $mockControllerContext->method('getRequest')->willReturn(($this->createMock(\Neos\Flow\Mvc\ActionRequest::class)));
         $this->inject($this->standaloneView, 'controllerContext', $mockControllerContext);
     }
 
