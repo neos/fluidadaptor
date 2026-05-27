@@ -44,11 +44,6 @@ abstract class ViewHelperBaseTestcase extends \Neos\Flow\Tests\UnitTestCase
     protected $viewHelperVariableContainerData = [];
 
     /**
-     * @var \Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $templateVariableContainer;
-
-    /**
      * @var \Neos\Flow\Mvc\Routing\UriBuilder|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $uriBuilder;
@@ -57,11 +52,6 @@ abstract class ViewHelperBaseTestcase extends \Neos\Flow\Tests\UnitTestCase
      * @var \Neos\Flow\Mvc\Controller\ControllerContext|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $controllerContext;
-
-    /**
-     * @var TagBuilder|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $tagBuilder;
 
     /**
      * @var array
@@ -92,7 +82,6 @@ abstract class ViewHelperBaseTestcase extends \Neos\Flow\Tests\UnitTestCase
         $this->viewHelperVariableContainer->method('exists')->willReturnCallback([$this, 'viewHelperVariableContainerExistsCallback']);
         $this->viewHelperVariableContainer->method('get')->willReturnCallback([$this, 'viewHelperVariableContainerGetCallback']);
         $this->viewHelperVariableContainer->method('addOrUpdate')->willReturnCallback([$this, 'viewHelperVariableContainerAddOrUpdateCallback']);
-        $this->templateVariableContainer = $this->createMock(TemplateVariableContainer::class);
         $this->uriBuilder = $this->createMock(\Neos\Flow\Mvc\Routing\UriBuilder::class);
         $this->uriBuilder->method('reset')->willReturn(($this->uriBuilder));
         $this->uriBuilder->method('setArguments')->willReturn(($this->uriBuilder));
@@ -110,10 +99,9 @@ abstract class ViewHelperBaseTestcase extends \Neos\Flow\Tests\UnitTestCase
         $this->controllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class);
         $this->controllerContext->method('getUriBuilder')->willReturn(($this->uriBuilder));
         $this->controllerContext->method('getRequest')->willReturn(($this->request));
-        $this->tagBuilder = $this->createMock(TagBuilder::class);
         $this->arguments = [];
         $this->renderingContext = new \Neos\FluidAdaptor\Core\Rendering\RenderingContext([]);
-        $this->renderingContext->setVariableProvider($this->templateVariableContainer);
+        $this->renderingContext->setVariableProvider($this->createStub(\Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer::class));
         $this->renderingContext->setViewHelperVariableContainer($this->viewHelperVariableContainer);
         $this->renderingContext->setControllerContext($this->controllerContext);
     }
@@ -157,7 +145,7 @@ abstract class ViewHelperBaseTestcase extends \Neos\Flow\Tests\UnitTestCase
         $viewHelper->setRenderingContext($this->renderingContext);
         $viewHelper->setArguments($this->arguments);
         if ($viewHelper instanceof AbstractTagBasedViewHelper) {
-            $viewHelper->injectTagBuilder($this->tagBuilder);
+            $viewHelper->injectTagBuilder($this->createStub(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class));
         }
     }
 
