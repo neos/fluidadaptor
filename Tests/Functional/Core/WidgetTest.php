@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Functional\Core;
 
 /*
@@ -17,7 +20,7 @@ use Neos\Flow\Tests\FunctionalTestCase;
 /**
  * Testcase for the widget mechanism
  */
-class WidgetTest extends FunctionalTestCase
+final class WidgetTest extends FunctionalTestCase
 {
     /**
      * Additional setup: Routes
@@ -83,7 +86,7 @@ class WidgetTest extends FunctionalTestCase
         self::assertSame('SomeAjaxController::indexAction(option1: "first0", option2: "second0")', \trim($confirmation));
         self::assertSame('SomeAjaxController::indexAction(option1: "first1", option2: "second1")', \trim($secondConfirmation));
 
-        self::assertNotEquals($ajaxWidgetUri, $secondAjaxWidgetUri);
+        self::assertNotSame($ajaxWidgetUri, $secondAjaxWidgetUri);
         $response = $this->browser->request('http://localhost/' . $ajaxWidgetUri);
         self::assertSame('SomeAjaxController::ajaxAction("first0", "second0")', trim($response->getBody()->getContents()));
         $response = $this->browser->request('http://localhost/' . $secondAjaxWidgetUri);

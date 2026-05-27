@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
 
 /*
@@ -30,17 +33,12 @@ use Psr\Http\Server\RequestHandlerInterface;
  * Testcase for AjaxWidgetMiddleware
  *
  */
-class AjaxWidgetMiddlewareTest extends UnitTestCase
+final class AjaxWidgetMiddlewareTest extends UnitTestCase
 {
     /**
      * @var AjaxWidgetMiddleware
      */
     protected $ajaxWidgetMiddleware;
-
-    /**
-     * @var ObjectManagerInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $mockObjectManager;
 
     /**
      * @var RequestHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
@@ -73,21 +71,6 @@ class AjaxWidgetMiddlewareTest extends UnitTestCase
     protected $mockDispatcher;
 
     /**
-     * @var Context|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $mockSecurityContext;
-
-    /**
-     * @var \Neos\Flow\Property\PropertyMapper|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $mockPropertyMapper;
-
-    /**
-     * @var \Neos\Flow\Property\PropertyMappingConfiguration|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $mockPropertyMappingConfiguration;
-
-    /**
      * @var \PHPUnit\Framework\MockObject\MockObject|ActionRequestFactory
      */
     protected $mockActionRequestFactory;
@@ -98,31 +81,29 @@ class AjaxWidgetMiddlewareTest extends UnitTestCase
     {
         $this->ajaxWidgetMiddleware = new AjaxWidgetMiddleware();
 
-        $this->mockObjectManager = $this->createMock(ObjectManagerInterface::class);
-
-        $this->mockHttpRequest = $this->getMockBuilder(ServerRequestInterface::class)->disableOriginalConstructor()->getMock();
+        $this->mockHttpRequest = $this->createMock(ServerRequestInterface::class);
         $this->mockHttpResponse = new Response();
         $this->mockHttpRequest->method('getQueryParams')->willreturn([]);
         $this->mockHttpRequest->method('getUploadedFiles')->willreturn([]);
 
-        $this->mockRequestHandler = $this->getMockBuilder(RequestHandlerInterface::class)->disableOriginalConstructor()->getMock();
+        $this->mockRequestHandler = $this->createMock(RequestHandlerInterface::class);
         $this->mockRequestHandler->method('handle')->willReturn($this->mockHttpResponse);
 
-        $this->mockAjaxWidgetContextHolder = $this->getMockBuilder(AjaxWidgetContextHolder::class)->getMock();
+        $this->mockAjaxWidgetContextHolder = $this->createMock(AjaxWidgetContextHolder::class);
         $this->inject($this->ajaxWidgetMiddleware, 'ajaxWidgetContextHolder', $this->mockAjaxWidgetContextHolder);
 
         $this->mockActionRequestFactory = $this->getMockBuilder(ActionRequestFactory::class)->disableOriginalConstructor()->onlyMethods(['prepareActionRequest'])->getMock();
 
         $this->inject($this->ajaxWidgetMiddleware, 'actionRequestFactory', $this->mockActionRequestFactory);
 
-        $this->mockHashService = $this->getMockBuilder(HashService::class)->getMock();
+        $this->mockHashService = $this->createMock(HashService::class);
         $this->inject($this->ajaxWidgetMiddleware, 'hashService', $this->mockHashService);
 
-        $this->mockDispatcher = $this->getMockBuilder(Dispatcher::class)->getMock();
+        $this->mockDispatcher = $this->createMock(Dispatcher::class);
         $this->inject($this->ajaxWidgetMiddleware, 'dispatcher', $this->mockDispatcher);
 
-        $this->mockSecurityContext = $this->getMockBuilder(Context::class)->getMock();
-        $this->inject($this->ajaxWidgetMiddleware, 'securityContext', $this->mockSecurityContext);
+        $mockSecurityContext = $this->createMock(Context::class);
+        $this->inject($this->ajaxWidgetMiddleware, 'securityContext', $mockSecurityContext);
     }
 
     /**
@@ -131,8 +112,6 @@ class AjaxWidgetMiddlewareTest extends UnitTestCase
     public function handleDoesNotCreateActionRequestIfHttpRequestContainsNoWidgetContext()
     {
         $this->mockHttpRequest->method('getParsedBody')->willReturn([]);
-
-        $this->mockObjectManager->expects($this->never())->method('get');
 
         $this->ajaxWidgetMiddleware->process($this->mockHttpRequest, $this->mockRequestHandler);
     }
@@ -148,10 +127,10 @@ class AjaxWidgetMiddlewareTest extends UnitTestCase
             '__widgetId' => $mockWidgetId,
         ]);
 
-        $mockWidgetContext = $this->getMockBuilder(WidgetContext::class)->getMock();
+        $mockWidgetContext = $this->createMock(WidgetContext::class);
         $mockWidgetContext->expects($this->atLeastOnce())->method('getControllerObjectName')->willReturn($mockControllerObjectName);
         $this->mockAjaxWidgetContextHolder->expects($this->atLeastOnce())->method('get')->with($mockWidgetId)->willReturn($mockWidgetContext);
-        $mockActionRequest = $this->getMockBuilder(ActionRequest::class)->disableOriginalConstructor()->getMock();
+        $mockActionRequest = $this->createMock(ActionRequest::class);
         $this->mockActionRequestFactory->method('prepareActionRequest')->willReturn($mockActionRequest);
 
         $mockActionRequest->expects($this->once())->method('setArguments')->with(['__widgetContext' =>  $mockWidgetContext, '__widgetId' => 'SomeWidgetId']);
@@ -167,14 +146,14 @@ class AjaxWidgetMiddlewareTest extends UnitTestCase
     {
         $mockWidgetId = 'SomeWidgetId';
         $mockControllerObjectName = 'SomeControllerObjectName';
-        $this->mockHttpRequest->expects($this->any())->method('getParsedBody')->willReturn([
+        $this->mockHttpRequest->method('getParsedBody')->willReturn([
             '__widgetId' => $mockWidgetId,
         ]);
 
-        $mockWidgetContext = $this->getMockBuilder(WidgetContext::class)->getMock();
+        $mockWidgetContext = $this->createMock(WidgetContext::class);
         $mockWidgetContext->expects($this->atLeastOnce())->method('getControllerObjectName')->willReturn($mockControllerObjectName);
         $this->mockAjaxWidgetContextHolder->expects($this->atLeastOnce())->method('get')->with($mockWidgetId)->willReturn($mockWidgetContext);
-        $mockActionRequest = $this->getMockBuilder(ActionRequest::class)->disableOriginalConstructor()->getMock();
+        $mockActionRequest = $this->createStub(ActionRequest::class);
         $this->mockActionRequestFactory->method('prepareActionRequest')->willReturn($mockActionRequest);
 
         $this->mockDispatcher->expects($this->once())->method('dispatch');
@@ -193,10 +172,10 @@ class AjaxWidgetMiddlewareTest extends UnitTestCase
             '__widgetId' => $mockWidgetId,
         ]);
 
-        $mockWidgetContext = $this->getMockBuilder(WidgetContext::class)->getMock();
+        $mockWidgetContext = $this->createMock(WidgetContext::class);
         $mockWidgetContext->expects($this->atLeastOnce())->method('getControllerObjectName')->willReturn($mockControllerObjectName);
         $this->mockAjaxWidgetContextHolder->expects($this->atLeastOnce())->method('get')->with($mockWidgetId)->willReturn($mockWidgetContext);
-        $mockActionRequest = $this->getMockBuilder(ActionRequest::class)->disableOriginalConstructor()->getMock();
+        $mockActionRequest = $this->createStub(ActionRequest::class);
         $this->mockActionRequestFactory->method('prepareActionRequest')->willReturn($mockActionRequest);
 
         $response = $this->ajaxWidgetMiddleware->process($this->mockHttpRequest, $this->mockRequestHandler);

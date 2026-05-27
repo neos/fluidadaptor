@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Link;
 
 /*
@@ -15,7 +18,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
  */
-class EmailViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
+final class EmailViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
      * var \Neos\FluidAdaptor\ViewHelpers\Link\EmailViewHelper
@@ -35,12 +38,12 @@ class EmailViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\View
     public function renderCorrectlySetsTagNameAndAttributesAndContent()
     {
         $mockTagBuilder = $this->createMock(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class);
-        $mockTagBuilder->expects($this->any())->method('setTagName')->with('a');
+        $mockTagBuilder->method('setTagName')->with('a');
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('href', 'mailto:some@email.tld');
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some content');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
-        $this->viewHelper->expects($this->any())->method('renderChildren')->willReturn(('some content'));
+        $this->viewHelper->method('renderChildren')->willReturn(('some content'));
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['email' => 'some@email.tld']);
         $this->viewHelper->render();
@@ -55,7 +58,7 @@ class EmailViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\View
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some@email.tld');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 
-        $this->viewHelper->expects($this->any())->method('renderChildren')->willReturn((null));
+        $this->viewHelper->method('renderChildren')->willReturn((null));
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['email' => 'some@email.tld']);
         $this->viewHelper->render();

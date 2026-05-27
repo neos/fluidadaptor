@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
 
 /*
@@ -86,27 +89,27 @@ abstract class ViewHelperBaseTestcase extends \Neos\Flow\Tests\UnitTestCase
     protected function setUp(): void
     {
         $this->viewHelperVariableContainer = $this->createMock(\TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer::class);
-        $this->viewHelperVariableContainer->expects($this->any())->method('exists')->will($this->returnCallback([$this, 'viewHelperVariableContainerExistsCallback']));
-        $this->viewHelperVariableContainer->expects($this->any())->method('get')->will($this->returnCallback([$this, 'viewHelperVariableContainerGetCallback']));
-        $this->viewHelperVariableContainer->expects($this->any())->method('addOrUpdate')->will($this->returnCallback([$this, 'viewHelperVariableContainerAddOrUpdateCallback']));
+        $this->viewHelperVariableContainer->method('exists')->willReturnCallback([$this, 'viewHelperVariableContainerExistsCallback']);
+        $this->viewHelperVariableContainer->method('get')->willReturnCallback([$this, 'viewHelperVariableContainerGetCallback']);
+        $this->viewHelperVariableContainer->method('addOrUpdate')->willReturnCallback([$this, 'viewHelperVariableContainerAddOrUpdateCallback']);
         $this->templateVariableContainer = $this->createMock(TemplateVariableContainer::class);
         $this->uriBuilder = $this->createMock(\Neos\Flow\Mvc\Routing\UriBuilder::class);
-        $this->uriBuilder->expects($this->any())->method('reset')->willReturn(($this->uriBuilder));
-        $this->uriBuilder->expects($this->any())->method('setArguments')->willReturn(($this->uriBuilder));
-        $this->uriBuilder->expects($this->any())->method('setSection')->willReturn(($this->uriBuilder));
-        $this->uriBuilder->expects($this->any())->method('setFormat')->willReturn(($this->uriBuilder));
-        $this->uriBuilder->expects($this->any())->method('setCreateAbsoluteUri')->willReturn(($this->uriBuilder));
-        $this->uriBuilder->expects($this->any())->method('setAddQueryString')->willReturn(($this->uriBuilder));
-        $this->uriBuilder->expects($this->any())->method('setArgumentsToBeExcludedFromQueryString')->willReturn(($this->uriBuilder));
+        $this->uriBuilder->method('reset')->willReturn(($this->uriBuilder));
+        $this->uriBuilder->method('setArguments')->willReturn(($this->uriBuilder));
+        $this->uriBuilder->method('setSection')->willReturn(($this->uriBuilder));
+        $this->uriBuilder->method('setFormat')->willReturn(($this->uriBuilder));
+        $this->uriBuilder->method('setCreateAbsoluteUri')->willReturn(($this->uriBuilder));
+        $this->uriBuilder->method('setAddQueryString')->willReturn(($this->uriBuilder));
+        $this->uriBuilder->method('setArgumentsToBeExcludedFromQueryString')->willReturn(($this->uriBuilder));
 
         $httpRequestFactory = new ServerRequestFactory(new UriFactory());
         $httpRequest = $httpRequestFactory->createServerRequest('GET', new Uri('http://localhost/foo'));
 
-        $this->request = $this->getMockBuilder(\Neos\Flow\Mvc\ActionRequest::class)->disableOriginalConstructor()->getMock();
-        $this->request->expects($this->any())->method('isMainRequest')->willReturn((true));
-        $this->controllerContext = $this->getMockBuilder(\Neos\Flow\Mvc\Controller\ControllerContext::class)->disableOriginalConstructor()->getMock();
-        $this->controllerContext->expects($this->any())->method('getUriBuilder')->willReturn(($this->uriBuilder));
-        $this->controllerContext->expects($this->any())->method('getRequest')->willReturn(($this->request));
+        $this->request = $this->createMock(\Neos\Flow\Mvc\ActionRequest::class);
+        $this->request->method('isMainRequest')->willReturn((true));
+        $this->controllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class);
+        $this->controllerContext->method('getUriBuilder')->willReturn(($this->uriBuilder));
+        $this->controllerContext->method('getRequest')->willReturn(($this->request));
         $this->tagBuilder = $this->createMock(TagBuilder::class);
         $this->arguments = [];
         $this->renderingContext = new \Neos\FluidAdaptor\Core\Rendering\RenderingContext([]);

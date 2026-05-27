@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
@@ -18,7 +21,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 /**
  * Test for the "Radio" Form view helper
  */
-class RadioViewHelperTest extends ViewHelperBaseTestcase
+final class RadioViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Form\RadioViewHelper
@@ -61,8 +64,8 @@ class RadioViewHelperTest extends ViewHelperBaseTestcase
         });
 
         $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
-        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
-        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->method('getName')->willReturn(('foo'));
+        $this->viewHelper->method('getValueAttribute')->willReturn(('bar'));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
@@ -95,8 +98,8 @@ class RadioViewHelperTest extends ViewHelperBaseTestcase
         });
 
         $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
-        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
-        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->method('getName')->willReturn(('foo'));
+        $this->viewHelper->method('getValueAttribute')->willReturn(('bar'));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['checked' => true]);
@@ -140,10 +143,10 @@ class RadioViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
-        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
-        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
-        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn(('propertyValue'));
+        $this->viewHelper->method('getName')->willReturn(('foo'));
+        $this->viewHelper->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->method('getPropertyValue')->willReturn(('propertyValue'));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['checked' => true]);
@@ -179,10 +182,10 @@ class RadioViewHelperTest extends ViewHelperBaseTestcase
         });
 
         $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
-        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
-        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
-        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
-        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn((true));
+        $this->viewHelper->method('getName')->willReturn(('foo'));
+        $this->viewHelper->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->method('getPropertyValue')->willReturn((true));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper);
@@ -211,10 +214,10 @@ class RadioViewHelperTest extends ViewHelperBaseTestcase
         });
 
         $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
-        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
-        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
-        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
-        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn(([]));
+        $this->viewHelper->method('getName')->willReturn(('foo'));
+        $this->viewHelper->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->method('getPropertyValue')->willReturn(([]));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
 
@@ -248,10 +251,10 @@ class RadioViewHelperTest extends ViewHelperBaseTestcase
         });
 
         $this->viewHelper->expects($this->once())->method('registerFieldNameForFormTokenGeneration')->with('foo');
-        $this->viewHelper->expects($this->any())->method('getName')->willReturn(('foo'));
-        $this->viewHelper->expects($this->any())->method('getValueAttribute')->willReturn(('bar'));
-        $this->viewHelper->expects($this->any())->method('isObjectAccessorMode')->willReturn((true));
-        $this->viewHelper->expects($this->any())->method('getPropertyValue')->willReturn(('bar'));
+        $this->viewHelper->method('getName')->willReturn(('foo'));
+        $this->viewHelper->method('getValueAttribute')->willReturn(('bar'));
+        $this->viewHelper->method('isObjectAccessorMode')->willReturn((true));
+        $this->viewHelper->method('getPropertyValue')->willReturn(('bar'));
         $this->viewHelper->injectTagBuilder($this->mockTagBuilder);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper);

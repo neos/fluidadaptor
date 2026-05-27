@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
@@ -20,7 +23,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 /**
  * Test for the "Button" Form view helper
  */
-class ButtonViewHelperTest extends ViewHelperBaseTestcase
+final class ButtonViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var ButtonViewHelper
@@ -41,7 +44,7 @@ class ButtonViewHelperTest extends ViewHelperBaseTestcase
     public function renderCorrectlySetsTagNameAndDefaultAttributes(): void
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute', 'setContent'])->getMock();
-        $mockTagBuilder->expects($this->any())->method('setTagName')->with('button');
+        $mockTagBuilder->method('setTagName')->with('button');
         $matcher = self::exactly(3);
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {
             if ($matcher->numberOfInvocations() === 1) {

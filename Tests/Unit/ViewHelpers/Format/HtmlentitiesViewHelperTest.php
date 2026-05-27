@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -22,7 +25,7 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\HtmlentitiesViewHelper
  */
-class HtmlentitiesViewHelperTest extends ViewHelperBaseTestcase
+final class HtmlentitiesViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Format\HtmlentitiesViewHelper

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -21,17 +24,12 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\CaseViewHelper
  */
-class CaseViewHelperTest extends ViewHelperBaseTestcase
+final class CaseViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Format\CaseViewHelper
      */
     protected $viewHelper;
-
-    /**
-     * @var RenderingContext
-     */
-    protected $renderingContextMock;
 
     /**
      * Holds the initial mb_internal_encoding value found on this system in order to restore it after the tests
@@ -42,7 +40,7 @@ class CaseViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->renderingContext = $this->getMockBuilder(RenderingContext::class)->disableOriginalConstructor()->getMock();
+        $this->renderingContext = $this->createMock(RenderingContext::class);
         $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Format\CaseViewHelper::class, []);
         $this->viewHelper->setRenderingContext($this->renderingContext);
         $this->originalMbEncodingValue = mb_internal_encoding();
@@ -73,13 +71,11 @@ class CaseViewHelperTest extends ViewHelperBaseTestcase
     /**
      *
      */
-    public static function fixtureStringDataProvider()
+    public static function fixtureStringDataProvider(): \Iterator
     {
-        return [
-            ['', ''],
-            [0, '0'],
-            ['foo', 'FOO']
-        ];
+        yield ['', ''];
+        yield [0, '0'];
+        yield ['foo', 'FOO'];
     }
 
     /**
@@ -111,7 +107,7 @@ class CaseViewHelperTest extends ViewHelperBaseTestcase
         mb_internal_encoding('ASCII');
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => 'dummy']);
         $this->viewHelper->render();
-        self::assertEquals('ASCII', mb_internal_encoding());
+        self::assertSame('ASCII', mb_internal_encoding());
     }
 
     /**
@@ -123,7 +119,7 @@ class CaseViewHelperTest extends ViewHelperBaseTestcase
         mb_internal_encoding('ASCII');
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => 'dummy', 'mode' => 'incorrectModeResultingInException']);
         $this->viewHelper->render();
-        self::assertEquals('ASCII', mb_internal_encoding());
+        self::assertSame('ASCII', mb_internal_encoding());
     }
 
     /**
@@ -138,20 +134,18 @@ class CaseViewHelperTest extends ViewHelperBaseTestcase
     /**
      * Signature: $input, $mode, $expected
      */
-    public static function conversionTestingDataProvider()
+    public static function conversionTestingDataProvider(): \Iterator
     {
-        return [
-            ['FooB4r', CaseViewHelper::CASE_LOWER, 'foob4r'],
-            ['FooB4r', CaseViewHelper::CASE_UPPER, 'FOOB4R'],
-            ['foo bar', CaseViewHelper::CASE_CAPITAL, 'Foo bar'],
-            ['FOO Bar', CaseViewHelper::CASE_UNCAPITAL, 'fOO Bar'],
-            ['fOo bar BAZ', CaseViewHelper::CASE_CAPITAL_WORDS, 'Foo Bar Baz'],
-            ['smørrebrød', CaseViewHelper::CASE_UPPER, 'SMØRREBRØD'],
-            ['smørrebrød', CaseViewHelper::CASE_CAPITAL, 'Smørrebrød'],
-            ['römtömtömtöm', CaseViewHelper::CASE_UPPER, 'RÖMTÖMTÖMTÖM'],
-            ['smörrebröd smörrebröd RÖMTÖMTÖMTÖM', CaseViewHelper::CASE_CAPITAL_WORDS, 'Smörrebröd Smörrebröd Römtömtömtöm'],
-            ['Ἕλλάς α ω', CaseViewHelper::CASE_UPPER, 'ἝΛΛΆΣ Α Ω'],
-        ];
+        yield ['FooB4r', CaseViewHelper::CASE_LOWER, 'foob4r'];
+        yield ['FooB4r', CaseViewHelper::CASE_UPPER, 'FOOB4R'];
+        yield ['foo bar', CaseViewHelper::CASE_CAPITAL, 'Foo bar'];
+        yield ['FOO Bar', CaseViewHelper::CASE_UNCAPITAL, 'fOO Bar'];
+        yield ['fOo bar BAZ', CaseViewHelper::CASE_CAPITAL_WORDS, 'Foo Bar Baz'];
+        yield ['smørrebrød', CaseViewHelper::CASE_UPPER, 'SMØRREBRØD'];
+        yield ['smørrebrød', CaseViewHelper::CASE_CAPITAL, 'Smørrebrød'];
+        yield ['römtömtömtöm', CaseViewHelper::CASE_UPPER, 'RÖMTÖMTÖMTÖM'];
+        yield ['smörrebröd smörrebröd RÖMTÖMTÖMTÖM', CaseViewHelper::CASE_CAPITAL_WORDS, 'Smörrebröd Smörrebröd Römtömtömtöm'];
+        yield ['Ἕλλάς α ω', CaseViewHelper::CASE_UPPER, 'ἝΛΛΆΣ Α Ω'];
     }
 
     /**

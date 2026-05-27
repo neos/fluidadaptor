@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Functional\Form;
 
 /*
@@ -17,7 +20,7 @@ use Neos\Flow\Mvc\Routing\Route;
  * Testcase for Standalone View
  */
 #[\PHPUnit\Framework\Attributes\Group('large')]
-class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
+final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
 {
     /**
      * @var boolean
@@ -73,8 +76,8 @@ class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
 
         $this->browser->request('http://localhost/test/fluid/formobjects/edit?fooPost=' . $postIdentifier);
         $form = $this->browser->getForm();
-        self::assertFalse(isset($form['post']['tags']['__identity']), 'Post tags identities not set.');
-        self::assertFalse(isset($form['tags']['__identity']), 'Tags identities not set.');
+        self::assertArrayNotHasKey('__identity', $form['post']['tags'], 'Post tags identities not set.');
+        self::assertArrayNotHasKey('__identity', $form['tags'], 'Tags identities not set.');
     }
 
     /**
@@ -86,7 +89,7 @@ class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
 
         $this->browser->request('http://localhost/test/fluid/formobjects/edit?fooPost=' . $postIdentifier);
         $form = $this->browser->getForm();
-        self::assertFalse(isset($form['post']['author']['location']['__identity']));
+        self::assertArrayNotHasKey('__identity', $form['post']['author']['location']);
     }
 
     /**

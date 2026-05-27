@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Functional\View;
 
 /*
@@ -23,7 +26,7 @@ use TYPO3Fluid\Fluid\Core\Parser\UnknownNamespaceException;
 /**
  * Testcase for Standalone View
  */
-class StandaloneViewTest extends FunctionalTestCase
+final class StandaloneViewTest extends FunctionalTestCase
 {
     /**
      * @test

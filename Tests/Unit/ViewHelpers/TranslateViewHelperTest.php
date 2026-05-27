@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
 
 /*
@@ -23,7 +26,7 @@ require_once(__DIR__ . '/ViewHelperBaseTestcase.php');
 /**
  * Test case for the Translate ViewHelper
  */
-class TranslateViewHelperTest extends ViewHelperBaseTestcase
+final class TranslateViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var TranslateViewHelper
@@ -46,11 +49,11 @@ class TranslateViewHelperTest extends ViewHelperBaseTestcase
 
         $this->translateViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\TranslateViewHelper::class, ['renderChildren']);
 
-        $this->request->expects($this->any())->method('getControllerPackageKey')->willReturn(('Neos.FluidAdaptor'));
+        $this->request->method('getControllerPackageKey')->willReturn(('Neos.FluidAdaptor'));
 
         $this->dummyLocale = new Locale('de_DE');
 
-        $this->mockTranslator = $this->getMockBuilder(\Neos\Flow\I18n\Translator::class)->disableOriginalConstructor()->getMock();
+        $this->mockTranslator = $this->createMock(\Neos\Flow\I18n\Translator::class);
         $this->inject($this->translateViewHelper, 'translator', $this->mockTranslator);
 
         $this->injectDependenciesIntoViewHelper($this->translateViewHelper);
@@ -135,10 +138,10 @@ class TranslateViewHelperTest extends ViewHelperBaseTestcase
     public function renderThrowsExceptionIfNoPackageCouldBeResolved()
     {
         $this->expectException(Exception::class);
-        $mockRequest = $this->getMockBuilder(ActionRequest::class)->disableOriginalConstructor()->getMock();
+        $mockRequest = $this->createMock(ActionRequest::class);
         $mockRequest->method('getControllerPackageKey')->willReturn('');
 
-        $mockControllerContext = $this->getMockBuilder(ControllerContext::class)->disableOriginalConstructor()->getMock();
+        $mockControllerContext = $this->createMock(ControllerContext::class);
         $mockControllerContext->method('getRequest')->willReturn($mockRequest);
 
         $this->renderingContext->setControllerContext($mockControllerContext);
@@ -150,35 +153,30 @@ class TranslateViewHelperTest extends ViewHelperBaseTestcase
     }
 
     /**
-     * @return array
+     * @return \Iterator<(int | string), mixed>
      */
-    public static function translationFallbackDataProvider()
+    public static function translationFallbackDataProvider(): \Iterator
     {
-        return [
-            # id & value specified with all 4 combinations of available translations for id/label
-            ['id' => 'some.id', 'value' => 'Some label', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated id'],
-            ['id' => 'some.id', 'value' => 'Some label', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'Translated id'],
-            ['id' => 'some.id', 'value' => 'Some label', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Some label'],
-            ['id' => 'some.id', 'value' => 'Some label', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'Some label'],
-
-            # only value specified with all 4 combinations of available translations for id/label
-            ['id' => null, 'value' => 'Some label', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'],
-            ['id' => null, 'value' => 'Some label', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => ''],
-            ['id' => null, 'value' => 'Some label', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'],
-            ['id' => null, 'value' => 'Some label', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => ''],
-
-            # only id specified with all 4 combinations of available translations for id/label
-            ['id' => 'some.id', 'value' => null, 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated id'],
-            ['id' => 'some.id', 'value' => null, 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'Translated id'],
-            ['id' => 'some.id', 'value' => null, 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'some.id'],
-            ['id' => 'some.id', 'value' => null, 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'some.id'],
-
-            # neither id nor value specified with all 4 combinations of available translations for id/label
-            ['id' => null, 'value' => null, 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'],
-            ['id' => null, 'value' => null, 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => ''],
-            ['id' => null, 'value' => null, 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'],
-            ['id' => null, 'value' => null, 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => ''],
-        ];
+        # id & value specified with all 4 combinations of available translations for id/label
+        yield ['id' => 'some.id', 'value' => 'Some label', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated id'];
+        yield ['id' => 'some.id', 'value' => 'Some label', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'Translated id'];
+        yield ['id' => 'some.id', 'value' => 'Some label', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Some label'];
+        yield ['id' => 'some.id', 'value' => 'Some label', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'Some label'];
+        # only value specified with all 4 combinations of available translations for id/label
+        yield ['id' => null, 'value' => 'Some label', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'];
+        yield ['id' => null, 'value' => 'Some label', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => ''];
+        yield ['id' => null, 'value' => 'Some label', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'];
+        yield ['id' => null, 'value' => 'Some label', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => ''];
+        # only id specified with all 4 combinations of available translations for id/label
+        yield ['id' => 'some.id', 'value' => null, 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated id'];
+        yield ['id' => 'some.id', 'value' => null, 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'Translated id'];
+        yield ['id' => 'some.id', 'value' => null, 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'some.id'];
+        yield ['id' => 'some.id', 'value' => null, 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'some.id'];
+        # neither id nor value specified with all 4 combinations of available translations for id/label
+        yield ['id' => null, 'value' => null, 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'];
+        yield ['id' => null, 'value' => null, 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => ''];
+        yield ['id' => null, 'value' => null, 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'];
+        yield ['id' => null, 'value' => null, 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => ''];
     }
 
     /**
@@ -192,8 +190,8 @@ class TranslateViewHelperTest extends ViewHelperBaseTestcase
      */
     public function translationFallbackTests($id, $value, $translatedId, $translatedLabel, $expectedResult)
     {
-        $this->mockTranslator->expects($this->any())->method('translateById')->with($id)->willReturn(($translatedId));
-        $this->mockTranslator->expects($this->any())->method('translateByOriginalLabel')->with($value)->willReturn(($translatedLabel));
+        $this->mockTranslator->method('translateById')->with($id)->willReturn(($translatedId));
+        $this->mockTranslator->method('translateByOriginalLabel')->with($value)->willReturn(($translatedLabel));
 
         $this->translateViewHelper = $this->prepareArguments($this->translateViewHelper, ['id' => $id, 'value' => $value]);
         $actualResult = $this->translateViewHelper->render();

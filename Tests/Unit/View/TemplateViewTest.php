@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 /*
@@ -22,7 +25,7 @@ use Neos\FluidAdaptor\View\TemplateView;
 /**
  * Testcase for the TemplateView
  */
-class TemplateViewTest extends UnitTestCase
+final class TemplateViewTest extends UnitTestCase
 {
     /**
      * Helper to build mock controller context needed to test expandGenericPathPattern.
@@ -39,15 +42,15 @@ class TemplateViewTest extends UnitTestCase
 
         $httpRequest = new ServerRequest('GET', new Uri('http://robertlemke.com/blog'));
         $mockRequest = $this->createMock(\Neos\Flow\Mvc\ActionRequest::class, [], [$httpRequest]);
-        $mockRequest->expects($this->any())->method('getControllerPackageKey')->willReturn(($packageKey));
-        $mockRequest->expects($this->any())->method('getControllerSubPackageKey')->willReturn(($subPackageKey));
-        $mockRequest->expects($this->any())->method('getControllerName')->willReturn(($controllerName));
-        $mockRequest->expects($this->any())->method('getControllerObjectName')->willReturn(($controllerObjectName));
-        $mockRequest->expects($this->any())->method('getFormat')->willReturn(($format));
+        $mockRequest->method('getControllerPackageKey')->willReturn(($packageKey));
+        $mockRequest->method('getControllerSubPackageKey')->willReturn(($subPackageKey));
+        $mockRequest->method('getControllerName')->willReturn(($controllerName));
+        $mockRequest->method('getControllerObjectName')->willReturn(($controllerObjectName));
+        $mockRequest->method('getFormat')->willReturn(($format));
 
         /** @var $mockControllerContext ControllerContext */
         $mockControllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class, ['getRequest'], [], '', false);
-        $mockControllerContext->expects($this->any())->method('getRequest')->willReturn(($mockRequest));
+        $mockControllerContext->method('getRequest')->willReturn(($mockRequest));
 
         return $mockControllerContext;
     }

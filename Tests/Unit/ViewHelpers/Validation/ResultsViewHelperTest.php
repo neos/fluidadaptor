@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Validation;
 
 /*
@@ -20,7 +23,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
  * Test for the Validation Results view helper
  *
  */
-class ResultsViewHelperTest extends ViewHelperBaseTestcase
+final class ResultsViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var ResultsViewHelper
@@ -53,7 +56,7 @@ class ResultsViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderAddsValidationResultsToTemplateVariableContainer()
     {
-        $mockValidationResults = $this->getMockBuilder(\Neos\Error\Messages\Result::class)->getMock();
+        $mockValidationResults = $this->createStub(\Neos\Error\Messages\Result::class);
         $this->request->expects($this->atLeastOnce())->method('getInternalArgument')->with('__submittedArgumentValidationResults')->willReturn(($mockValidationResults));
         $this->templateVariableContainer->expects($this->once())->method('add')->with('validationResults', $mockValidationResults);
         $this->viewHelper->expects($this->once())->method('renderChildren');
@@ -68,7 +71,7 @@ class ResultsViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderAddsValidationResultsToTemplateVariableContainerWithCustomVariableNameIfSpecified()
     {
-        $mockValidationResults = $this->getMockBuilder(\Neos\Error\Messages\Result::class)->getMock();
+        $mockValidationResults = $this->createStub(\Neos\Error\Messages\Result::class);
         $this->request->expects($this->atLeastOnce())->method('getInternalArgument')->with('__submittedArgumentValidationResults')->willReturn(($mockValidationResults));
         $this->templateVariableContainer->expects($this->once())->method('add')->with('customName', $mockValidationResults);
         $this->viewHelper->expects($this->once())->method('renderChildren');
@@ -83,8 +86,8 @@ class ResultsViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderAddsValidationResultsForOnePropertyIfForArgumentIsNotEmpty()
     {
-        $mockPropertyValidationResults = $this->getMockBuilder(\Neos\Error\Messages\Result::class)->getMock();
-        $mockValidationResults = $this->getMockBuilder(\Neos\Error\Messages\Result::class)->getMock();
+        $mockPropertyValidationResults = $this->createStub(\Neos\Error\Messages\Result::class);
+        $mockValidationResults = $this->createMock(\Neos\Error\Messages\Result::class);
         $mockValidationResults->expects($this->once())->method('forProperty')->with('somePropertyName')->willReturn(($mockPropertyValidationResults));
         $this->request->expects($this->atLeastOnce())->method('getInternalArgument')->with('__submittedArgumentValidationResults')->willReturn(($mockValidationResults));
         $this->templateVariableContainer->expects($this->once())->method('add')->with('validationResults', $mockPropertyValidationResults);

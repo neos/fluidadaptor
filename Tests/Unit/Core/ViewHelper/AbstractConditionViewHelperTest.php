@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
 
 /*
@@ -22,7 +25,7 @@ require_once(__DIR__ . '/../../ViewHelpers/ViewHelperBaseTestcase.php');
 /**
  * Testcase for Condition ViewHelper
  */
-class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
+final class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var AbstractConditionViewHelper|\PHPUnit\Framework\MockObject\MockObject
@@ -41,7 +44,7 @@ class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderThenChildReturnsAllChildrenIfNoThenViewHelperChildExists()
     {
-        $this->viewHelper->expects($this->any())->method('renderChildren')->willReturn(('foo'));
+        $this->viewHelper->method('renderChildren')->willReturn(('foo'));
 
         $actualResult = $this->viewHelper->_call('renderThenChild');
         self::assertEquals('foo', $actualResult);
@@ -80,7 +83,7 @@ class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
     public function renderThenChildReturnsEmptyStringIfChildNodesOnlyContainElseViewHelper()
     {
         $mockElseViewHelperNode = $this->createMock(ViewHelperNode::class, ['getViewHelperClassName', 'evaluate'], [], '', false);
-        $mockElseViewHelperNode->expects($this->any())->method('getViewHelperClassName')->willReturn((ElseViewHelper::class));
+        $mockElseViewHelperNode->method('getViewHelperClassName')->willReturn((ElseViewHelper::class));
         $this->viewHelper->setChildNodes([$mockElseViewHelperNode]);
         $this->viewHelper->expects($this->never())->method('renderChildren')->willReturn(('Child nodes'));
 
@@ -103,8 +106,8 @@ class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
     public function renderElseChildRendersElseViewHelperChildIfConditionIsFalseAndNoThenViewHelperChildExists()
     {
         $mockElseViewHelperNode = $this->createMock(ViewHelperNode::class, ['getViewHelperClassName', 'evaluate', 'setRenderingContext'], [], '', false);
-        $mockElseViewHelperNode->expects($this->any())->method('getViewHelperClassName')->willReturn((ElseViewHelper::class));
-        $mockElseViewHelperNode->expects($this->any())->method('evaluate')->with($this->renderingContext)->willReturn(('ElseViewHelperResults'));
+        $mockElseViewHelperNode->method('getViewHelperClassName')->willReturn((ElseViewHelper::class));
+        $mockElseViewHelperNode->method('evaluate')->with($this->renderingContext)->willReturn(('ElseViewHelperResults'));
 
         $this->viewHelper->setChildNodes([$mockElseViewHelperNode]);
         $actualResult = $this->viewHelper->_call('renderElseChild');
@@ -149,7 +152,7 @@ class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
     public function elseArgumentHasPriorityOverChildNodesIfConditionIsFalse()
     {
         $mockElseViewHelperNode = $this->createMock(ViewHelperNode::class, ['getViewHelperClassName', 'evaluate', 'setRenderingContext'], [], '', false);
-        $mockElseViewHelperNode->expects($this->any())->method('getViewHelperClassName')->willReturn((ElseViewHelper::class));
+        $mockElseViewHelperNode->method('getViewHelperClassName')->willReturn((ElseViewHelper::class));
         $mockElseViewHelperNode->expects($this->never())->method('evaluate');
 
         $this->viewHelper->setChildNodes([$mockElseViewHelperNode]);

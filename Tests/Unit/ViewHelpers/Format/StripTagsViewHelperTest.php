@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -22,7 +25,7 @@ use Neos\FluidAdaptor\ViewHelpers\Fixtures\UserWithToString;
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\StripTagsViewHelper
  */
-class StripTagsViewHelperTest extends ViewHelperBaseTestcase
+final class StripTagsViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Format\StripTagsViewHelper|\PHPUnit\Framework\MockObject\MockObject
@@ -50,7 +53,7 @@ class StripTagsViewHelperTest extends ViewHelperBaseTestcase
     public function renderUsesValueAsSourceIfSpecified()
     {
         $string = 'Some string';
-        $this->viewHelper->expects($this->any())->method('buildRenderChildrenClosure')->willReturn(function () {
+        $this->viewHelper->method('buildRenderChildrenClosure')->willReturn(function () {
             throw new \Exception('rendderChildrenClosure was invoked but should not have been');
         });
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => $string]);
@@ -73,15 +76,13 @@ class StripTagsViewHelperTest extends ViewHelperBaseTestcase
     /**
      * Data Provider for the render tests
      *
-     * @return array
+     * @return \Iterator<(int | string), mixed>
      */
-    public static function stringsTestDataProvider()
+    public static function stringsTestDataProvider(): \Iterator
     {
-        return [
-            ['This is a sample text without special characters.', 'This is a sample text without special characters.'],
-            ['This is a sample text <b>with <i>some</i> tags</b>.', 'This is a sample text with some tags.'],
-            ['This text contains some &quot;&Uuml;mlaut&quot;.', 'This text contains some &quot;&Uuml;mlaut&quot;.']
-        ];
+        yield ['This is a sample text without special characters.', 'This is a sample text without special characters.'];
+        yield ['This is a sample text <b>with <i>some</i> tags</b>.', 'This is a sample text with some tags.'];
+        yield ['This text contains some &quot;&Uuml;mlaut&quot;.', 'This text contains some &quot;&Uuml;mlaut&quot;.'];
     }
 
     /**
@@ -90,7 +91,7 @@ class StripTagsViewHelperTest extends ViewHelperBaseTestcase
      */
     public function renderCorrectlyConvertsIntoPlaintext($source, $expectedResult)
     {
-        $this->viewHelper->expects($this->any())->method('buildRenderChildrenClosure')->willReturn(function () {
+        $this->viewHelper->method('buildRenderChildrenClosure')->willReturn(function () {
             throw new \Exception('rendderChildrenClosure was invoked but should not have been');
         });
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => $source]);
@@ -104,7 +105,7 @@ class StripTagsViewHelperTest extends ViewHelperBaseTestcase
     public function renderReturnsUnmodifiedSourceIfItIsANumber()
     {
         $source = 123.45;
-        $this->viewHelper->expects($this->any())->method('buildRenderChildrenClosure')->willReturn(function () {
+        $this->viewHelper->method('buildRenderChildrenClosure')->willReturn(function () {
             throw new \Exception('rendderChildrenClosure was invoked but should not have been');
         });
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => $source]);
@@ -119,7 +120,7 @@ class StripTagsViewHelperTest extends ViewHelperBaseTestcase
     {
         $user = new UserWithToString('Xaver <b>Cross-Site</b>');
         $expectedResult = 'Xaver Cross-Site';
-        $this->viewHelper->expects($this->any())->method('buildRenderChildrenClosure')->willReturn(function () {
+        $this->viewHelper->method('buildRenderChildrenClosure')->willReturn(function () {
             throw new \Exception('renderChildrenClosure was invoked but should not have been');
         });
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => $user]);
@@ -134,7 +135,7 @@ class StripTagsViewHelperTest extends ViewHelperBaseTestcase
     {
         $this->expectException(\InvalidArgumentException::class);
         $user = new UserWithoutToString('Xaver <b>Cross-Site</b>');
-        $this->viewHelper->expects($this->any())->method('buildRenderChildrenClosure')->willReturn(function () {
+        $this->viewHelper->method('buildRenderChildrenClosure')->willReturn(function () {
             throw new \Exception('renderChildrenClosure was invoked but should not have been');
         });
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => $user]);

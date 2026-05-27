@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
 
 /*
@@ -17,7 +20,7 @@ use Neos\FluidAdaptor\Core\Widget\Exception\WidgetContextNotFoundException;
  * Testcase for AjaxWidgetContextHolder
  *
  */
-class AjaxWidgetContextHolderTest extends \Neos\Flow\Tests\UnitTestCase
+final class AjaxWidgetContextHolderTest extends \Neos\Flow\Tests\UnitTestCase
 {
     /**
      * @test

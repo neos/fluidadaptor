@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -21,7 +24,7 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 /**
  * Test for date view helper \Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper
  */
-class DateViewHelperTest extends ViewHelperBaseTestcase
+final class DateViewHelperTest extends ViewHelperBaseTestcase
 {
     protected $viewHelper;
 
@@ -169,7 +172,7 @@ class DateViewHelperTest extends ViewHelperBaseTestcase
         $this->inject($this->viewHelper, 'localizationService', $mockLocalizationService);
 
         $mockDatetimeFormatter = $this->getMockBuilder(\Neos\Flow\I18n\Formatter\DatetimeFormatter::class)->onlyMethods(['format'])->getMock();
-        $mockDatetimeFormatter->expects($this->once())->method('format')->will(self::throwException(new I18n\Exception()));
+        $mockDatetimeFormatter->expects($this->once())->method('format')->willThrowException(new I18n\Exception());
         $this->inject($this->viewHelper, 'datetimeFormatter', $mockDatetimeFormatter);
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['date' => new \DateTime(), 'forceLocale' => true]);

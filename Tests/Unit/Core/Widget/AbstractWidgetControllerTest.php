@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
 
 /*
@@ -21,7 +24,7 @@ use Neos\FluidAdaptor\Core\Widget\WidgetContext;
 /**
  * Test case for AbstractWidgetController
  */
-class AbstractWidgetControllerTest extends UnitTestCase
+final class AbstractWidgetControllerTest extends UnitTestCase
 {
     /**
      * @test
@@ -49,7 +52,7 @@ class AbstractWidgetControllerTest extends UnitTestCase
         $mockResponse = new ActionResponse();
 
         $httpRequest = new ServerRequest('GET', new Uri('http://localhost'));
-        $mockActionRequest->expects($this->any())->method('getHttpRequest')->willReturn(($httpRequest));
+        $mockActionRequest->method('getHttpRequest')->willReturn(($httpRequest));
 
         $expectedWidgetConfiguration = ['foo' => uniqid()];
 

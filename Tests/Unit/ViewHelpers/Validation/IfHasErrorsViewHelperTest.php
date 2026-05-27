@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
 
 /*
@@ -20,7 +23,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
  */
-class IfHasErrorsViewHelperTest extends ViewHelperBaseTestcase
+final class IfHasErrorsViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var IfHasErrorsViewHelper|\PHPUnit\Framework\MockObject\MockObject

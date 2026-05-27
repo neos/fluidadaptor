@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
 
 /*
@@ -17,7 +20,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
  * Testcase for WidgetContext
  *
  */
-class WidgetContextTest extends \Neos\Flow\Tests\UnitTestCase
+final class WidgetContextTest extends \Neos\Flow\Tests\UnitTestCase
 {
     /**
      * @var \Neos\FluidAdaptor\Core\Widget\WidgetContext
@@ -85,8 +88,8 @@ class WidgetContextTest extends \Neos\Flow\Tests\UnitTestCase
      */
     public function viewHelperChildNodesCanBeReadAgain()
     {
-        $viewHelperChildNodes = $this->createMock(RootNode::class);
-        $renderingContext = $this->createMock(RenderingContextInterface::class);
+        $viewHelperChildNodes = $this->createStub(RootNode::class);
+        $renderingContext = $this->createStub(RenderingContextInterface::class);
 
         $this->widgetContext->setViewHelperChildNodes($viewHelperChildNodes, $renderingContext);
         self::assertSame($viewHelperChildNodes, $this->widgetContext->getViewHelperChildNodes());

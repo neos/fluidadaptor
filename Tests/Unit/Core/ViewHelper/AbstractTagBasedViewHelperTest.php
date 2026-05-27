@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
 
 /*
@@ -17,7 +20,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 /**
  * Testcase for TagBasedViewHelper
  */
-class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
+final class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject|AbstractTagBasedViewHelper

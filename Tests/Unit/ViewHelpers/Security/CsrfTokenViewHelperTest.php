@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
 
 /*
@@ -18,7 +21,7 @@ use Neos\FluidAdaptor\ViewHelpers\Security\CsrfTokenViewHelper;
 /**
  * Test case for the CsrfTokenViewHelper
  */
-class CsrfTokenViewHelperTest extends ViewHelperBaseTestcase
+final class CsrfTokenViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var CsrfTokenViewHelper|\PHPUnit\Framework\MockObject\MockObject
@@ -38,7 +41,7 @@ class CsrfTokenViewHelperTest extends ViewHelperBaseTestcase
         parent::setUp();
         $this->viewHelper = $this->getMockBuilder(CsrfTokenViewHelper::class)->onlyMethods(['buildRenderChildrenClosure'])->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
-        $this->objectManagerMock = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
+        $this->objectManagerMock = $this->createMock(ObjectManagerInterface::class);
         $this->renderingContext->injectObjectManager($this->objectManagerMock);
         $this->viewHelper->initializeArguments();
     }
@@ -50,7 +53,7 @@ class CsrfTokenViewHelperTest extends ViewHelperBaseTestcase
     {
         $mockSecurityContext = $this->createMock(\Neos\Flow\Security\Context::class);
         $mockSecurityContext->expects($this->once())->method('getCsrfProtectionToken')->willReturn(('TheCsrfToken'));
-        $this->objectManagerMock->expects($this->any())->method('get')->willReturn($mockSecurityContext);
+        $this->objectManagerMock->method('get')->willReturn($mockSecurityContext);
 
         $actualResult = $this->viewHelper->render();
         self::assertEquals('TheCsrfToken', $actualResult);

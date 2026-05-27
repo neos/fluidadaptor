@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
@@ -19,7 +22,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
  * Test for the Abstract Form view helper
  *
  */
-class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
+final class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @test
@@ -31,7 +34,7 @@ class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
         eval('namespace Neos\\Fluid\\ViewHelpers\\Form; class ' . $className . ' {
 			public function __clone() {}
 		}');
-        $object = $this->createMock($fullClassName);
+        $object = $this->createStub($fullClassName);
 
         $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
         $mockPersistenceManager->expects($this->once())->method('getIdentifierByObject')->with($object)->willReturn(('123'));
@@ -39,7 +42,7 @@ class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
         $expectedResult = chr(10) . '<input type="hidden" name="prefix[theName][__identity]" value="123" />' . chr(10);
 
         $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, ['prefixFieldName', 'registerFieldNameForFormTokenGeneration'], [], '', false);
-        $viewHelper->expects($this->any())->method('prefixFieldName')->with('theName')->willReturn(('prefix[theName]'));
+        $viewHelper->method('prefixFieldName')->with('theName')->willReturn(('prefix[theName]'));
         $viewHelper->_set('persistenceManager', $mockPersistenceManager);
 
         $actualResult = $viewHelper->_call('renderHiddenIdentityField', $object, 'theName');
@@ -56,7 +59,7 @@ class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
         eval('namespace Neos\\Fluid\\ViewHelpers\\Form; class ' . $className . ' {
 			public function __clone() {}
 		}');
-        $object = $this->createMock($fullClassName);
+        $object = $this->createStub($fullClassName);
 
         $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
         $mockPersistenceManager->expects($this->once())->method('getIdentifierByObject')->with($object)->willReturn(('123'));
@@ -64,7 +67,7 @@ class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
         $expectedResult = chr(10) . '<input type="hidden" name="prefix[theName][__identity]" value="123" />' . chr(10);
 
         $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, ['prefixFieldName', 'registerFieldNameForFormTokenGeneration'], [], '', false);
-        $viewHelper->expects($this->any())->method('prefixFieldName')->with('theName')->willReturn(('prefix[theName]'));
+        $viewHelper->method('prefixFieldName')->with('theName')->willReturn(('prefix[theName]'));
         $viewHelper->_set('persistenceManager', $mockPersistenceManager);
 
         $actualResult = $viewHelper->_call('renderHiddenIdentityField', $object, 'theName');
@@ -81,7 +84,7 @@ class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
         eval('namespace Neos\\Fluid\\ViewHelpers\\Form; class ' . $className . ' {
 			public function __clone() {}
 		}');
-        $object = $this->createMock($fullClassName);
+        $object = $this->createStub($fullClassName);
 
         $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
         $mockPersistenceManager->expects($this->once())->method('getIdentifierByObject')->with($object)->willReturn((null));

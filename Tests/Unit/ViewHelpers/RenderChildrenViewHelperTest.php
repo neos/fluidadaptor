@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
 
 /*
@@ -24,7 +27,7 @@ require_once(__DIR__ . '/ViewHelperBaseTestcase.php');
  * Testcase for CycleViewHelper
  *
  */
-class RenderChildrenViewHelperTest extends ViewHelperBaseTestcase
+final class RenderChildrenViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var RenderChildrenViewHelper
@@ -46,16 +49,16 @@ class RenderChildrenViewHelperTest extends ViewHelperBaseTestcase
     {
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
 
-        $renderingContext = $this->createMock(RenderingContextInterface::class);
+        $renderingContext = $this->createStub(RenderingContextInterface::class);
 
         $rootNode = $this->createMock(RootNode::class);
 
         $widgetContext = $this->createMock(WidgetContext::class);
-        $this->request->expects($this->any())->method('getInternalArgument')->with('__widgetContext')->willReturn($widgetContext);
-        $widgetContext->expects($this->any())->method('getViewHelperChildNodeRenderingContext')->willReturn($renderingContext);
-        $widgetContext->expects($this->any())->method('getViewHelperChildNodes')->willReturn($rootNode);
+        $this->request->method('getInternalArgument')->with('__widgetContext')->willReturn($widgetContext);
+        $widgetContext->method('getViewHelperChildNodeRenderingContext')->willReturn($renderingContext);
+        $widgetContext->method('getViewHelperChildNodes')->willReturn($rootNode);
 
-        $rootNode->expects($this->any())->method('evaluate')->with($renderingContext)->willReturn('Rendered Results');
+        $rootNode->method('evaluate')->with($renderingContext)->willReturn('Rendered Results');
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['k1' => 'v1', 'k2' => 'v2']);
         $output = $this->viewHelper->render();
@@ -84,9 +87,9 @@ class RenderChildrenViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->initializeArguments();
 
         $widgetContext = $this->createMock(WidgetContext::class);
-        $this->request->expects($this->any())->method('getInternalArgument')->with('__widgetContext')->willReturn($widgetContext);
-        $widgetContext->expects($this->any())->method('getViewHelperChildNodeRenderingContext')->willReturn(null);
-        $widgetContext->expects($this->any())->method('getViewHelperChildNodes')->willReturn(null);
+        $this->request->method('getInternalArgument')->with('__widgetContext')->willReturn($widgetContext);
+        $widgetContext->method('getViewHelperChildNodeRenderingContext')->willReturn(null);
+        $widgetContext->method('getViewHelperChildNodes')->willReturn(null);
 
         $this->viewHelper->render();
     }

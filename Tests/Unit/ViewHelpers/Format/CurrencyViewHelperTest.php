@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -21,7 +24,7 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\CurrencyViewHelper
  */
-class CurrencyViewHelperTest extends ViewHelperBaseTestcase
+final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
 {
     protected $viewHelper;
 
@@ -161,7 +164,7 @@ class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         $this->inject($this->viewHelper, 'localizationService', $mockLocalizationService);
 
         $mockNumberFormatter = $this->getMockBuilder(\Neos\Flow\I18n\Formatter\NumberFormatter::class)->onlyMethods(['formatCurrencyNumber'])->getMock();
-        $mockNumberFormatter->expects($this->once())->method('formatCurrencyNumber')->will(self::throwException(new \Neos\Flow\I18n\Exception()));
+        $mockNumberFormatter->expects($this->once())->method('formatCurrencyNumber')->willThrowException(new \Neos\Flow\I18n\Exception());
         $this->inject($this->viewHelper, 'numberFormatter', $mockNumberFormatter);
 
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((123.456));

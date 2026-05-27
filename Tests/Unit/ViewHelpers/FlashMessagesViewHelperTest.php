@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
 
 /*
@@ -18,7 +21,7 @@ require_once(__DIR__ . '/ViewHelperBaseTestcase.php');
 /**
  * Testcase for FlashMessagesViewHelper
  */
-class FlashMessagesViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
+final class FlashMessagesViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\FlashMessagesViewHelper
@@ -43,8 +46,8 @@ class FlashMessagesViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelp
     protected function setUp(): void
     {
         $this->mockFlashMessageContainer = $this->createMock(\Neos\Flow\Mvc\FlashMessage\FlashMessageContainer::class);
-        $mockControllerContext = $this->getMockBuilder(\Neos\Flow\Mvc\Controller\ControllerContext::class)->disableOriginalConstructor()->getMock();
-        $mockControllerContext->expects($this->any())->method('getFlashMessageContainer')->willReturn(($this->mockFlashMessageContainer));
+        $mockControllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class);
+        $mockControllerContext->method('getFlashMessageContainer')->willReturn(($this->mockFlashMessageContainer));
 
         $this->mockTagBuilder = $this->createMock(TagBuilder::class);
         $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\FlashMessagesViewHelper::class, []);
@@ -65,30 +68,28 @@ class FlashMessagesViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelp
     /**
      * Data provider for renderTests()
      */
-    public static function renderDataProvider()
+    public static function renderDataProvider(): \Iterator
     {
-        return [
-            [
-                '<li class="flashmessages-ok">Some Flash Message</li>',
-                [new \Neos\Error\Messages\Message('Some Flash Message')]
-            ],
-            [
-                '<li class="flashmessages-error">Error &quot;dynamic&quot; Flash Message</li>',
-                [new \Neos\Error\Messages\Error('Error %s Flash Message', null, ['"dynamic"'])]
-            ],
-            [
-                '<li class="flashmessages-error">Error Flash &quot;Message&quot;</li><li class="flashmessages-notice">Notice Flash Message</li>',
-                [new \Neos\Error\Messages\Error('Error Flash "Message"'), new \Neos\Error\Messages\Notice('Notice Flash Message')]
-            ],
-            [
-                '<li class="flashmessages-warning"><h3>Some &quot;Warning&quot;</h3>Warning message body</li><li class="flashmessages-notice">Notice Flash Message</li>',
-                [new \Neos\Error\Messages\Warning('Warning message body', null, [], 'Some "Warning"'), new \Neos\Error\Messages\Notice('Notice Flash Message')]
-            ],
-            [
-                '<li class="customClass-ok">Message 01</li><li class="customClass-notice">Message 02</li>',
-                [new \Neos\Error\Messages\Message('Message 01'), new \Neos\Error\Messages\Notice('Message 02')],
-                'customClass'
-            ],
+        yield [
+            '<li class="flashmessages-ok">Some Flash Message</li>',
+            [new \Neos\Error\Messages\Message('Some Flash Message')]
+        ];
+        yield [
+            '<li class="flashmessages-error">Error &quot;dynamic&quot; Flash Message</li>',
+            [new \Neos\Error\Messages\Error('Error %s Flash Message', null, ['"dynamic"'])]
+        ];
+        yield [
+            '<li class="flashmessages-error">Error Flash &quot;Message&quot;</li><li class="flashmessages-notice">Notice Flash Message</li>',
+            [new \Neos\Error\Messages\Error('Error Flash "Message"'), new \Neos\Error\Messages\Notice('Notice Flash Message')]
+        ];
+        yield [
+            '<li class="flashmessages-warning"><h3>Some &quot;Warning&quot;</h3>Warning message body</li><li class="flashmessages-notice">Notice Flash Message</li>',
+            [new \Neos\Error\Messages\Warning('Warning message body', null, [], 'Some "Warning"'), new \Neos\Error\Messages\Notice('Notice Flash Message')]
+        ];
+        yield [
+            '<li class="customClass-ok">Message 01</li><li class="customClass-notice">Message 02</li>',
+            [new \Neos\Error\Messages\Message('Message 01'), new \Neos\Error\Messages\Notice('Message 02')],
+            'customClass'
         ];
     }
 

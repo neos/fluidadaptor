@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -23,7 +26,7 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\BytesViewHelper
  */
-class BytesViewHelperTest extends ViewHelperBaseTestcase
+final class BytesViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Format\NumberViewHelper
@@ -39,85 +42,81 @@ class BytesViewHelperTest extends ViewHelperBaseTestcase
     }
 
     /**
-     * @return array
+     * @return \Iterator<(int | string), mixed>
      */
-    public static function valueDataProvider()
+    public static function valueDataProvider(): \Iterator
     {
-        return [
-
-            // invalid values
-            [
-                'value' => 'invalid',
-                'decimals' => null,
-                'decimalSeparator' => null,
-                'thousandsSeparator' => null,
-                'expected' => '0 B'
-            ],
-            [
-                'value' => '',
-                'decimals' => 2,
-                'decimalSeparator' => null,
-                'thousandsSeparator' => null,
-                'expected' => '0.00 B'
-            ],
-            [
-                'value' => [],
-                'decimals' => 2,
-                'decimalSeparator' => ',',
-                'thousandsSeparator' => null,
-                'expected' => '0,00 B'
-            ],
-
-            // valid values
-            [
-                'value' => 123,
-                'decimals' => null,
-                'decimalSeparator' => null,
-                'thousandsSeparator' => null,
-                'expected' => '123 B'
-            ],
-            [
-                'value' => '43008',
-                'decimals' => 1,
-                'decimalSeparator' => null,
-                'thousandsSeparator' => null,
-                'expected' => '42.0 KB'
-            ],
-            [
-                'value' => 1024,
-                'decimals' => 1,
-                'decimalSeparator' => null,
-                'thousandsSeparator' => null,
-                'expected' => '1.0 KB'
-            ],
-            [
-                'value' => 1023,
-                'decimals' => 2,
-                'decimalSeparator' => null,
-                'thousandsSeparator' => null,
-                'expected' => '1,023.00 B'
-            ],
-            [
-                'value' => 1073741823,
-                'decimals' => 1,
-                'decimalSeparator' => null,
-                'thousandsSeparator' => '.',
-                'expected' => '1.024.0 MB'
-            ],
-            [
-                'value' => pow(1024, 5),
-                'decimals' => 1,
-                'decimalSeparator' => null,
-                'thousandsSeparator' => null,
-                'expected' => '1.0 PB'
-            ],
-            [
-                'value' => pow(1024, 8),
-                'decimals' => 1,
-                'decimalSeparator' => null,
-                'thousandsSeparator' => null,
-                'expected' => '1.0 YB'
-            ]
+        // invalid values
+        yield [
+            'value' => 'invalid',
+            'decimals' => null,
+            'decimalSeparator' => null,
+            'thousandsSeparator' => null,
+            'expected' => '0 B'
+        ];
+        yield [
+            'value' => '',
+            'decimals' => 2,
+            'decimalSeparator' => null,
+            'thousandsSeparator' => null,
+            'expected' => '0.00 B'
+        ];
+        yield [
+            'value' => [],
+            'decimals' => 2,
+            'decimalSeparator' => ',',
+            'thousandsSeparator' => null,
+            'expected' => '0,00 B'
+        ];
+        // valid values
+        yield [
+            'value' => 123,
+            'decimals' => null,
+            'decimalSeparator' => null,
+            'thousandsSeparator' => null,
+            'expected' => '123 B'
+        ];
+        yield [
+            'value' => '43008',
+            'decimals' => 1,
+            'decimalSeparator' => null,
+            'thousandsSeparator' => null,
+            'expected' => '42.0 KB'
+        ];
+        yield [
+            'value' => 1024,
+            'decimals' => 1,
+            'decimalSeparator' => null,
+            'thousandsSeparator' => null,
+            'expected' => '1.0 KB'
+        ];
+        yield [
+            'value' => 1023,
+            'decimals' => 2,
+            'decimalSeparator' => null,
+            'thousandsSeparator' => null,
+            'expected' => '1,023.00 B'
+        ];
+        yield [
+            'value' => 1073741823,
+            'decimals' => 1,
+            'decimalSeparator' => null,
+            'thousandsSeparator' => '.',
+            'expected' => '1.024.0 MB'
+        ];
+        yield [
+            'value' => pow(1024, 5),
+            'decimals' => 1,
+            'decimalSeparator' => null,
+            'thousandsSeparator' => null,
+            'expected' => '1.0 PB'
+        ];
+        yield [
+            'value' => pow(1024, 8),
+            'decimals' => 1,
+            'decimalSeparator' => null,
+            'thousandsSeparator' => null,
+            'expected' => '1.0 YB'
         ];
     }
 
@@ -252,7 +251,7 @@ class BytesViewHelperTest extends ViewHelperBaseTestcase
         $mockNumberFormatter
             ->expects(static::once())
             ->method('formatDecimalNumber')
-            ->will(static::throwException(new I18nException()))
+            ->willThrowException(new I18nException())
         ;
         $this->inject($this->viewHelper, 'numberFormatter', $mockNumberFormatter);
 

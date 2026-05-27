@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Uri;
 
 /*
@@ -25,17 +28,12 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 /**
  * Test case for the resource uri view helper
  */
-class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
+final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
 {
     /**
      * @var ResourceViewHelper
      */
     protected $viewHelper;
-
-    /**
-     * @var ObjectManagerInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected $objectManagerMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject
@@ -52,14 +50,14 @@ class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\V
         parent::setUp();
         $this->mockI18nService = $this->createMock(Service::class);
         $this->mockResourceManager = $this->createMock(ResourceManager::class);
-        $this->objectManagerMock = $this->getMockBuilder(ObjectManagerInterface::class)->getMock();
-        $this->objectManagerMock->expects($this->any())->method('get')->will($this->returnValueMap([
+        $objectManagerMock = $this->createMock(ObjectManagerInterface::class);
+        $objectManagerMock->method('get')->willReturnMap([
             [Service::class, $this->mockI18nService],
             [ResourceManager::class, $this->mockResourceManager]
-        ]));
+        ]);
         $this->viewHelper = $this->getAccessibleMock(ResourceViewHelper::class, ['renderChildren'], [], '', false);
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
-        $this->renderingContext->injectObjectManager($this->objectManagerMock);
+        $this->renderingContext->injectObjectManager($objectManagerMock);
     }
 
     /**

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 /*
@@ -22,31 +25,21 @@ use Neos\FluidAdaptor\View\StandaloneView;
 /**
  * Testcase for the StandaloneView
  */
-class StandaloneViewTest extends UnitTestCase
+final class StandaloneViewTest extends UnitTestCase
 {
     /**
      * @var StandaloneView
      */
     protected $standaloneView;
 
-    /**
-     * @var ControllerContext
-     */
-    protected $mockControllerContext;
-
-    /**
-     * @var ActionRequest
-     */
-    protected $mockRequest;
-
     protected function setUp(): void
     {
         $this->standaloneView = $this->getAccessibleMock(\Neos\FluidAdaptor\View\StandaloneView::class, []);
 
-        $this->mockRequest = $this->getMockBuilder(\Neos\Flow\Mvc\ActionRequest::class)->disableOriginalConstructor()->getMock();
-        $this->mockControllerContext = $this->getMockBuilder(\Neos\Flow\Mvc\Controller\ControllerContext::class)->disableOriginalConstructor()->getMock();
-        $this->mockControllerContext->expects($this->any())->method('getRequest')->willReturn(($this->mockRequest));
-        $this->inject($this->standaloneView, 'controllerContext', $this->mockControllerContext);
+        $mockRequest = $this->createMock(\Neos\Flow\Mvc\ActionRequest::class);
+        $mockControllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class);
+        $mockControllerContext->method('getRequest')->willReturn(($mockRequest));
+        $this->inject($this->standaloneView, 'controllerContext', $mockControllerContext);
     }
 
     /**

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 /*
@@ -18,7 +21,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer;
 /**
  * Testcase for the TemplateView
  */
-class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
+final class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
 {
     /**
      * @var AbstractTemplateView
@@ -50,8 +53,8 @@ class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
         $this->templateVariableContainer = $this->getMockBuilder(TemplateVariableContainer::class)->onlyMethods(['exists', 'remove', 'add'])->getMock();
         $this->viewHelperVariableContainer = $this->getMockBuilder(ViewHelperVariableContainer::class)->onlyMethods(['setView'])->getMock();
         $this->renderingContext = $this->getMockBuilder(RenderingContext::class)->onlyMethods(['getViewHelperVariableContainer', 'getVariableProvider'])->disableOriginalConstructor()->getMock();
-        $this->renderingContext->expects($this->any())->method('getViewHelperVariableContainer')->willReturn(($this->viewHelperVariableContainer));
-        $this->renderingContext->expects($this->any())->method('getVariableProvider')->willReturn(($this->templateVariableContainer));
+        $this->renderingContext->method('getViewHelperVariableContainer')->willReturn(($this->viewHelperVariableContainer));
+        $this->renderingContext->method('getVariableProvider')->willReturn(($this->templateVariableContainer));
         $this->view = $this->getMockBuilder(AbstractTemplateView::class)->onlyMethods(['canRender'])->getMock();
         $this->view->setRenderingContext($this->renderingContext);
     }

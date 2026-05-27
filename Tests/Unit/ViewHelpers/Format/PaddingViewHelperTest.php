@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -18,7 +21,7 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 /**
  * Test for Neos\FluidAdaptor\ViewHelpers\Format\PaddingViewHelper
  */
-class PaddingViewHelperTest extends ViewHelperBaseTestcase
+final class PaddingViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Format\PaddingViewHelper

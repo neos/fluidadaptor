@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
 
 /*
@@ -21,7 +24,7 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
  * Testcase for IfAccessViewHelper
  *
  */
-class IfAccessViewHelperTest extends ViewHelperBaseTestcase
+final class IfAccessViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var IfAccessViewHelper
@@ -35,10 +38,10 @@ class IfAccessViewHelperTest extends ViewHelperBaseTestcase
 
     protected function setUp(): void
     {
-        $this->mockPrivilegeManager = $this->getMockBuilder(\Neos\Flow\Security\Authorization\PrivilegeManagerInterface::class)->disableOriginalConstructor()->getMock();
+        $this->mockPrivilegeManager = $this->createMock(\Neos\Flow\Security\Authorization\PrivilegeManagerInterface::class);
 
-        $objectManager = $this->getMockBuilder(ObjectManagerInterface::class)->disableOriginalConstructor()->getMock();
-        $objectManager->expects($this->any())->method('get')->willReturnCallback(function ($objectName) {
+        $objectManager = $this->createMock(ObjectManagerInterface::class);
+        $objectManager->method('get')->willReturnCallback(function ($objectName) {
             switch ($objectName) {
                 case PrivilegeManagerInterface::class:
                     return $this->mockPrivilegeManager;
@@ -46,8 +49,8 @@ class IfAccessViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        $renderingContext = $this->getMockBuilder(RenderingContext::class)->disableOriginalConstructor()->getMock();
-        $renderingContext->expects($this->any())->method('getObjectManager')->willReturn($objectManager);
+        $renderingContext = $this->createMock(RenderingContext::class);
+        $renderingContext->method('getObjectManager')->willReturn($objectManager);
 
         $this->ifAccessViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Security\IfAccessViewHelper::class, ['renderThenChild', 'renderElseChild']);
         $this->inject($this->ifAccessViewHelper, 'renderingContext', $renderingContext);

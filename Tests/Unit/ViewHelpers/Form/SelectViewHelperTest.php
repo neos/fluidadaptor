@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
@@ -23,7 +26,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 /**
  * Test for the "Select" Form view helper
  */
-class SelectViewHelperTest extends ViewHelperBaseTestcase
+final class SelectViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Form\SelectViewHelper
@@ -327,7 +330,7 @@ class SelectViewHelperTest extends ViewHelperBaseTestcase
 
         /** @var PersistenceManagerInterface|\PHPUnit\Framework\MockObject\MockObject $mockPersistenceManager */
         $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
-        $mockPersistenceManager->expects($this->any())->method('getIdentifierByObject')->with($user->getInterests())->willReturn((null));
+        $mockPersistenceManager->method('getIdentifierByObject')->with($user->getInterests())->willReturn((null));
         $this->viewHelper->injectPersistenceManager($mockPersistenceManager);
 
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
@@ -348,7 +351,7 @@ class SelectViewHelperTest extends ViewHelperBaseTestcase
     public function selectOnDomainObjectsCreatesExpectedOptions()
     {
         $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
-        $mockPersistenceManager->expects($this->any())->method('getIdentifierByObject')->willReturn((2));
+        $mockPersistenceManager->method('getIdentifierByObject')->willReturn((2));
         $this->viewHelper->injectPersistenceManager($mockPersistenceManager);
 
         $this->tagBuilder->expects($this->once())->method('addAttribute')->with('name', 'myName[__identity]');
@@ -418,11 +421,9 @@ class SelectViewHelperTest extends ViewHelperBaseTestcase
     public function multipleSelectOnDomainObjectsCreatesExpectedOptionsWithoutOptionValueField()
     {
         $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
-        $mockPersistenceManager->expects($this->any())->method('getIdentifierByObject')->will(self::returnCallBack(
-            function ($object) {
-                return $object->getId();
-            }
-        ));
+        $mockPersistenceManager->method('getIdentifierByObject')->willReturnCallback(function ($object) {
+            return $object->getId();
+        });
         $this->viewHelper->injectPersistenceManager($mockPersistenceManager);
 
         $this->tagBuilder = new TagBuilder();
@@ -458,7 +459,7 @@ class SelectViewHelperTest extends ViewHelperBaseTestcase
     public function selectWithoutFurtherConfigurationOnDomainObjectsUsesUuidForValueAndLabel()
     {
         $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
-        $mockPersistenceManager->expects($this->any())->method('getIdentifierByObject')->willReturn(('fakeUUID'));
+        $mockPersistenceManager->method('getIdentifierByObject')->willReturn(('fakeUUID'));
         $this->viewHelper->injectPersistenceManager($mockPersistenceManager);
 
         $this->tagBuilder->expects($this->once())->method('addAttribute')->with('name', 'myName');
@@ -484,7 +485,7 @@ class SelectViewHelperTest extends ViewHelperBaseTestcase
     public function selectWithoutFurtherConfigurationOnDomainObjectsUsesToStringForLabelIfAvailable()
     {
         $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
-        $mockPersistenceManager->expects($this->any())->method('getIdentifierByObject')->willReturn(('fakeUUID'));
+        $mockPersistenceManager->method('getIdentifierByObject')->willReturn(('fakeUUID'));
         $this->viewHelper->injectPersistenceManager($mockPersistenceManager);
 
         $this->tagBuilder->expects($this->once())->method('addAttribute')->with('name', 'myName');
@@ -512,7 +513,7 @@ class SelectViewHelperTest extends ViewHelperBaseTestcase
     {
         $this->expectException(Exception::class);
         $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
-        $mockPersistenceManager->expects($this->any())->method('getIdentifierByObject')->willReturn((null));
+        $mockPersistenceManager->method('getIdentifierByObject')->willReturn((null));
         $this->viewHelper->injectPersistenceManager($mockPersistenceManager);
 
         $user = new \Neos\FluidAdaptor\ViewHelpers\Fixtures\UserDomainClass(1, 'Ingmar', 'Schlecht');
@@ -693,38 +694,30 @@ class SelectViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->_call('getTranslatedLabel', 'value1', 'label1');
     }
 
-    public static function getTranslatedLabelDataProvider()
+    public static function getTranslatedLabelDataProvider(): \Iterator
     {
-        return [
-
-            ## translate by id
-
-            # using value
-            ['by' => 'id', 'using' => 'value', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated id'],
-            ['by' => 'id', 'using' => 'value', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'Translated id'],
-            ['by' => 'id', 'using' => 'value', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Some label'],
-            ['by' => 'id', 'using' => 'value', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'Some label'],
-
-            # using label
-            ['by' => 'id', 'using' => 'label', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated id'],
-            ['by' => 'id', 'using' => 'label', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'Translated id'],
-            ['by' => 'id', 'using' => 'label', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Some label'],
-            ['by' => 'id', 'using' => 'label', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'Some label'],
-
-            ## translate by label
-
-            # using value
-            ['by' => 'label', 'using' => 'value', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'],
-            ['by' => 'label', 'using' => 'value', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'someValue'],
-            ['by' => 'label', 'using' => 'value', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'],
-            ['by' => 'label', 'using' => 'value', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'someValue'],
-
-            # using label
-            ['by' => 'label', 'using' => 'label', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'],
-            ['by' => 'label', 'using' => 'label', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'Some label'],
-            ['by' => 'label', 'using' => 'label', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'],
-            ['by' => 'label', 'using' => 'label', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'Some label'],
-        ];
+        ## translate by id
+        # using value
+        yield ['by' => 'id', 'using' => 'value', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated id'];
+        yield ['by' => 'id', 'using' => 'value', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'Translated id'];
+        yield ['by' => 'id', 'using' => 'value', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Some label'];
+        yield ['by' => 'id', 'using' => 'value', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'Some label'];
+        # using label
+        yield ['by' => 'id', 'using' => 'label', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated id'];
+        yield ['by' => 'id', 'using' => 'label', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'Translated id'];
+        yield ['by' => 'id', 'using' => 'label', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Some label'];
+        yield ['by' => 'id', 'using' => 'label', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'Some label'];
+        ## translate by label
+        # using value
+        yield ['by' => 'label', 'using' => 'value', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'];
+        yield ['by' => 'label', 'using' => 'value', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'someValue'];
+        yield ['by' => 'label', 'using' => 'value', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'];
+        yield ['by' => 'label', 'using' => 'value', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'someValue'];
+        # using label
+        yield ['by' => 'label', 'using' => 'label', 'translatedId' => 'Translated id', 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'];
+        yield ['by' => 'label', 'using' => 'label', 'translatedId' => 'Translated id', 'translatedLabel' => null, 'expectedResult' => 'Some label'];
+        yield ['by' => 'label', 'using' => 'label', 'translatedId' => null, 'translatedLabel' => 'Translated label', 'expectedResult' => 'Translated label'];
+        yield ['by' => 'label', 'using' => 'label', 'translatedId' => null, 'translatedLabel' => null, 'expectedResult' => 'Some label'];
     }
 
     /**
@@ -743,9 +736,9 @@ class SelectViewHelperTest extends ViewHelperBaseTestcase
 
         $mockTranslator = $this->createMock(\Neos\Flow\I18n\Translator::class);
         if ($by === 'label') {
-            $mockTranslator->expects($this->once())->method('translateByOriginalLabel')->will(self::returnCallBack(function ($label) use ($translatedLabel) {
+            $mockTranslator->expects($this->once())->method('translateByOriginalLabel')->willReturnCallback(function ($label) use ($translatedLabel) {
                 return $translatedLabel !== null ? $translatedLabel : $label;
-            }));
+            });
         } else {
             $mockTranslator->expects($this->once())->method('translateById')->willReturn(($translatedId));
         }

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -17,7 +20,7 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\NumberViewHelper
  */
-class NumberViewHelperTest extends ViewHelperBaseTestcase
+final class NumberViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Format\NumberViewHelper
@@ -98,7 +101,7 @@ class NumberViewHelperTest extends ViewHelperBaseTestcase
         $this->inject($this->viewHelper, 'localizationService', $mockLocalizationService);
 
         $mockNumberFormatter = $this->getMockBuilder(\Neos\Flow\I18n\Formatter\NumberFormatter::class)->onlyMethods(['formatDecimalNumber'])->getMock();
-        $mockNumberFormatter->expects($this->once())->method('formatDecimalNumber')->will(self::throwException(new \Neos\Flow\I18n\Exception()));
+        $mockNumberFormatter->expects($this->once())->method('formatDecimalNumber')->willThrowException(new \Neos\Flow\I18n\Exception());
         $this->inject($this->viewHelper, 'numberFormatter', $mockNumberFormatter);
 
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((123.456));

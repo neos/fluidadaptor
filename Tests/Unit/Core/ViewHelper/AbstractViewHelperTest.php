@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
 
 /*
@@ -29,7 +32,7 @@ require_once(__DIR__ . '/../Fixtures/TestViewHelper2.php');
  * Testcase for AbstractViewHelper
  *
  */
-class AbstractViewHelperTest extends UnitTestCase
+final class AbstractViewHelperTest extends UnitTestCase
 {
     /**
      * @var ReflectionService
@@ -43,9 +46,9 @@ class AbstractViewHelperTest extends UnitTestCase
 
     protected function setUp(): void
     {
-        $this->mockReflectionService = $this->getMockBuilder(ReflectionService::class)->disableOriginalConstructor()->getMock();
+        $this->mockReflectionService = $this->createMock(ReflectionService::class);
         $this->mockObjectManager = $this->createMock(ObjectManagerInterface::class);
-        $this->mockObjectManager->expects($this->any())->method('get')->with(ReflectionService::class)->willReturn($this->mockReflectionService);
+        $this->mockObjectManager->method('get')->with(ReflectionService::class)->willReturn($this->mockReflectionService);
     }
 
     /**
@@ -53,7 +56,7 @@ class AbstractViewHelperTest extends UnitTestCase
      */
     public function argumentsCanBeRegistered(): void
     {
-        $this->mockReflectionService->expects($this->any())->method('getMethodParameters')->willReturn([]);
+        $this->mockReflectionService->method('getMethodParameters')->willReturn([]);
 
         $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, [], [], '', false);
         $viewHelper->injectObjectManager($this->mockObjectManager);
@@ -90,7 +93,7 @@ class AbstractViewHelperTest extends UnitTestCase
      */
     public function overrideArgumentOverwritesExistingArgumentDefinition(): void
     {
-        $this->mockReflectionService->expects($this->any())->method('getMethodParameters')->willReturn([]);
+        $this->mockReflectionService->method('getMethodParameters')->willReturn([]);
 
         $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, [], [], '', false);
         $viewHelper->injectObjectManager($this->mockObjectManager);
@@ -125,7 +128,7 @@ class AbstractViewHelperTest extends UnitTestCase
      */
     public function prepareArgumentsCallsInitializeArguments(): void
     {
-        $this->mockReflectionService->expects($this->any())->method('getMethodParameters')->willReturn([]);
+        $this->mockReflectionService->method('getMethodParameters')->willReturn([]);
 
         $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['initializeArguments'], [], '', false);
         $viewHelper->injectObjectManager($this->mockObjectManager);
@@ -216,7 +219,7 @@ class AbstractViewHelperTest extends UnitTestCase
         $expectedOutput = 'Output';
         $actualOutput = $viewHelper->initializeArgumentsAndRender(['argument1' => 'value1']);
         self::assertEquals($expectedOutput, $actualOutput);
-        self::assertEquals(['validateArguments', 'initialize', 'callRenderMethod'], $calls);
+        self::assertSame(['validateArguments', 'initialize', 'callRenderMethod'], $calls);
     }
 
     /**
@@ -224,9 +227,9 @@ class AbstractViewHelperTest extends UnitTestCase
      */
     public function setRenderingContextShouldSetInnerVariables(): void
     {
-        $templateVariableContainer = $this->createMock(TemplateVariableContainer::class);
-        $viewHelperVariableContainer = $this->createMock(ViewHelperVariableContainer::class);
-        $controllerContext = $this->getMockBuilder(ControllerContext::class)->disableOriginalConstructor()->getMock();
+        $templateVariableContainer = $this->createStub(TemplateVariableContainer::class);
+        $viewHelperVariableContainer = $this->createStub(ViewHelperVariableContainer::class);
+        $controllerContext = $this->createStub(ControllerContext::class);
 
         $dummyView = new TemplateView([]);
         $renderingContext = $dummyView->getRenderingContext();
