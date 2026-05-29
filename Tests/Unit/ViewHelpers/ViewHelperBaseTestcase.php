@@ -14,6 +14,11 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
  * source code.
  */
 use Neos\Flow\Tests\UnitTestCase;
+use TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer;
+use Neos\Flow\Mvc\Routing\UriBuilder;
+use Neos\Flow\Mvc\ActionRequest;
+use Neos\Flow\Mvc\Controller\ControllerContext;
+use Neos\FluidAdaptor\Core\Rendering\RenderingContext;
 use PHPUnit\Framework\MockObject\MockObject;
 use GuzzleHttp\Psr7\Uri;
 use Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer;
@@ -75,15 +80,27 @@ abstract class ViewHelperBaseTestcase extends UnitTestCase
     protected $viewHelper;
 
     /**
+     * @var TagBuilder|MockObject
+     */
+    protected $tagBuilder;
+
+    /**
+     * @var TemplateVariableContainer|MockObject
+     */
+    protected $templateVariableContainer;
+
+    /**
      * @return void
      */
     protected function setUp(): void
     {
-        $this->viewHelperVariableContainer = $this->createMock(\TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer::class);
+        $this->tagBuilder = $this->createMock(TagBuilder::class);
+        $this->templateVariableContainer = $this->createMock(TemplateVariableContainer::class);
+        $this->viewHelperVariableContainer = $this->createMock(ViewHelperVariableContainer::class);
         $this->viewHelperVariableContainer->method('exists')->willReturnCallback([$this, 'viewHelperVariableContainerExistsCallback']);
         $this->viewHelperVariableContainer->method('get')->willReturnCallback([$this, 'viewHelperVariableContainerGetCallback']);
         $this->viewHelperVariableContainer->method('addOrUpdate')->willReturnCallback([$this, 'viewHelperVariableContainerAddOrUpdateCallback']);
-        $this->uriBuilder = $this->createMock(\Neos\Flow\Mvc\Routing\UriBuilder::class);
+        $this->uriBuilder = $this->createMock(UriBuilder::class);
         $this->uriBuilder->method('reset')->willReturn(($this->uriBuilder));
         $this->uriBuilder->method('setArguments')->willReturn(($this->uriBuilder));
         $this->uriBuilder->method('setSection')->willReturn(($this->uriBuilder));
@@ -95,14 +112,14 @@ abstract class ViewHelperBaseTestcase extends UnitTestCase
         $httpRequestFactory = new ServerRequestFactory(new UriFactory());
         $httpRequest = $httpRequestFactory->createServerRequest('GET', new Uri('http://localhost/foo'));
 
-        $this->request = $this->createMock(\Neos\Flow\Mvc\ActionRequest::class);
+        $this->request = $this->createMock(ActionRequest::class);
         $this->request->method('isMainRequest')->willReturn((true));
-        $this->controllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class);
+        $this->controllerContext = $this->createMock(ControllerContext::class);
         $this->controllerContext->method('getUriBuilder')->willReturn(($this->uriBuilder));
         $this->controllerContext->method('getRequest')->willReturn(($this->request));
         $this->arguments = [];
-        $this->renderingContext = new \Neos\FluidAdaptor\Core\Rendering\RenderingContext([]);
-        $this->renderingContext->setVariableProvider($this->createStub(\Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer::class));
+        $this->renderingContext = new RenderingContext([]);
+        $this->renderingContext->setVariableProvider($this->templateVariableContainer);
         $this->renderingContext->setViewHelperVariableContainer($this->viewHelperVariableContainer);
         $this->renderingContext->setControllerContext($this->controllerContext);
     }
@@ -146,7 +163,7 @@ abstract class ViewHelperBaseTestcase extends UnitTestCase
         $viewHelper->setRenderingContext($this->renderingContext);
         $viewHelper->setArguments($this->arguments);
         if ($viewHelper instanceof AbstractTagBasedViewHelper) {
-            $viewHelper->injectTagBuilder($this->createStub(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class));
+            $viewHelper->injectTagBuilder($this->tagBuilder);
         }
     }
 
