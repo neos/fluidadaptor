@@ -147,7 +147,7 @@ final class UploadViewHelperTest extends ViewHelperBaseTestcase
         $mockValidationResults = $this->createMock(Result::class);
         $mockValidationResults->expects($this->atLeastOnce())->method('hasErrors')->willReturn(true);
         $matcher = self::exactly(2);
-        $this->request->expects($matcher)->method('getInternalArgument')->willReturnCallback(function (...$parameters) use ($matcher) {
+        $this->request->expects($matcher)->method('getInternalArgument')->willReturnCallback(function (...$parameters) use ($matcher, $mockValidationResults, $submittedData) {
             if ($matcher->numberOfInvocations() === 1) {
                 $this->assertSame('__submittedArgumentValidationResults', $parameters[0]);
                 return $mockValidationResults;
