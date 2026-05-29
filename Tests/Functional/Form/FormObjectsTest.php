@@ -13,7 +13,7 @@ namespace Neos\FluidAdaptor\Tests\Functional\Form;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Large;
 use Neos\Flow\Tests\FunctionalTestCase;
 use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\DomCrawler\Field\InputFormField;
@@ -25,7 +25,7 @@ use Neos\Flow\Mvc\Routing\Route;
 /**
  * Testcase for Standalone View
  */
-#[Group('large')]
+#[Large]
 final class FormObjectsTest extends FunctionalTestCase
 {
     /**
