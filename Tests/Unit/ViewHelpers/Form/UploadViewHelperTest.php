@@ -13,7 +13,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use Neos\Error\Messages\Result;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\Flow\Property\PropertyMapper;
@@ -53,9 +54,7 @@ final class UploadViewHelperTest extends ViewHelperBaseTestcase
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsTagName(): void
     {
         $this->tagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
@@ -64,9 +63,7 @@ final class UploadViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsTypeNameAndValueAttributes(): void
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setContent', 'render', 'addAttribute'])->getMock();
@@ -95,18 +92,14 @@ final class UploadViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCallsSetErrorClassAttribute(): void
     {
         $this->viewHelper->expects($this->once())->method('setErrorClassAttribute');
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hiddenFieldsAreNotRenderedByDefault(): void
     {
         $expectedResult = '';
@@ -115,9 +108,7 @@ final class UploadViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hiddenFieldsContainDataOfTheSpecifiedResource(): void
     {
         $resource = new PersistentResource();
@@ -136,9 +127,7 @@ final class UploadViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hiddenFieldContainsDataOfAPreviouslyUploadedResource(): void
     {
         $mockResourceUuid = '79ecda60-1a27-69ca-17bf-a5d9e80e6c39';
@@ -154,7 +143,7 @@ final class UploadViewHelperTest extends ViewHelperBaseTestcase
             ]
         ];
 
-        /** @var Result|\PHPUnit\Framework\MockObject\MockObject $mockValidationResults */
+        /** @var Result|MockObject $mockValidationResults */
         $mockValidationResults = $this->createMock(Result::class);
         $mockValidationResults->expects($this->atLeastOnce())->method('hasErrors')->willReturn(true);
         $matcher = self::exactly(2);
@@ -169,7 +158,7 @@ final class UploadViewHelperTest extends ViewHelperBaseTestcase
             }
         });
 
-        /** @var PersistentResource|\PHPUnit\Framework\MockObject\MockObject $mockResource */
+        /** @var PersistentResource|MockObject $mockResource */
         $mockResource = $this->createStub(PersistentResource::class);
         $mockPersistenceManager = $this->createMock(PersistenceManagerInterface::class);
         $mockPersistenceManager->expects($this->once())->method('getIdentifierByObject')->with($mockResource)->willReturn($mockResourceUuid);
@@ -186,19 +175,17 @@ final class UploadViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hiddenFieldsContainDataOfValueArgumentIfNoResourceHasBeenUploaded(): void
     {
         $mockValueResourceUuid = '79ecda60-1a27-69ca-17bf-a5d9e80e6c39';
 
-        /** @var Result|\PHPUnit\Framework\MockObject\MockObject $mockValidationResults */
+        /** @var Result|MockObject $mockValidationResults */
         $mockValidationResults = $this->createMock(Result::class);
         $mockValidationResults->expects($this->atLeastOnce())->method('hasErrors')->willReturn(false);
         $this->request->expects($this->atLeastOnce())->method('getInternalArgument')->with('__submittedArgumentValidationResults')->willReturn($mockValidationResults);
 
-        /** @var PersistentResource|\PHPUnit\Framework\MockObject\MockObject $mockPropertyResource */
+        /** @var PersistentResource|MockObject $mockPropertyResource */
         $mockPropertyResource = $this->createStub(PersistentResource::class);
         $mockFormObject = [
             'foo' => $mockPropertyResource
@@ -220,19 +207,17 @@ final class UploadViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function hiddenFieldsContainDataOfBoundPropertyIfNoValueArgumentIsSetAndNoResourceHasBeenUploaded(): void
     {
         $mockResourceUuid = '79ecda60-1a27-69ca-17bf-a5d9e80e6c39';
 
-        /** @var Result|\PHPUnit\Framework\MockObject\MockObject $mockValidationResults */
+        /** @var Result|MockObject $mockValidationResults */
         $mockValidationResults = $this->createMock(Result::class);
         $mockValidationResults->expects($this->atLeastOnce())->method('hasErrors')->willReturn(false);
         $this->request->expects($this->atLeastOnce())->method('getInternalArgument')->with('__submittedArgumentValidationResults')->willReturn($mockValidationResults);
 
-        /** @var PersistentResource|\PHPUnit\Framework\MockObject\MockObject $mockPropertyResource */
+        /** @var PersistentResource|MockObject $mockPropertyResource */
         $mockPropertyResource = $this->createStub(PersistentResource::class);
         $mockFormObject = [
             'foo' => $mockPropertyResource

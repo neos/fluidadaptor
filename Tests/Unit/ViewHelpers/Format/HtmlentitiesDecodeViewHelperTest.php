@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
+use Neos\FluidAdaptor\ViewHelpers\Format\HtmlentitiesDecodeViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -35,21 +38,17 @@ final class HtmlentitiesDecodeViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\HtmlentitiesDecodeViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(HtmlentitiesDecodeViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperDeactivatesEscapingInterceptor()
     {
         self::assertFalse($this->viewHelper->isEscapingInterceptorEnabled());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderUsesValueAsSourceIfSpecified()
     {
         $this->viewHelper->expects($this->never())->method('renderChildren');
@@ -58,9 +57,7 @@ final class HtmlentitiesDecodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('Some string', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderUsesChildnodesAsSourceIfSpecified()
     {
         $this->viewHelper->expects($this->atLeastOnce())->method('renderChildren')->willReturn(('Some string'));
@@ -69,9 +66,7 @@ final class HtmlentitiesDecodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('Some string', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderDoesNotModifyValueIfItDoesNotContainSpecialCharacters()
     {
         $source = 'This is a sample text without special characters. <> &©"\'';
@@ -80,9 +75,7 @@ final class HtmlentitiesDecodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($source, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderDecodesSimpleString()
     {
         $source = 'Some special characters: &amp; &quot; \' &lt; &gt; *';
@@ -92,9 +85,7 @@ final class HtmlentitiesDecodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderRespectsKeepQuoteArgument()
     {
         $source = 'Some special characters: &amp; &quot; \' &lt; &gt; *';
@@ -104,9 +95,7 @@ final class HtmlentitiesDecodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderRespectsEncodingArgument()
     {
         $source = mb_convert_encoding('Some special characters: &amp; &quot; \' &lt; &gt; *', 'ISO-8859-1', 'UTF-8');
@@ -116,9 +105,7 @@ final class HtmlentitiesDecodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderReturnsUnmodifiedSourceIfItIsANumber()
     {
         $source = 123.45;
@@ -127,9 +114,7 @@ final class HtmlentitiesDecodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($source, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderDecodesObjectsToStrings()
     {
         $user = new UserWithToString('Xaver &lt;b&gt;Cross-Site&lt;/b&gt;');
@@ -139,9 +124,7 @@ final class HtmlentitiesDecodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderDoesNotModifySourceIfItIsAnObjectThatCantBeConvertedToAString()
     {
         $this->expectException(\InvalidArgumentException::class);

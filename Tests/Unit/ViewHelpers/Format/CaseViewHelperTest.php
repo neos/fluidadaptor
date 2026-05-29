@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -41,7 +44,7 @@ final class CaseViewHelperTest extends ViewHelperBaseTestcase
     {
         parent::setUp();
         $this->renderingContext = $this->createMock(RenderingContext::class);
-        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Format\CaseViewHelper::class, []);
+        $this->viewHelper = $this->getAccessibleMock(CaseViewHelper::class, []);
         $this->viewHelper->setRenderingContext($this->renderingContext);
         $this->originalMbEncodingValue = mb_internal_encoding();
     }
@@ -54,9 +57,7 @@ final class CaseViewHelperTest extends ViewHelperBaseTestcase
         mb_internal_encoding($this->originalMbEncodingValue);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRendersChildrenIfGivenValueIsNull()
     {
         $testString = 'child was here';
@@ -78,10 +79,8 @@ final class CaseViewHelperTest extends ViewHelperBaseTestcase
         yield ['foo', 'FOO'];
     }
 
-    /**
-     * @dataProvider fixtureStringDataProvider
-     * @test
-     */
+    #[DataProvider('fixtureStringDataProvider')]
+    #[Test]
     public function viewHelperDoesNotRenderChildrenIfGivenValueIsNotNull($testString, $expected)
     {
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => $testString]);
@@ -89,9 +88,7 @@ final class CaseViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperThrowsExceptionIfIncorrectModeIsGiven()
     {
         $this->expectException(InvalidVariableException::class);
@@ -99,9 +96,7 @@ final class CaseViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render('Foo', 'incorrectMode');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRestoresMbInternalEncodingValueAfterInvocation()
     {
         mb_internal_encoding('ASCII');
@@ -110,9 +105,7 @@ final class CaseViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame('ASCII', mb_internal_encoding());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRestoresMbInternalEncodingAfterExceptionOccurred()
     {
         $this->expectException(InvalidVariableException::class);
@@ -122,9 +115,7 @@ final class CaseViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame('ASCII', mb_internal_encoding());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperConvertsUppercasePerDefault()
     {
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => 'FooB4r']);
@@ -148,10 +139,8 @@ final class CaseViewHelperTest extends ViewHelperBaseTestcase
         yield ['Ἕλλάς α ω', CaseViewHelper::CASE_UPPER, 'ἝΛΛΆΣ Α Ω'];
     }
 
-    /**
-     * @test
-     * @dataProvider conversionTestingDataProvider
-     */
+    #[DataProvider('conversionTestingDataProvider')]
+    #[Test]
     public function viewHelperConvertsCorrectly($input, $mode, $expected)
     {
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => $input, 'mode' => $mode]);

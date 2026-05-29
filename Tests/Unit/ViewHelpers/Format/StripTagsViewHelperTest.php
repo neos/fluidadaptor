@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
+use Neos\FluidAdaptor\ViewHelpers\Format\StripTagsViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\MockObject;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -28,28 +33,24 @@ use Neos\FluidAdaptor\ViewHelpers\Fixtures\UserWithToString;
 final class StripTagsViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
-     * @var \Neos\FluidAdaptor\ViewHelpers\Format\StripTagsViewHelper|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Neos\FluidAdaptor\ViewHelpers\Format\StripTagsViewHelper|MockObject
      */
     protected $viewHelper;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\StripTagsViewHelper::class)->onlyMethods(['buildRenderChildrenClosure', 'renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(StripTagsViewHelper::class)->onlyMethods(['buildRenderChildrenClosure', 'renderChildren'])->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperDeactivatesEscapingInterceptor()
     {
         self::assertFalse($this->viewHelper->isEscapingInterceptorEnabled());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderUsesValueAsSourceIfSpecified()
     {
         $string = 'Some string';
@@ -61,9 +62,7 @@ final class StripTagsViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($string, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderUsesChildnodesAsSourceIfSpecified()
     {
         $string = 'Some string';
@@ -85,10 +84,8 @@ final class StripTagsViewHelperTest extends ViewHelperBaseTestcase
         yield ['This text contains some &quot;&Uuml;mlaut&quot;.', 'This text contains some &quot;&Uuml;mlaut&quot;.'];
     }
 
-    /**
-     * @test
-     * @dataProvider stringsTestDataProvider
-     */
+    #[DataProvider('stringsTestDataProvider')]
+    #[Test]
     public function renderCorrectlyConvertsIntoPlaintext($source, $expectedResult)
     {
         $this->viewHelper->method('buildRenderChildrenClosure')->willReturn(function () {
@@ -99,9 +96,7 @@ final class StripTagsViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderReturnsUnmodifiedSourceIfItIsANumber()
     {
         $source = 123.45;
@@ -113,9 +108,7 @@ final class StripTagsViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($source, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderConvertsObjectsToStrings()
     {
         $user = new UserWithToString('Xaver <b>Cross-Site</b>');
@@ -128,9 +121,7 @@ final class StripTagsViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderDoesNotModifySourceIfItIsAnObjectThatCantBeConvertedToAString()
     {
         $this->expectException(\InvalidArgumentException::class);

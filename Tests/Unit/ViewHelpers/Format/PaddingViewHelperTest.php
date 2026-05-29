@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
+use Neos\FluidAdaptor\ViewHelpers\Format\PaddingViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -31,13 +34,11 @@ final class PaddingViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\PaddingViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(PaddingViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringsArePaddedWithBlanksByDefault()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn(('foo'));
@@ -46,9 +47,7 @@ final class PaddingViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('foo       ', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function paddingStringCanBeSpecified()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn(('foo'));
@@ -57,9 +56,7 @@ final class PaddingViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('foo-=-=-=-', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringIsNotTruncatedIfPadLengthIsBelowStringLength()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn(('some long string'));
@@ -68,9 +65,7 @@ final class PaddingViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('some long string', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function integersArePaddedCorrectly()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((123));

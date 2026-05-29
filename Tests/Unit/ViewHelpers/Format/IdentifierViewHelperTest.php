@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
+use Neos\FluidAdaptor\ViewHelpers\Format\IdentifierViewHelper;
+use Neos\Flow\Persistence\PersistenceManagerInterface;
+use PHPUnit\Framework\Attributes\Test;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -39,15 +43,13 @@ final class IdentifierViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Format\IdentifierViewHelper::class, ['renderChildren']);
+        $this->viewHelper = $this->getAccessibleMock(IdentifierViewHelper::class, ['renderChildren']);
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
-        $this->mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
+        $this->mockPersistenceManager = $this->createMock(PersistenceManagerInterface::class);
         $this->viewHelper->_set('persistenceManager', $this->mockPersistenceManager);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderGetsIdentifierForObjectFromPersistenceManager()
     {
         $object = new \stdClass();
@@ -65,9 +67,7 @@ final class IdentifierViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderWithoutValueInvokesRenderChildren()
     {
         $object = new \stdClass();
@@ -86,9 +86,7 @@ final class IdentifierViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('b59292c5-1a28-4b36-8615-10d3c5b3a4d8', $this->viewHelper->render());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderReturnsNullIfGivenValueIsNull()
     {
         $this->viewHelper
@@ -100,9 +98,7 @@ final class IdentifierViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals(null, $this->viewHelper->render());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThrowsExceptionIfGivenValueIsNoObject()
     {
         $this->expectException(\InvalidArgumentException::class);

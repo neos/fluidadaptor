@@ -13,7 +13,9 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Uri;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use Neos\Flow\I18n\Locale;
 use Neos\Flow\I18n\Service;
 use Neos\Flow\ObjectManagement\ObjectManagerInterface;
@@ -28,7 +30,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 /**
  * Test case for the resource uri view helper
  */
-final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
+final class ResourceViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var ResourceViewHelper
@@ -36,12 +38,12 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
     protected $viewHelper;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var MockObject
      */
     protected $mockI18nService;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var MockObject
      */
     protected $mockResourceManager;
 
@@ -60,9 +62,7 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         $this->renderingContext->injectObjectManager($objectManagerMock);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderUsesCurrentControllerPackageKeyToBuildTheResourceUri()
     {
         $this->mockResourceManager->expects($this->atLeastOnce())->method('getPublicPackageResourceUri')->with('ThePackageKey', 'Styles/Main.css')->willReturn(('TheCorrectResourceUri'));
@@ -77,9 +77,7 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         self::assertEquals('TheCorrectResourceUri', $resourceUri);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderUsesCustomPackageKeyIfSpecified()
     {
         $this->mockResourceManager->expects($this->atLeastOnce())->method('getPublicPackageResourceUri')->with('ThePackageKey', 'Styles/Main.css')->willReturn(('TheCorrectResourceUri'));
@@ -93,9 +91,7 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         self::assertEquals('TheCorrectResourceUri', $resourceUri);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderUsesProvidedPersistentResourceInsteadOfPackageAndPath()
     {
         $resource = new PersistentResource();
@@ -110,9 +106,7 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         self::assertEquals('TheCorrectResourceUri', $resourceUri);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCreatesASpecialBrokenResourceUriIfTheResourceCouldNotBePublished()
     {
         $resource = new PersistentResource();
@@ -127,9 +121,7 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         self::assertEquals('404-Resource-Not-Found', $resourceUri);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderLocalizesResource()
     {
         $this->mockI18nService->expects($this->once())->method('getLocalizedFilename')->with('resource://ThePackageKey/Public/Styles/Main.css')->willReturn((['resource://ThePackageKey/Public/Styles/Main.css.de', new Locale('de')]));
@@ -142,9 +134,7 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         self::assertEquals('TheCorrectResourceUri', $resourceUri);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderLocalizesResourceGivenAsResourceUri()
     {
         $this->mockResourceManager
@@ -168,9 +158,7 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         self::assertEquals('TheCorrectResourceUri', $resourceUri);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderSkipsLocalizationIfRequested()
     {
         $this->mockI18nService->expects($this->never())->method('getLocalizedFilename');
@@ -183,9 +171,7 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderSkipsLocalizationForResourcesGivenAsResourceUriIfRequested()
     {
         $this->mockI18nService->expects($this->never())->method('getLocalizedFilename');
@@ -198,9 +184,7 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThrowsExceptionIfNeitherResourceNorPathWereGiven()
     {
         $this->expectException(InvalidVariableException::class);
@@ -212,9 +196,7 @@ final class ResourceViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThrowsExceptionIfResourceUriNotPointingToPublicWasGivenAsPath()
     {
         $this->expectException(InvalidVariableException::class);

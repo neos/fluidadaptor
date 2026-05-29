@@ -13,7 +13,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\Core\Parser\Interceptor;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Neos\FluidAdaptor\Core\Parser\Interceptor\ResourceInterceptor;
 use Neos\FluidAdaptor\Core\Parser\SyntaxTree\ResourceUriNode;
 use Neos\Flow\Tests\UnitTestCase;
@@ -29,9 +30,7 @@ use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
  */
 final class ResourceInterceptorTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function resourcesInCssUrlsAreReplacedCorrectly()
     {
         $originalText1 = '<style type="text/css">
@@ -105,10 +104,8 @@ final class ResourceInterceptorTest extends UnitTestCase
         ];
     }
 
-    /**
-     * @dataProvider supportedUrls
-     * @test
-     */
+    #[DataProvider('supportedUrls')]
+    #[Test]
     public function supportedUrlsAreDetected($part1, $part2, $part3, $expectedPath, $expectedPackageKey)
     {
         $originalText = $part1 . $part2 . $part3;

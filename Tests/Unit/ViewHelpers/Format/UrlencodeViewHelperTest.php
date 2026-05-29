@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
+use PHPUnit\Framework\Attributes\Test;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -37,17 +39,13 @@ final class UrlencodeViewHelperTest extends ViewHelperBaseTestcase
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperDeactivatesEscapingInterceptor()
     {
         self::assertFalse($this->viewHelper->isEscapingInterceptorEnabled());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderUsesValueAsSourceIfSpecified()
     {
         $this->viewHelper->expects($this->never())->method('renderChildren');
@@ -56,9 +54,7 @@ final class UrlencodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('Source', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderUsesChildnodesAsSourceIfSpecified()
     {
         $this->viewHelper->expects($this->atLeastOnce())->method('renderChildren')->willReturn(('Source'));
@@ -67,9 +63,7 @@ final class UrlencodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('Source', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderDoesNotModifyValueIfItDoesNotContainSpecialCharacters()
     {
         $source = 'StringWithoutSpecialCharacters';
@@ -78,9 +72,7 @@ final class UrlencodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($source, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderEncodesString()
     {
         $source = 'Foo @+%/ "';
@@ -90,9 +82,7 @@ final class UrlencodeViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThrowsExceptionIfItIsNoStringAndHasNoToStringMethod()
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -101,9 +91,7 @@ final class UrlencodeViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderRendersObjectWithToStringMethod()
     {
         $source = new Uri('http://typo3.com/foo&bar=1');

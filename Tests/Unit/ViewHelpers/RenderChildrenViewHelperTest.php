@@ -13,7 +13,7 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
 use Neos\FluidAdaptor\Core\Widget\Exception\RenderingContextNotFoundException;
 use Neos\FluidAdaptor\Core\Widget\Exception\WidgetContextNotFoundException;
 use Neos\FluidAdaptor\Core\Widget\WidgetContext;
@@ -42,9 +42,7 @@ final class RenderChildrenViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper = $this->getMockBuilder(RenderChildrenViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCallsEvaluateOnTheRootNode(): void
     {
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
@@ -65,9 +63,7 @@ final class RenderChildrenViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('Rendered Results', $output);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThrowsExceptionIfTheRequestIsNotAWidgetRequest(): void
     {
         $this->expectException(WidgetContextNotFoundException::class);
@@ -77,9 +73,7 @@ final class RenderChildrenViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThrowsExceptionIfTheChildNodeRenderingContextIsNotThere(): void
     {
         $this->expectException(RenderingContextNotFoundException::class);

@@ -13,7 +13,9 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use Neos\Error\Messages\Result;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
@@ -28,9 +30,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
  */
 final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function ifAnAttributeValueIsAnObjectMaintainedByThePersistenceManagerItIsConvertedToAUUID(): void
     {
         $mockPersistenceManager = $this->createMock(PersistenceManagerInterface::class);
@@ -56,9 +56,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame('6f487e40-4483-11de-8a39-0800200c9a66', $formViewHelper->_call('getValueAttribute'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getNameBuildsNameFromFieldNamePrefixFormObjectNameAndPropertyIfInObjectAccessorMode(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -80,9 +78,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getNameBuildsNameFromFieldNamePrefixFormObjectNameAndHierarchicalPropertyIfInObjectAccessorMode(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -104,9 +100,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getNameBuildsNameFromFieldNamePrefixAndPropertyIfInObjectAccessorModeAndNoFormObjectNameIsSpecified(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -127,9 +121,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getNameResolvesPropertyPathIfInObjectAccessorModeAndNoFormObjectNameIsSpecified(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -150,9 +142,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getNameBuildsNameFromFieldNamePrefixAndFieldNameIfNotInObjectAccessorMode(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -194,10 +184,8 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         yield ['value' => ['value' => ['something' => 'MyString']]];
     }
 
-    /**
-     * @test
-     * @dataProvider formObjectVariantsDataProvider
-     */
+    #[DataProvider('formObjectVariantsDataProvider')]
+    #[Test]
     public function getValueAttributeBuildsValueFromPropertyAndFormObjectIfInObjectAccessorMode($value): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode', 'addAdditionalIdentityPropertiesIfNeeded'], [], '', false);
@@ -217,9 +205,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getValueAttributeReturnsNullIfNotInObjectAccessorModeAndValueArgumentIsNoSet(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -232,9 +218,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertNull($formViewHelper->_call('getValueAttribute'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getValueAttributeReturnsValueArgumentIfSpecified(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -247,9 +231,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('someValue', $formViewHelper->_call('getValueAttribute'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getValueAttributeConvertsObjectsToIdentifiers(): void
     {
         $mockObject = $this->createStub(\stdClass::class);
@@ -268,9 +250,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame('6f487e40-4483-11de-8a39-0800200c9a66', $formViewHelper->_call('getValueAttribute'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getValueAttributeDoesNotConvertsObjectsToIdentifiersIfTheyAreNotKnownToPersistence(): void
     {
         $mockObject = $this->createStub(\stdClass::class);
@@ -289,9 +269,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($mockObject, $formViewHelper->_call('getValueAttribute'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isObjectAccessorModeReturnsTrueIfPropertyIsSetAndFormObjectIsGiven(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, [], [], '', false);
@@ -310,9 +288,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertFalse($formViewHelper->_call('isObjectAccessorMode'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getMappingResultsForPropertyReturnsErrorsFromRequestIfPropertyIsSet(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -337,9 +313,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getMappingResultsForPropertyReturnsErrorsFromRequestIfFormObjectNameIsNotSet(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -364,9 +338,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getMappingResultsForPropertyReturnsEmptyResultIfNoErrorOccurredInObjectAccessorMode(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -377,9 +349,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertEmpty($actualResult->getFlattenedErrors());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getMappingResultsForPropertyReturnsEmptyResultIfNoErrorOccurredInNonObjectAccessorMode(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -390,9 +360,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         self::assertEmpty($actualResult->getFlattenedErrors());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getMappingResultsForPropertyReturnsValidationResultsIfErrorsHappenedInObjectAccessorMode(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -412,9 +380,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('getMappingResultsForProperty');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getMappingResultsForSubPropertyReturnsValidationResultsIfErrorsHappenedInObjectAccessorMode(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -434,9 +400,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('getMappingResultsForProperty');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getMappingResultsForPropertyReturnsValidationResultsIfErrorsHappenedInNonObjectAccessorMode(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -450,9 +414,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('getMappingResultsForProperty');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getMappingResultsForSubPropertyReturnsValidationResultsIfErrorsHappenedInNonObjectAccessorMode(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['isObjectAccessorMode'], [], '', false);
@@ -467,9 +429,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
     }
 
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setErrorClassAttributeDoesNotSetClassAttributeIfNoErrorOccurred(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['hasArgument', 'getErrorsForProperty'], [], '', false);
@@ -480,9 +440,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('setErrorClassAttribute');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setErrorClassAttributeSetsErrorClassIfAnErrorOccurred(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['hasArgument', 'getMappingResultsForProperty'], [], '', false);
@@ -507,9 +465,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('setErrorClassAttribute');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setErrorClassAttributeAppendsErrorClassToExistingClassesIfAnErrorOccurred(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['hasArgument', 'getMappingResultsForProperty'], [], '', false);
@@ -536,9 +492,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('setErrorClassAttribute');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setErrorClassAttributeSetsCustomErrorClassIfAnErrorOccurred(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['hasArgument', 'getMappingResultsForProperty'], [], '', false);
@@ -565,9 +519,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('setErrorClassAttribute');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setErrorClassAttributeAppendsCustomErrorClassIfAnErrorOccurred(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['hasArgument', 'getMappingResultsForProperty'], [], '', false);
@@ -593,9 +545,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('setErrorClassAttribute');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addAdditionalIdentityPropertiesIfNeededDoesNotTryToAccessObjectPropertiesIfFormObjectIsNotSet(): void
     {
         $formFieldViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['renderHiddenIdentityField'], [], '', false);
@@ -613,9 +563,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formFieldViewHelper->_call('addAdditionalIdentityPropertiesIfNeeded');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addAdditionalIdentityPropertiesIfNeededDoesNotCreateAnythingIfPropertyIsWithoutDot(): void
     {
         $formFieldViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['renderHiddenIdentityField'], [], '', false);
@@ -634,9 +582,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formFieldViewHelper->_call('addAdditionalIdentityPropertiesIfNeeded');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addAdditionalIdentityPropertiesIfNeededCallsRenderIdentityFieldWithTheRightParameters(): void
     {
         $className = 'test_' . uniqid();
@@ -673,9 +619,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formFieldViewHelper->_call('addAdditionalIdentityPropertiesIfNeeded');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addAdditionalIdentityPropertiesIfNeededCallsRenderIdentityFieldWithTheRightParametersWithMoreHierarchyLevels(): void
     {
         $className = 'test_' . uniqid();
@@ -723,9 +667,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formFieldViewHelper->_call('addAdditionalIdentityPropertiesIfNeeded');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderHiddenFieldForEmptyValueAddsHiddenFieldNameToVariableContainer(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['getName'], [], '', false);
@@ -745,9 +687,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('renderHiddenFieldForEmptyValue');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderHiddenFieldForEmptyValueDoesNotAddTheSameHiddenFieldNameMoreThanOnce(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['getName'], [], '', false);
@@ -764,10 +704,8 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('renderHiddenFieldForEmptyValue');
     }
 
-    /**
-     * @test
-     * @doesNotPerformAssertions
-     */
+    #[Test]
+    #[DoesNotPerformAssertions]
     public function renderHiddenFieldForEmptyValueRemovesEmptySquareBracketsFromHiddenFieldName(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['getName'], [], '', false);
@@ -783,10 +721,8 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('renderHiddenFieldForEmptyValue');
     }
 
-    /**
-     * @test
-     * @doesNotPerformAssertions
-     */
+    #[Test]
+    #[DoesNotPerformAssertions]
     public function renderHiddenFieldForEmptyValueDoesNotRemoveNonEmptySquareBracketsFromHiddenFieldName(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['getName'], [], '', false);
@@ -802,9 +738,7 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         $formViewHelper->_call('renderHiddenFieldForEmptyValue');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderHiddenFieldForEmptyValueAddsHiddenFieldWithDisabledState(): void
     {
         $formViewHelper = $this->getAccessibleMock(AbstractFormFieldViewHelper::class, ['getName'], [], '', false);

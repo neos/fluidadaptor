@@ -13,7 +13,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\FluidAdaptor\ViewHelpers\Form\HiddenViewHelper;
+use PHPUnit\Framework\Attributes\Test;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
@@ -32,14 +33,12 @@ final class HiddenViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\HiddenViewHelper::class, ['setErrorClassAttribute', 'getName', 'getValueAttribute', 'registerFieldNameForFormTokenGeneration']);
+        $this->viewHelper = $this->getAccessibleMock(HiddenViewHelper::class, ['setErrorClassAttribute', 'getName', 'getValueAttribute', 'registerFieldNameForFormTokenGeneration']);
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsTagNameAndDefaultAttributes()
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute'])->getMock();

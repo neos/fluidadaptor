@@ -13,7 +13,15 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\Flow\Mvc\FlashMessage\FlashMessageContainer;
+use Neos\Flow\Mvc\Controller\ControllerContext;
+use Neos\FluidAdaptor\ViewHelpers\FlashMessagesViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+use Neos\Error\Messages\Message;
+use Neos\Error\Messages\Error;
+use Neos\Error\Messages\Notice;
+use Neos\Error\Messages\Warning;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 require_once(__DIR__ . '/ViewHelperBaseTestcase.php');
@@ -21,7 +29,7 @@ require_once(__DIR__ . '/ViewHelperBaseTestcase.php');
 /**
  * Testcase for FlashMessagesViewHelper
  */
-final class FlashMessagesViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
+final class FlashMessagesViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\FlashMessagesViewHelper
@@ -45,19 +53,17 @@ final class FlashMessagesViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\Vi
      */
     protected function setUp(): void
     {
-        $this->mockFlashMessageContainer = $this->createMock(\Neos\Flow\Mvc\FlashMessage\FlashMessageContainer::class);
-        $mockControllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class);
+        $this->mockFlashMessageContainer = $this->createMock(FlashMessageContainer::class);
+        $mockControllerContext = $this->createMock(ControllerContext::class);
         $mockControllerContext->method('getFlashMessageContainer')->willReturn(($this->mockFlashMessageContainer));
 
         $this->mockTagBuilder = $this->createMock(TagBuilder::class);
-        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\FlashMessagesViewHelper::class, []);
+        $this->viewHelper = $this->getAccessibleMock(FlashMessagesViewHelper::class, []);
         $this->viewHelper->_set('controllerContext', $mockControllerContext);
         $this->viewHelper->_set('tag', $this->mockTagBuilder);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderReturnsEmptyStringIfNoFlashMessagesAreInQueue()
     {
         $this->mockFlashMessageContainer->expects($this->once())->method('getMessagesAndFlush')->willReturn(([]));
@@ -72,35 +78,35 @@ final class FlashMessagesViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\Vi
     {
         yield [
             '<li class="flashmessages-ok">Some Flash Message</li>',
-            [new \Neos\Error\Messages\Message('Some Flash Message')]
+            [new Message('Some Flash Message')]
         ];
         yield [
             '<li class="flashmessages-error">Error &quot;dynamic&quot; Flash Message</li>',
-            [new \Neos\Error\Messages\Error('Error %s Flash Message', null, ['"dynamic"'])]
+            [new Error('Error %s Flash Message', null, ['"dynamic"'])]
         ];
         yield [
             '<li class="flashmessages-error">Error Flash &quot;Message&quot;</li><li class="flashmessages-notice">Notice Flash Message</li>',
-            [new \Neos\Error\Messages\Error('Error Flash "Message"'), new \Neos\Error\Messages\Notice('Notice Flash Message')]
+            [new Error('Error Flash "Message"'), new Notice('Notice Flash Message')]
         ];
         yield [
             '<li class="flashmessages-warning"><h3>Some &quot;Warning&quot;</h3>Warning message body</li><li class="flashmessages-notice">Notice Flash Message</li>',
-            [new \Neos\Error\Messages\Warning('Warning message body', null, [], 'Some "Warning"'), new \Neos\Error\Messages\Notice('Notice Flash Message')]
+            [new Warning('Warning message body', null, [], 'Some "Warning"'), new Notice('Notice Flash Message')]
         ];
         yield [
             '<li class="customClass-ok">Message 01</li><li class="customClass-notice">Message 02</li>',
-            [new \Neos\Error\Messages\Message('Message 01'), new \Neos\Error\Messages\Notice('Message 02')],
+            [new Message('Message 01'), new Notice('Message 02')],
             'customClass'
         ];
     }
 
     /**
-     * @test
-     * @dataProvider renderDataProvider()
      * @param string $expectedResult
      * @param array $flashMessages
      * @param string $class
      * @return void
      */
+    #[DataProvider('renderDataProvider')]
+    #[Test]
     public function renderTests($expectedResult, array $flashMessages = [], $class = null)
     {
         $this->mockFlashMessageContainer->expects($this->once())->method('getMessagesAndFlush')->willReturn(($flashMessages));

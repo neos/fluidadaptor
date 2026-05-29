@@ -13,7 +13,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use Neos\FluidAdaptor\Core\ViewHelper\AbstractConditionViewHelper;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\ViewHelperNode;
@@ -28,7 +29,7 @@ require_once(__DIR__ . '/../../ViewHelpers/ViewHelperBaseTestcase.php');
 final class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
-     * @var AbstractConditionViewHelper|\PHPUnit\Framework\MockObject\MockObject
+     * @var AbstractConditionViewHelper|MockObject
      */
     protected $viewHelper;
 
@@ -39,9 +40,7 @@ final class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThenChildReturnsAllChildrenIfNoThenViewHelperChildExists()
     {
         $this->viewHelper->method('renderChildren')->willReturn(('foo'));
@@ -50,9 +49,7 @@ final class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('foo', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThenChildReturnsThenViewHelperChildIfConditionIsTrueAndThenViewHelperChildExists()
     {
         $mockThenViewHelperNode = $this->createMock(ViewHelperNode::class, ['getViewHelperClassName', 'evaluate'], [], '', false);
@@ -64,9 +61,7 @@ final class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('ThenViewHelperResults', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThenChildReturnsValueOfThenArgumentIfItIsSpecified()
     {
         $this->viewHelper->expects($this->atLeastOnce())->method('hasArgument')->with('then')->willReturn((true));
@@ -77,9 +72,7 @@ final class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('ThenArgument', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThenChildReturnsEmptyStringIfChildNodesOnlyContainElseViewHelper()
     {
         $mockElseViewHelperNode = $this->createMock(ViewHelperNode::class, ['getViewHelperClassName', 'evaluate'], [], '', false);
@@ -91,18 +84,14 @@ final class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderElseChildReturnsEmptyStringIfConditionIsFalseAndNoElseViewHelperChildExists()
     {
         $actualResult = $this->viewHelper->_call('renderElseChild');
         self::assertEquals('', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderElseChildRendersElseViewHelperChildIfConditionIsFalseAndNoThenViewHelperChildExists()
     {
         $mockElseViewHelperNode = $this->createMock(ViewHelperNode::class, ['getViewHelperClassName', 'evaluate', 'setRenderingContext'], [], '', false);
@@ -114,9 +103,7 @@ final class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('ElseViewHelperResults', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function thenArgumentHasPriorityOverChildNodesIfConditionIsTrue()
     {
         $mockThenViewHelperNode = $this->createMock(ViewHelperNode::class, ['getViewHelperClassName', 'evaluate', 'setRenderingContext'], [], '', false);
@@ -133,9 +120,7 @@ final class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('ThenArgument', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderReturnsValueOfElseArgumentIfConditionIsFalse()
     {
         $this->viewHelper->expects($this->atLeastOnce())->method('hasArgument')->with('else')->willReturn((true));
@@ -146,9 +131,7 @@ final class AbstractConditionViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('ElseArgument', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function elseArgumentHasPriorityOverChildNodesIfConditionIsFalse()
     {
         $mockElseViewHelperNode = $this->createMock(ViewHelperNode::class, ['getViewHelperClassName', 'evaluate', 'setRenderingContext'], [], '', false);

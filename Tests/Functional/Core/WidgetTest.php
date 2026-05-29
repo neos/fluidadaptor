@@ -13,7 +13,7 @@ namespace Neos\FluidAdaptor\Tests\Functional\Core;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
 use Neos\Flow\Mvc\Routing\Route;
 use Neos\Flow\Tests\FunctionalTestCase;
 
@@ -47,9 +47,8 @@ final class WidgetTest extends FunctionalTestCase
      * the AJAX widget in its template. The indexAction renders that template which
      * in turn lets the "someAjax" widget call the indexAction of its own controller
      * (SomeAjaxController).
-     *
-     * @test
      */
+    #[Test]
     public function ifIncludedInATemplateTheWidgetReturnsResultOfItsOwnIndexAction(): void
     {
         $response = $this->browser->request('http://localhost/test/widget/ajaxtest');
@@ -64,9 +63,8 @@ final class WidgetTest extends FunctionalTestCase
      * sending a request (from outside) to the widget, calling the ajaxAction().
      *
      * We send a request to this URI and check if the AJAX widget was really invoked.
-     *
-     * @test
      */
+    #[Test]
     public function theGeneratedUriLeadsToASpecificActionOfTheAjaxController(): void
     {
         $response = $this->browser->request('http://localhost/test/widget/ajaxtest');
@@ -76,9 +74,7 @@ final class WidgetTest extends FunctionalTestCase
         self::assertSame('SomeAjaxController::ajaxAction("value1", "value2")', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function ifIncludedInAForViewHelperTheWidgetsKeepTheirDifferentContext(): void
     {
         $response = $this->browser->request('http://localhost/test/widget/ajaxtest/forIndex');
@@ -93,9 +89,7 @@ final class WidgetTest extends FunctionalTestCase
         self::assertSame('SomeAjaxController::ajaxAction("first1", "second1")', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function redirectWithoutDelayAndNoParameterImmediatelyRedirectsToTargetAction(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -105,9 +99,7 @@ final class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter"></div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function redirectWithoutDelayAndWithParameterImmediatelyRedirectsToTargetAction(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -116,9 +108,7 @@ final class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter">foo, via redirect</div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function redirectWithDelayAndNoParameterOutputsRefreshMetaHeader(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -135,9 +125,7 @@ final class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter"></div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function redirectWithDelayAndWithParameterOutputsRefreshMetaHeader(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -154,9 +142,7 @@ final class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter">bar, via redirect</div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function redirectToDifferentControllerThrowsException(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -167,9 +153,7 @@ final class WidgetTest extends FunctionalTestCase
         self::assertSame('1380284579', $response->getHeaderLine('X-Flow-ExceptionCode'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function forwardWithoutParameterTriggersTargetAction(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -179,9 +163,7 @@ final class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter"></div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function forwardWithParameterTriggersTargetAction(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -191,9 +173,7 @@ final class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter">baz, via forward</div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function forwardToDifferentControllerThrowsException(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -204,9 +184,7 @@ final class WidgetTest extends FunctionalTestCase
         self::assertSame('1380284579', $response->getHeaderLine('X-Flow-ExceptionCode'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function aCustomViewResponseIsRespectedInAjaxContext(): void
     {
         $response = $this->browser->request('http://localhost/test/widget/ajaxtest');

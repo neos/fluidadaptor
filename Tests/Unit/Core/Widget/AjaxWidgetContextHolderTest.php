@@ -13,36 +13,35 @@ namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\Flow\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Test;
+use Neos\FluidAdaptor\Core\Widget\AjaxWidgetContextHolder;
+use Neos\FluidAdaptor\Core\Widget\WidgetContext;
 use Neos\FluidAdaptor\Core\Widget\Exception\WidgetContextNotFoundException;
 
 /**
  * Testcase for AjaxWidgetContextHolder
  *
  */
-final class AjaxWidgetContextHolderTest extends \Neos\Flow\Tests\UnitTestCase
+final class AjaxWidgetContextHolderTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function storeSetsTheAjaxWidgetIdentifierInContext()
     {
-        $ajaxWidgetContextHolder = $this->getAccessibleMock(\Neos\FluidAdaptor\Core\Widget\AjaxWidgetContextHolder::class, []);
+        $ajaxWidgetContextHolder = $this->getAccessibleMock(AjaxWidgetContextHolder::class, []);
 
-        $widgetContext = $this->createMock(\Neos\FluidAdaptor\Core\Widget\WidgetContext::class, ['setAjaxWidgetIdentifier']);
+        $widgetContext = $this->createMock(WidgetContext::class, ['setAjaxWidgetIdentifier']);
         $widgetContext->expects($this->once())->method('setAjaxWidgetIdentifier');
 
         $ajaxWidgetContextHolder->store($widgetContext);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function storedWidgetContextCanBeRetrievedAgain()
     {
-        $ajaxWidgetContextHolder = $this->getAccessibleMock(\Neos\FluidAdaptor\Core\Widget\AjaxWidgetContextHolder::class, []);
+        $ajaxWidgetContextHolder = $this->getAccessibleMock(AjaxWidgetContextHolder::class, []);
 
-        $widgetContext = $this->createMock(\Neos\FluidAdaptor\Core\Widget\WidgetContext::class, ['setAjaxWidgetIdentifier']);
+        $widgetContext = $this->createMock(WidgetContext::class, ['setAjaxWidgetIdentifier']);
         $widgetContextId = null;
         $widgetContext->expects($this->once())->method('setAjaxWidgetIdentifier')->willReturnCallback(function ($identifier) use (&$widgetContextId) {
             $widgetContextId = $identifier;
@@ -52,13 +51,11 @@ final class AjaxWidgetContextHolderTest extends \Neos\Flow\Tests\UnitTestCase
         self::assertSame($widgetContext, $ajaxWidgetContextHolder->get($widgetContextId));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getThrowsExceptionIfWidgetContextIsNotFound()
     {
         $this->expectException(WidgetContextNotFoundException::class);
-        $ajaxWidgetContextHolder = new \Neos\FluidAdaptor\Core\Widget\AjaxWidgetContextHolder();
+        $ajaxWidgetContextHolder = new AjaxWidgetContextHolder();
         $ajaxWidgetContextHolder->get(42);
     }
 }

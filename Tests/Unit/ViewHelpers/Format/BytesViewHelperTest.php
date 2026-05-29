@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
+use Neos\FluidAdaptor\ViewHelpers\Format\BytesViewHelper;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -36,7 +40,7 @@ final class BytesViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\BytesViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(BytesViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
 
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
@@ -126,9 +130,9 @@ final class BytesViewHelperTest extends ViewHelperBaseTestcase
      * @param $decimalSeparator
      * @param $thousandsSeparator
      * @param $expected
-     * @test
-     * @dataProvider valueDataProvider
      */
+    #[DataProvider('valueDataProvider')]
+    #[Test]
     public function renderCorrectlyConvertsAValue($value, $decimals, $decimalSeparator, $thousandsSeparator, $expected)
     {
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => $value, 'decimals' => $decimals, 'decimalSeparator' => $decimalSeparator, 'thousandsSeparator' => $thousandsSeparator]);
@@ -136,9 +140,7 @@ final class BytesViewHelperTest extends ViewHelperBaseTestcase
         static::assertEquals($expected, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderUsesChildNodesIfValueArgumentIsOmitted()
     {
         $this->viewHelper->expects(static::once())->method('renderChildren')->willReturn(12345);
@@ -149,9 +151,7 @@ final class BytesViewHelperTest extends ViewHelperBaseTestcase
         static::assertEquals('12 KB', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperUsesNumberFormatterOnGivenLocale()
     {
         $mockNumberFormatter = $this
@@ -167,9 +167,7 @@ final class BytesViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperAppendsUnitToLocalizedNumber()
     {
         $mockNumberFormatter = $this
@@ -191,9 +189,7 @@ final class BytesViewHelperTest extends ViewHelperBaseTestcase
         static::assertEquals('123,45 KB', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperFetchesCurrentLocaleViaI18nService()
     {
         $localizationConfiguration = new Configuration('de_DE');
@@ -224,9 +220,7 @@ final class BytesViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperConvertsI18nExceptionsIntoViewHelperExceptions()
     {
         $localizationConfiguration = new Configuration('de_DE');

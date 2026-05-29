@@ -13,7 +13,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\Flow\Tests\UnitTestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 use GuzzleHttp\Psr7\Uri;
 use Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer;
 use Neos\FluidAdaptor\Core\ViewHelper\AbstractTagBasedViewHelper;
@@ -26,10 +27,10 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperInterface;
 /**
  * Base test class for testing view helpers
  */
-abstract class ViewHelperBaseTestcase extends \Neos\Flow\Tests\UnitTestCase
+abstract class ViewHelperBaseTestcase extends UnitTestCase
 {
     /**
-     * @var \TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer|\PHPUnit\Framework\MockObject\MockObject
+     * @var \TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer|MockObject
      */
     protected $viewHelperVariableContainer;
 
@@ -44,12 +45,12 @@ abstract class ViewHelperBaseTestcase extends \Neos\Flow\Tests\UnitTestCase
     protected $viewHelperVariableContainerData = [];
 
     /**
-     * @var \Neos\Flow\Mvc\Routing\UriBuilder|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Neos\Flow\Mvc\Routing\UriBuilder|MockObject
      */
     protected $uriBuilder;
 
     /**
-     * @var \Neos\Flow\Mvc\Controller\ControllerContext|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Neos\Flow\Mvc\Controller\ControllerContext|MockObject
      */
     protected $controllerContext;
 
@@ -59,17 +60,17 @@ abstract class ViewHelperBaseTestcase extends \Neos\Flow\Tests\UnitTestCase
     protected $arguments;
 
     /**
-     * @var \Neos\Flow\Mvc\ActionRequest|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Neos\Flow\Mvc\ActionRequest|MockObject
      */
     protected $request;
 
     /**
-     * @var \Neos\FluidAdaptor\Core\Rendering\RenderingContext|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Neos\FluidAdaptor\Core\Rendering\RenderingContext|MockObject
      */
     protected $renderingContext;
 
     /**
-     * @var ViewHelperInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var ViewHelperInterface|MockObject
      */
     protected $viewHelper;
 

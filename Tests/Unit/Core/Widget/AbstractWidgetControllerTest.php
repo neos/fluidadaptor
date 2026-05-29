@@ -13,7 +13,10 @@ namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use Neos\Flow\Mvc\ActionRequest;
+use Neos\FluidAdaptor\Core\Widget\AbstractWidgetController;
+use Neos\Flow\Mvc\Controller\MvcPropertyMappingConfigurationService;
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Uri;
 use Neos\Flow\Mvc\ActionResponse;
@@ -26,29 +29,25 @@ use Neos\FluidAdaptor\Core\Widget\WidgetContext;
  */
 final class AbstractWidgetControllerTest extends UnitTestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function processRequestShouldThrowExceptionIfWidgetContextNotFound()
     {
         $this->expectException(WidgetContextNotFoundException::class);
         /** @var \Neos\Flow\Mvc\ActionRequest $mockActionRequest */
-        $mockActionRequest = $this->createMock(\Neos\Flow\Mvc\ActionRequest::class);
+        $mockActionRequest = $this->createMock(ActionRequest::class);
         $mockActionRequest->expects($this->atLeastOnce())->method('getInternalArgument')->with('__widgetContext')->willReturn((null));
         $response = new ActionResponse();
 
         /** @var \Neos\FluidAdaptor\Core\Widget\AbstractWidgetController $abstractWidgetController */
-        $abstractWidgetController = $this->getMockForAbstractClass(\Neos\FluidAdaptor\Core\Widget\AbstractWidgetController::class);
+        $abstractWidgetController = $this->getMockForAbstractClass(AbstractWidgetController::class);
         $abstractWidgetController->processRequest($mockActionRequest, $response);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function processRequestShouldSetWidgetConfiguration()
     {
         /** @var \Neos\Flow\Mvc\ActionRequest $mockActionRequest */
-        $mockActionRequest = $this->createMock(\Neos\Flow\Mvc\ActionRequest::class);
+        $mockActionRequest = $this->createMock(ActionRequest::class);
         $mockResponse = new ActionResponse();
 
         $httpRequest = new ServerRequest('GET', new Uri('http://localhost'));
@@ -61,9 +60,9 @@ final class AbstractWidgetControllerTest extends UnitTestCase
 
         $mockActionRequest->expects($this->atLeastOnce())->method('getInternalArgument')->with('__widgetContext')->willReturn(($widgetContext));
 
-        $abstractWidgetController = $this->getAccessibleMock(\Neos\FluidAdaptor\Core\Widget\AbstractWidgetController::class, ['resolveActionMethodName', 'initializeActionMethodArguments', 'initializeActionMethodValidators', 'mapRequestArgumentsToControllerArguments', 'detectFormat', 'resolveView', 'callActionMethod']);
+        $abstractWidgetController = $this->getAccessibleMock(AbstractWidgetController::class, ['resolveActionMethodName', 'initializeActionMethodArguments', 'initializeActionMethodValidators', 'mapRequestArgumentsToControllerArguments', 'detectFormat', 'resolveView', 'callActionMethod']);
         $abstractWidgetController->method('resolveActionMethodName')->willReturn('indexAction');
-        $abstractWidgetController->_set('mvcPropertyMappingConfigurationService', $this->createMock(\Neos\Flow\Mvc\Controller\MvcPropertyMappingConfigurationService::class));
+        $abstractWidgetController->_set('mvcPropertyMappingConfigurationService', $this->createMock(MvcPropertyMappingConfigurationService::class));
 
         $abstractWidgetController->processRequest($mockActionRequest, $mockResponse);
 

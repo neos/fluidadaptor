@@ -13,7 +13,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use Neos\Error\Messages\Error;
 use Neos\Error\Messages\Result;
 use Neos\FluidAdaptor\ViewHelpers\Validation\IfHasErrorsViewHelper;
@@ -26,7 +27,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 final class IfHasErrorsViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
-     * @var IfHasErrorsViewHelper|\PHPUnit\Framework\MockObject\MockObject
+     * @var IfHasErrorsViewHelper|MockObject
      */
     protected $viewHelper;
 
@@ -35,13 +36,11 @@ final class IfHasErrorsViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Validation\IfHasErrorsViewHelper::class, ['renderThenChild', 'renderElseChild']);
+        $this->viewHelper = $this->getAccessibleMock(IfHasErrorsViewHelper::class, ['renderThenChild', 'renderElseChild']);
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsAndRendersThenChildIfResultsHaveErrors()
     {
         $result = new Result;
@@ -52,21 +51,17 @@ final class IfHasErrorsViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('ThenChild', $this->viewHelper->render());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function returnsAndRendersElseChildIfNoValidationResultsArePresentAtAll()
     {
         $this->viewHelper->expects($this->once())->method('renderElseChild')->willReturn(('ElseChild'));
         self::assertEquals('ElseChild', $this->viewHelper->render());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function queriesResultForPropertyIfPropertyPathIsGiven()
     {
-        $resultMock = $this->createMock(\Neos\Error\Messages\Result::class);
+        $resultMock = $this->createMock(Result::class);
         $resultMock->expects($this->once())->method('forProperty')->with('foo.bar.baz')->willReturn((new Result()));
 
         $this->request->expects($this->once())->method('getInternalArgument')->with('__submittedArgumentValidationResults')->willReturn(($resultMock));

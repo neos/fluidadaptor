@@ -13,7 +13,9 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\FluidAdaptor\ViewHelpers\Form\SubmitViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
@@ -31,18 +33,16 @@ final class SubmitViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = new \Neos\FluidAdaptor\ViewHelpers\Form\SubmitViewHelper();
+        $this->viewHelper = new SubmitViewHelper();
         $this->arguments['name'] = '';
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsTagNameAndDefaultAttributes()
     {
-        $mockTagBuilder = $this->getMockBuilder(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute'])->getMock();
+        $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute'])->getMock();
         $mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
         $matcher = self::atLeastOnce();
         $mockTagBuilder->expects($matcher)->method('addAttribute')->willReturnCallback(function (...$parameters) use ($matcher) {

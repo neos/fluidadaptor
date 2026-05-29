@@ -13,7 +13,10 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use Neos\Flow\Persistence\PersistenceManagerInterface;
+use Neos\FluidAdaptor\ViewHelpers\FormViewHelper;
+use Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormViewHelper;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
@@ -24,9 +27,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
  */
 final class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function renderHiddenIdentityFieldReturnsAHiddenInputFieldContainingTheObjectsUUID()
     {
         $className = 'Object' . uniqid();
@@ -36,12 +37,12 @@ final class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
 		}');
         $object = $this->createStub($fullClassName);
 
-        $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
+        $mockPersistenceManager = $this->createMock(PersistenceManagerInterface::class);
         $mockPersistenceManager->expects($this->once())->method('getIdentifierByObject')->with($object)->willReturn(('123'));
 
         $expectedResult = chr(10) . '<input type="hidden" name="prefix[theName][__identity]" value="123" />' . chr(10);
 
-        $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, ['prefixFieldName', 'registerFieldNameForFormTokenGeneration'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(FormViewHelper::class, ['prefixFieldName', 'registerFieldNameForFormTokenGeneration'], [], '', false);
         $viewHelper->method('prefixFieldName')->with('theName')->willReturn(('prefix[theName]'));
         $viewHelper->_set('persistenceManager', $mockPersistenceManager);
 
@@ -49,9 +50,7 @@ final class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderHiddenIdentityFieldReturnsAHiddenInputFieldIfObjectIsNewButAClone()
     {
         $className = 'Object' . uniqid();
@@ -61,12 +60,12 @@ final class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
 		}');
         $object = $this->createStub($fullClassName);
 
-        $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
+        $mockPersistenceManager = $this->createMock(PersistenceManagerInterface::class);
         $mockPersistenceManager->expects($this->once())->method('getIdentifierByObject')->with($object)->willReturn(('123'));
 
         $expectedResult = chr(10) . '<input type="hidden" name="prefix[theName][__identity]" value="123" />' . chr(10);
 
-        $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, ['prefixFieldName', 'registerFieldNameForFormTokenGeneration'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(FormViewHelper::class, ['prefixFieldName', 'registerFieldNameForFormTokenGeneration'], [], '', false);
         $viewHelper->method('prefixFieldName')->with('theName')->willReturn(('prefix[theName]'));
         $viewHelper->_set('persistenceManager', $mockPersistenceManager);
 
@@ -74,9 +73,7 @@ final class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderHiddenIdentityFieldReturnsACommentIfTheObjectIsWithoutIdentity()
     {
         $className = 'Object' . uniqid();
@@ -86,49 +83,43 @@ final class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
 		}');
         $object = $this->createStub($fullClassName);
 
-        $mockPersistenceManager = $this->createMock(\Neos\Flow\Persistence\PersistenceManagerInterface::class);
+        $mockPersistenceManager = $this->createMock(PersistenceManagerInterface::class);
         $mockPersistenceManager->expects($this->once())->method('getIdentifierByObject')->with($object)->willReturn((null));
 
         $expectedResult = chr(10) . '<!-- Object of type ' . get_class($object) . ' is without identity -->' . chr(10);
 
-        $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class, ['prefixFieldName', 'registerFieldNameForFormTokenGeneration'], [], '', false);
+        $viewHelper = $this->getAccessibleMock(FormViewHelper::class, ['prefixFieldName', 'registerFieldNameForFormTokenGeneration'], [], '', false);
         $viewHelper->_set('persistenceManager', $mockPersistenceManager);
 
         $actualResult = $viewHelper->_call('renderHiddenIdentityField', $object, 'theName');
         self::assertSame($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function prefixFieldNameReturnsEmptyStringIfGivenFieldNameIsNULL()
     {
-        $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormViewHelper::class, [], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractFormViewHelper::class, [], [], '', false);
         $this->injectDependenciesIntoViewHelper($viewHelper);
 
         self::assertSame('', $viewHelper->_call('prefixFieldName', null));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function prefixFieldNameReturnsEmptyStringIfGivenFieldNameIsEmpty()
     {
-        $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormViewHelper::class, [], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractFormViewHelper::class, [], [], '', false);
         $this->injectDependenciesIntoViewHelper($viewHelper);
 
         self::assertSame('', $viewHelper->_call('prefixFieldName', ''));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function prefixFieldNameReturnsGivenFieldNameIfFieldNamePrefixIsEmpty()
     {
-        $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormViewHelper::class, [], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractFormViewHelper::class, [], [], '', false);
         $this->injectDependenciesIntoViewHelper($viewHelper);
         $this->viewHelperVariableContainerData = [
-            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => [
+            FormViewHelper::class => [
                 'fieldNamePrefix' => '',
             ]
         ];
@@ -136,15 +127,13 @@ final class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame('someFieldName', $viewHelper->_call('prefixFieldName', 'someFieldName'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function prefixFieldNamePrefixesGivenFieldNameWithFieldNamePrefix()
     {
-        $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormViewHelper::class, [], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractFormViewHelper::class, [], [], '', false);
         $this->injectDependenciesIntoViewHelper($viewHelper);
         $this->viewHelperVariableContainerData = [
-            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => [
+            FormViewHelper::class => [
                 'fieldNamePrefix' => 'somePrefix',
             ]
         ];
@@ -152,15 +141,13 @@ final class AbstractFormViewHelperTest extends ViewHelperBaseTestcase
         self::assertSame('somePrefix[someFieldName]', $viewHelper->_call('prefixFieldName', 'someFieldName'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function prefixFieldNamePreservesSquareBracketsOfFieldName()
     {
-        $viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormViewHelper::class, [], [], '', false);
+        $viewHelper = $this->getAccessibleMock(AbstractFormViewHelper::class, [], [], '', false);
         $this->injectDependenciesIntoViewHelper($viewHelper);
         $this->viewHelperVariableContainerData = [
-            \Neos\FluidAdaptor\ViewHelpers\FormViewHelper::class => [
+            FormViewHelper::class => [
                 'fieldNamePrefix' => 'somePrefix[foo]',
             ]
         ];

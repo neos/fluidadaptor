@@ -13,28 +13,28 @@ namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\Flow\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use Neos\FluidAdaptor\Core\ViewHelper\AbstractTagBasedViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 /**
  * Testcase for TagBasedViewHelper
  */
-final class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
+final class AbstractTagBasedViewHelperTest extends UnitTestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|AbstractTagBasedViewHelper
+     * @var MockObject|AbstractTagBasedViewHelper
      */
     protected $viewHelper;
 
     protected function setUp(): void
     {
-        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\Core\ViewHelper\AbstractTagBasedViewHelper::class, [], [], '', false);
+        $this->viewHelper = $this->getAccessibleMock(AbstractTagBasedViewHelper::class, [], [], '', false);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function initializeResetsUnderlyingTagBuilder()
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['reset'])->disableOriginalConstructor()->getMock();
@@ -44,9 +44,7 @@ final class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
         $this->viewHelper->initialize();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function oneTagAttributeIsRenderedCorrectly()
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['addAttribute'])->disableOriginalConstructor()->getMock();
@@ -59,9 +57,7 @@ final class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
         $this->viewHelper->initialize();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function additionalTagAttributesAreRenderedCorrectly()
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['addAttribute'])->disableOriginalConstructor()->getMock();
@@ -74,9 +70,7 @@ final class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
         $this->viewHelper->initialize();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function dataAttributesAreRenderedCorrectly()
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['addAttribute'])->disableOriginalConstructor()->getMock();
@@ -98,9 +92,7 @@ final class AbstractTagBasedViewHelperTest extends \Neos\Flow\Tests\UnitTestCase
         $this->viewHelper->initialize();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function standardTagAttributesAreRegistered()
     {
         $mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['addAttribute'])->disableOriginalConstructor()->getMock();

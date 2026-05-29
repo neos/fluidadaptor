@@ -13,7 +13,9 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\MockObject;
 use Neos\Flow\I18n\Locale;
 use Neos\Flow\I18n\Translator;
 use Neos\Flow\Mvc\ActionRequest;
@@ -39,7 +41,7 @@ final class TranslateViewHelperTest extends ViewHelperBaseTestcase
     protected $dummyLocale;
 
     /**
-     * @var Translator|\PHPUnit\Framework\MockObject\MockObject
+     * @var Translator|MockObject
      */
     protected $mockTranslator;
 
@@ -47,21 +49,19 @@ final class TranslateViewHelperTest extends ViewHelperBaseTestcase
     {
         parent::setUp();
 
-        $this->translateViewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\TranslateViewHelper::class, ['renderChildren']);
+        $this->translateViewHelper = $this->getAccessibleMock(TranslateViewHelper::class, ['renderChildren']);
 
         $this->request->method('getControllerPackageKey')->willReturn(('Neos.FluidAdaptor'));
 
         $this->dummyLocale = new Locale('de_DE');
 
-        $this->mockTranslator = $this->createMock(\Neos\Flow\I18n\Translator::class);
+        $this->mockTranslator = $this->createMock(Translator::class);
         $this->inject($this->translateViewHelper, 'translator', $this->mockTranslator);
 
         $this->injectDependenciesIntoViewHelper($this->translateViewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperTranslatesByOriginalLabel()
     {
         $this->mockTranslator->expects($this->once())->method('translateByOriginalLabel', 'Untranslated Label', 'Main', 'Neos.Flow', [], null, $this->dummyLocale)->willReturn(('Translated Label'));
@@ -72,9 +72,7 @@ final class TranslateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('Translated Label', $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperTranslatesById()
     {
         $this->mockTranslator->expects($this->once())->method('translateById', 'some.label', 'Main', 'Neos.Flow', [], null, $this->dummyLocale)->willReturn(('Translated Label'));
@@ -84,9 +82,7 @@ final class TranslateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('Translated Label', $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperUsesValueIfIdIsNotFound()
     {
         $this->translateViewHelper->expects($this->never())->method('renderChildren');
@@ -96,9 +92,7 @@ final class TranslateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('Default from value', $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperUsesRenderChildrenIfIdIsNotFound()
     {
         $this->translateViewHelper->expects($this->once())->method('renderChildren')->willReturn(('Default from renderChildren'));
@@ -108,9 +102,7 @@ final class TranslateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('Default from renderChildren', $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperReturnsIdWhenRenderChildrenReturnsEmptyResultIfIdIsNotFound()
     {
         $this->mockTranslator->expects($this->once())->method('translateById', 'some.label', 'Main', 'Neos.Flow', [], null, $this->dummyLocale)->willReturn(('some.label'));
@@ -122,9 +114,7 @@ final class TranslateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('some.label', $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThrowsExceptionIfGivenLocaleIdentifierIsInvalid()
     {
         $this->expectException(Exception::class);
@@ -132,9 +122,7 @@ final class TranslateViewHelperTest extends ViewHelperBaseTestcase
         $this->translateViewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderThrowsExceptionIfNoPackageCouldBeResolved()
     {
         $this->expectException(Exception::class);
@@ -180,14 +168,14 @@ final class TranslateViewHelperTest extends ViewHelperBaseTestcase
     }
 
     /**
-     * @test
-     * @dataProvider translationFallbackDataProvider
      * @param string $id
      * @param string $value
      * @param string $translatedId
      * @param string $translatedLabel
      * @param string $expectedResult
      */
+    #[DataProvider('translationFallbackDataProvider')]
+    #[Test]
     public function translationFallbackTests($id, $value, $translatedId, $translatedLabel, $expectedResult)
     {
         $this->mockTranslator->method('translateById')->with($id)->willReturn(($translatedId));

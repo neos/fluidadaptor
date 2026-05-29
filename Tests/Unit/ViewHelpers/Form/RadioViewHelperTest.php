@@ -13,7 +13,10 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\FluidAdaptor\ViewHelpers\Form\RadioViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
@@ -29,21 +32,19 @@ final class RadioViewHelperTest extends ViewHelperBaseTestcase
     protected $viewHelper;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder
+     * @var MockObject|\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder
      */
     protected $mockTagBuilder;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\RadioViewHelper::class, ['setErrorClassAttribute', 'getName', 'getValueAttribute', 'isObjectAccessorMode', 'getPropertyValue', 'registerFieldNameForFormTokenGeneration']);
+        $this->viewHelper = $this->getAccessibleMock(RadioViewHelper::class, ['setErrorClassAttribute', 'getName', 'getValueAttribute', 'isObjectAccessorMode', 'getPropertyValue', 'registerFieldNameForFormTokenGeneration']);
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
-        $this->mockTagBuilder = $this->getMockBuilder(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute'])->getMock();
+        $this->mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute'])->getMock();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsTagNameAndDefaultAttributes()
     {
         $this->mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
@@ -72,9 +73,7 @@ final class RadioViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderSetsCheckedAttributeIfSpecified()
     {
         $matcher = self::exactly(4);
@@ -106,9 +105,7 @@ final class RadioViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderIgnoresBoundPropertyIfCheckedIsSet()
     {
         $matcher = self::exactly(7);
@@ -156,9 +153,7 @@ final class RadioViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsCheckedAttributeIfCheckboxIsBoundToAPropertyOfTypeBoolean()
     {
         $matcher = self::exactly(4);
@@ -192,9 +187,7 @@ final class RadioViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderDoesNotAppendSquareBracketsToNameAttributeIfBoundToAPropertyOfTypeArray()
     {
         $matcher = self::exactly(3);
@@ -225,9 +218,7 @@ final class RadioViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsCheckedAttributeIfCheckboxIsBoundToAPropertyOfTypeString()
     {
         $matcher = self::exactly(4);
@@ -261,9 +252,7 @@ final class RadioViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCallsSetErrorClassAttribute()
     {
         $this->viewHelper->expects($this->once())->method('setErrorClassAttribute');

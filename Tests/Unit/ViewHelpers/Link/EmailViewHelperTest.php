@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Link;
 
+use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Link\EmailViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -18,7 +23,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 /**
  */
-final class EmailViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
+final class EmailViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * var \Neos\FluidAdaptor\ViewHelpers\Link\EmailViewHelper
@@ -28,16 +33,14 @@ final class EmailViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelper
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Link\EmailViewHelper::class, ['renderChildren']);
+        $this->viewHelper = $this->getAccessibleMock(EmailViewHelper::class, ['renderChildren']);
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsTagNameAndAttributesAndContent()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class);
+        $mockTagBuilder = $this->createMock(TagBuilder::class);
         $mockTagBuilder->method('setTagName')->with('a');
         $mockTagBuilder->expects($this->once())->method('addAttribute')->with('href', 'mailto:some@email.tld');
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some content');
@@ -49,12 +52,10 @@ final class EmailViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelper
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderSetsTagContentToEmailIfRenderChildrenReturnNull()
     {
-        $mockTagBuilder = $this->createMock(\TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder::class);
+        $mockTagBuilder = $this->createMock(TagBuilder::class);
         $mockTagBuilder->expects($this->once())->method('setContent')->with('some@email.tld');
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
 

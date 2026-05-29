@@ -13,8 +13,7 @@ namespace Neos\FluidAdaptor\Tests\Unit\View;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
-
+use PHPUnit\Framework\Attributes\Test;
 use Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException;
 use org\bovigo\vfs\vfsStreamWrapper;
 use Neos\Flow\Mvc\ActionRequest;
@@ -34,15 +33,13 @@ final class StandaloneViewTest extends UnitTestCase
 
     protected function setUp(): void
     {
-        $this->standaloneView = $this->getAccessibleMock(\Neos\FluidAdaptor\View\StandaloneView::class, []);
-        $mockControllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class);
-        $mockControllerContext->method('getRequest')->willReturn(($this->createMock(\Neos\Flow\Mvc\ActionRequest::class)));
+        $this->standaloneView = $this->getAccessibleMock(StandaloneView::class, []);
+        $mockControllerContext = $this->createMock(ControllerContext::class);
+        $mockControllerContext->method('getRequest')->willReturn(($this->createMock(ActionRequest::class)));
         $this->inject($this->standaloneView, 'controllerContext', $mockControllerContext);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getLayoutPathAndFilenameThrowsExceptionIfSpecifiedLayoutRootPathIsNoDirectory()
     {
         $this->expectException(InvalidTemplateResourceException::class);
@@ -53,9 +50,7 @@ final class StandaloneViewTest extends UnitTestCase
         $this->standaloneView->getTemplatePaths()->getLayoutSource();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getLayoutPathAndFilenameThrowsExceptionIfLayoutFileIsADirectory()
     {
         $this->expectException(InvalidTemplateResourceException::class);
@@ -65,9 +60,7 @@ final class StandaloneViewTest extends UnitTestCase
         $this->standaloneView->getTemplatePaths()->getLayoutSource('NotAFile');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getPartialPathAndFilenameThrowsExceptionIfSpecifiedPartialRootPathIsNoDirectory()
     {
         $this->expectException(InvalidTemplateResourceException::class);
@@ -78,9 +71,7 @@ final class StandaloneViewTest extends UnitTestCase
         $this->standaloneView->getTemplatePaths()->getPartialSource('SomePartial');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getPartialPathAndFilenameThrowsExceptionIfPartialFileIsADirectory()
     {
         $this->expectException(InvalidTemplateResourceException::class);

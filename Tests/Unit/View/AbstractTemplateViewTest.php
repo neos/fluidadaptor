@@ -13,6 +13,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\View;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
+use Neos\Flow\Tests\UnitTestCase;
+use PHPUnit\Framework\Attributes\Test;
 use Neos\FluidAdaptor\Core\Rendering\RenderingContext;
 use Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer;
 use Neos\FluidAdaptor\View\AbstractTemplateView;
@@ -21,7 +23,7 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\ViewHelperVariableContainer;
 /**
  * Testcase for the TemplateView
  */
-final class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
+final class AbstractTemplateViewTest extends UnitTestCase
 {
     /**
      * @var AbstractTemplateView
@@ -59,18 +61,14 @@ final class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
         $this->view->setRenderingContext($this->renderingContext);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewIsPlacedInViewHelperVariableContainer()
     {
         $this->viewHelperVariableContainer->expects($this->once())->method('setView')->with($this->view);
         $this->view->setRenderingContext($this->renderingContext);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assignAddsValueToTemplateVariableContainer()
     {
         $matcher = self::exactly(2);
@@ -90,9 +88,7 @@ final class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
             ->assign('bar', 'BarValue');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assignCanOverridePreviouslyAssignedValues()
     {
         $matcher = self::exactly(2);
@@ -111,9 +107,7 @@ final class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
         $this->view->assign('foo', 'FooValueOverridden');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assignMultipleAddsValuesToTemplateVariableContainer()
     {
         $matcher = self::exactly(3);
@@ -137,9 +131,7 @@ final class AbstractTemplateViewTest extends \Neos\Flow\Tests\UnitTestCase
             ->assignMultiple(['baz' => 'BazValue']);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function assignMultipleCanOverridePreviouslyAssignedValues()
     {
         $matcher = self::exactly(3);

@@ -13,7 +13,7 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
 use Doctrine\Common\Collections\ArrayCollection;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
@@ -50,9 +50,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->mockTagBuilder = $this->getMockBuilder(TagBuilder::class)->onlyMethods(['setTagName', 'addAttribute'])->getMock();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsTagNameAndDefaultAttributes()
     {
         $this->mockTagBuilder->expects($this->atLeastOnce())->method('setTagName')->with('input');
@@ -81,9 +79,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderSetsCheckedAttributeIfSpecified()
     {
         $matcher = self::exactly(4);
@@ -114,9 +110,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderIgnoresValueOfBoundPropertyIfCheckedIsSet()
     {
         $matcher = self::exactly(7);
@@ -164,9 +158,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsCheckedAttributeIfCheckboxIsBoundToAPropertyOfTypeBoolean()
     {
         $matcher = self::exactly(4);
@@ -199,9 +191,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderAppendsSquareBracketsToNameAttributeIfBoundToAPropertyOfTypeArray()
     {
         $matcher = self::exactly(3);
@@ -231,9 +221,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsCheckedAttributeIfCheckboxIsBoundToAPropertyOfTypeArray()
     {
         $matcher = self::exactly(4);
@@ -266,9 +254,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsCheckedAttributeIfCheckboxIsBoundToAPropertyOfTypeArrayObject()
     {
         $matcher = self::exactly(4);
@@ -301,9 +287,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsCheckedAttributeIfCheckboxIsBoundToAnEntityCollection()
     {
         $matcher = self::exactly(4);
@@ -331,7 +315,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
 
         $userCollection = new ArrayCollection([$user_kd, $user_bw]);
 
-        /** @var PersistenceManagerInterface|\PHPUnit\Framework\MockObject\MockObject $mockPersistenceManager */
+        /** @var PersistenceManagerInterface|MockObject $mockPersistenceManager */
         $mockPersistenceManager = $this->createMock(PersistenceManagerInterface::class);
         $mockPersistenceManager->method('getIdentifierByObject')->willReturnCallback(function (UserDomainClass $user) {
             return (string)$user->getId();
@@ -348,9 +332,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderSetsCheckedAttributeIfBoundPropertyIsNotNull()
     {
         $matcher = self::exactly(4);
@@ -383,9 +365,7 @@ final class CheckboxViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCallsSetErrorClassAttribute()
     {
         $this->viewHelper->expects($this->once())->method('setErrorClassAttribute');

@@ -13,7 +13,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 use GuzzleHttp\Psr7\Response;
 use Neos\Flow\Mvc\ActionRequest;
 use Neos\Flow\Mvc\ActionRequestFactory;
@@ -41,37 +42,37 @@ final class AjaxWidgetMiddlewareTest extends UnitTestCase
     protected $ajaxWidgetMiddleware;
 
     /**
-     * @var RequestHandlerInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var RequestHandlerInterface|MockObject
      */
     protected $mockRequestHandler;
 
     /**
-     * @var ServerRequestInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var ServerRequestInterface|MockObject
      */
     protected $mockHttpRequest;
 
     /**
-     * @var ResponseInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var ResponseInterface|MockObject
      */
     protected $mockHttpResponse;
 
     /**
-     * @var AjaxWidgetContextHolder|\PHPUnit\Framework\MockObject\MockObject
+     * @var AjaxWidgetContextHolder|MockObject
      */
     protected $mockAjaxWidgetContextHolder;
 
     /**
-     * @var HashService|\PHPUnit\Framework\MockObject\MockObject
+     * @var HashService|MockObject
      */
     protected $mockHashService;
 
     /**
-     * @var Dispatcher|\PHPUnit\Framework\MockObject\MockObject
+     * @var Dispatcher|MockObject
      */
     protected $mockDispatcher;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|ActionRequestFactory
+     * @var MockObject|ActionRequestFactory
      */
     protected $mockActionRequestFactory;
 
@@ -114,9 +115,7 @@ final class AjaxWidgetMiddlewareTest extends UnitTestCase
         $this->ajaxWidgetMiddleware->process($this->mockHttpRequest, $this->mockRequestHandler);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function handleSetsWidgetContextAndControllerObjectNameIfWidgetIdIsPresent()
     {
         $mockWidgetId = 'SomeWidgetId';
@@ -137,9 +136,7 @@ final class AjaxWidgetMiddlewareTest extends UnitTestCase
         $this->ajaxWidgetMiddleware->process($this->mockHttpRequest, $this->mockRequestHandler);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function handleDispatchesActionRequestIfWidgetContextIsPresent()
     {
         $mockWidgetId = 'SomeWidgetId';
@@ -159,9 +156,7 @@ final class AjaxWidgetMiddlewareTest extends UnitTestCase
         $this->ajaxWidgetMiddleware->process($this->mockHttpRequest, $this->mockRequestHandler);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function handleCancelsComponentChainIfWidgetContextIsPresent()
     {
         $mockWidgetId = 'SomeWidgetId';
@@ -180,9 +175,7 @@ final class AjaxWidgetMiddlewareTest extends UnitTestCase
         self::assertNotSame($this->mockHttpResponse, $response);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function extractWidgetContextDecodesSerializedWidgetContextIfPresent()
     {
         $ajaxWidgetComponent = $this->getAccessibleMock(AjaxWidgetMiddleware::class, []);

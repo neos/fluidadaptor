@@ -13,14 +13,20 @@ namespace Neos\FluidAdaptor\Tests\Functional\Form;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Group;
+use Neos\Flow\Tests\FunctionalTestCase;
+use PHPUnit\Framework\Attributes\Test;
+use Symfony\Component\DomCrawler\Field\InputFormField;
+use Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post;
+use Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\User;
+use Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Tag;
 use Neos\Flow\Mvc\Routing\Route;
 
 /**
  * Testcase for Standalone View
  */
-#[\PHPUnit\Framework\Attributes\Group('large')]
-final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
+#[Group('large')]
+final class FormObjectsTest extends FunctionalTestCase
 {
     /**
      * @var boolean
@@ -52,9 +58,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         $this->router->addRoute($route);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectIsCreatedCorrectly()
     {
         $this->browser->request('http://localhost/test/fluid/formobjects');
@@ -67,9 +71,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertSame('Neos Team|hello@neos.io', $response->getBody()->getContents());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function multipleCheckboxRendersCorrectFieldNameForEntities()
     {
         $postIdentifier = $this->setupDummyPost(true);
@@ -80,9 +82,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertArrayNotHasKey('__identity', $form['tags'], 'Tags identities not set.');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function embeddedValueObjectWillNotRenderHiddenIdentityField()
     {
         $postIdentifier = $this->setupDummyPost(true);
@@ -92,9 +92,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertArrayNotHasKey('__identity', $form['post']['author']['location']);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function formIsRedisplayedIfValidationErrorsOccur()
     {
         $this->browser->request('http://localhost/test/fluid/formobjects');
@@ -115,9 +113,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertSame('Neos Team|another@email.org', $response->getBody()->getContents());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function formForPersistedObjectIsRedisplayedIfValidationErrorsOccur()
     {
         $postIdentifier = $this->setupDummyPost();
@@ -140,9 +136,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertSame('Egon Olsen|another@email.org', $response->getBody()->getContents());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function formErrorsForNonObjectAccessorFieldsAreHighlightedIfValidationErrorsOccur()
     {
         $this->browser->request('http://localhost/test/fluid/formobjects/check');
@@ -156,9 +150,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertSame('f3-form-error', $this->browser->getCrawler()->filterXPath('//*[@id="email"]')->attr('class'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function valueOfNonObjectAccessorFieldsIsOverriddenBySubmittedValueIfValidationErrorsOccur()
     {
         $this->browser->request('http://localhost/test/fluid/formobjects/check');
@@ -172,9 +164,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertSame('test_noValidEmail', $form['email']->getValue());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectIsNotCreatedAnymoreIfHmacHasBeenTampered()
     {
         $this->browser->request('http://localhost/test/fluid/formobjects');
@@ -186,9 +176,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertSame(400, $this->browser->getLastResponse()->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectIsNotCreatedAnymoreIfIdentityFieldHasBeenAdded()
     {
         $postIdentifier = $this->setupDummyPost();
@@ -196,32 +184,28 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         $form = $this->browser->getForm();
 
         $identityFieldDom = dom_import_simplexml(simplexml_load_string('<input type="text" name="post[__identity]" value="' . $postIdentifier . '" />'));
-        $form->set(new \Symfony\Component\DomCrawler\Field\InputFormField($identityFieldDom));
+        $form->set(new InputFormField($identityFieldDom));
 
         $this->browser->submit($form);
 
         self::assertSame(500, $this->browser->getLastResponse()->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectIsNotCreatedAnymoreIfNewFieldHasBeenAdded()
     {
         $this->browser->request('http://localhost/test/fluid/formobjects');
         $form = $this->browser->getForm();
 
         $identityFieldDom = dom_import_simplexml(simplexml_load_string('<input type="text" name="post[someProperty]" value="someValue" />'));
-        $form->set(new \Symfony\Component\DomCrawler\Field\InputFormField($identityFieldDom));
+        $form->set(new InputFormField($identityFieldDom));
 
         $this->browser->submit($form);
 
         self::assertSame(500, $this->browser->getLastResponse()->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectIsNotCreatedAnymoreIfHmacIsRemoved()
     {
         $this->browser->request('http://localhost/test/fluid/formobjects');
@@ -233,9 +217,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertSame(500, $this->browser->getLastResponse()->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectIsNotModifiedOnFormError()
     {
         $postIdentifier = $this->setupDummyPost();
@@ -249,13 +231,11 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertNotSame('Hello World|test_noValidEmail', $response->getBody()->getContents());
 
         $this->persistenceManager->clearState();
-        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
+        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, Post::class);
         self::assertNotSame('test_noValidEmail', $post->getAuthor()->getEmailAddress(), 'The invalid email address "' . $post->getAuthor()->getEmailAddress() . '" was persisted!');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectCanBeModifiedAfterFormError()
     {
         $postIdentifier = $this->setupDummyPost();
@@ -274,13 +254,11 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         $response = $this->browser->submit($form);
         self::assertSame('Hello World|foo@bar.org', $response->getBody()->getContents());
 
-        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
+        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, Post::class);
         self::assertSame('foo@bar.org', $post->getAuthor()->getEmailAddress());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectCanBeModified()
     {
         $postIdentifier = $this->setupDummyPost();
@@ -295,9 +273,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertSame('Hello World|foo@bar.org', $response->getBody()->getContents());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectIsNotModifiedAnymoreIfHmacHasBeenManipulated()
     {
         $postIdentifier = $this->setupDummyPost();
@@ -311,9 +287,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertSame(400, $this->browser->getLastResponse()->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectIsNotModifiedAnymoreIfIdentityFieldHasBeenRemoved()
     {
         $postIdentifier = $this->setupDummyPost();
@@ -327,9 +301,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertSame(500, $this->browser->getLastResponse()->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectIsNotModifiedAnymoreIfNewFieldHasBeenAdded()
     {
         $postIdentifier = $this->setupDummyPost();
@@ -338,16 +310,14 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         $form = $this->browser->getForm();
 
         $privateFieldDom = dom_import_simplexml(simplexml_load_string('<input type="text" name="post[pivate]" value="0" />'));
-        $form->set(new \Symfony\Component\DomCrawler\Field\InputFormField($privateFieldDom));
+        $form->set(new InputFormField($privateFieldDom));
 
         $this->browser->submit($form);
 
         self::assertSame(500, $this->browser->getLastResponse()->getStatusCode());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function objectIsNotModifiedAnymoreIfHmacIsRemoved()
     {
         $postIdentifier = $this->setupDummyPost();
@@ -367,15 +337,15 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
      */
     protected function setupDummyPost($withTags = false)
     {
-        $author = new Fixtures\Domain\Model\User();
+        $author = new User();
         $author->setEmailAddress('foo@bar.org');
-        $post = new Fixtures\Domain\Model\Post();
+        $post = new Post();
         $post->setAuthor($author);
         $post->setName('myName');
         $post->setPrivate(true);
         if ($withTags === true) {
-            $post->addTag(new Fixtures\Domain\Model\Tag('Tag1'));
-            $post->addTag(new Fixtures\Domain\Model\Tag('Tag2'));
+            $post->addTag(new Tag('Tag1'));
+            $post->addTag(new Tag('Tag2'));
         }
         $this->persistenceManager->add($post);
         $postIdentifier = $this->persistenceManager->getIdentifierByObject($post);
@@ -385,9 +355,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         return $postIdentifier;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function checkboxIsCheckedCorrectlyOnValidationErrorsEvenIfDefaultTrueValue()
     {
         $this->browser->request('http://localhost/test/fluid/formobjects');
@@ -404,9 +372,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertNotNull($this->browser->getCrawler()->filterXPath('//input[@id="private"]')->attr('checked'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function radioButtonsAreCheckedCorrectlyOnValidationErrors()
     {
         $this->browser->request('http://localhost/test/fluid/formobjects');
@@ -434,13 +400,11 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         self::assertNull($this->browser->getCrawler()->filterXPath('//input[@id="subCategory_bar"]')->attr('checked'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function valueForDisabledCheckboxIsNotLost()
     {
         $postIdentifier = $this->setupDummyPost();
-        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
+        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, Post::class);
         self::assertEquals(true, $post->getPrivate());
 
         $this->browser->request('http://localhost/test/fluid/formobjects/edit?fooPost=' . $postIdentifier);
@@ -452,7 +416,7 @@ final class FormObjectsTest extends \Neos\Flow\Tests\FunctionalTestCase
         $this->browser->submit($form);
 
         $this->persistenceManager->clearState();
-        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, \Neos\FluidAdaptor\Tests\Functional\Form\Fixtures\Domain\Model\Post::class);
+        $post = $this->persistenceManager->getObjectByIdentifier($postIdentifier, Post::class);
         // This will currently never fail, because DomCrawler\Form does not handle hidden checkbox fields correctly!
         // Hence this test currently only relies on the correctly set "disabled" attribute on the hidden field.
         self::assertEquals(true, $post->getPrivate(), 'The value for the checkbox field "private" was lost on form submit!');

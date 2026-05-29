@@ -13,7 +13,7 @@ namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use PHPUnit\Framework\Attributes\Test;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\ObjectManagement\ObjectManagerInterface;
 use Neos\Flow\Reflection\ReflectionService;
@@ -51,9 +51,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         $this->mockObjectManager->method('get')->with(ReflectionService::class)->willReturn($this->mockReflectionService);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function argumentsCanBeRegistered(): void
     {
         $this->mockReflectionService->method('getMethodParameters')->willReturn([]);
@@ -71,9 +69,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         self::assertEquals([$name => $expected], $viewHelper->prepareArguments(), 'Argument definitions not returned correctly.');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function registeringTheSameArgumentNameAgainThrowsException(): void
     {
         $this->expectException(Exception::class);
@@ -88,9 +84,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         $viewHelper->_call('registerArgument', $name, 'integer', $description, $isRequired);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function overrideArgumentOverwritesExistingArgumentDefinition(): void
     {
         $this->mockReflectionService->method('getMethodParameters')->willReturn([]);
@@ -111,9 +105,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         self::assertEquals($viewHelper->prepareArguments(), [$name => $expected], 'Argument definitions not returned correctly. The original ArgumentDefinition could not be overridden.');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function overrideArgumentThrowsExceptionWhenTryingToOverwriteAnNonexistingArgument(): void
     {
         $this->expectException(Exception::class);
@@ -123,9 +115,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         $viewHelper->_call('overrideArgument', 'argumentName', 'string', 'description', true);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function prepareArgumentsCallsInitializeArguments(): void
     {
         $this->mockReflectionService->method('getMethodParameters')->willReturn([]);
@@ -138,9 +128,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         $viewHelper->prepareArguments();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function validateArgumentsCallsPrepareArguments(): void
     {
         $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['prepareArguments'], [], '', false);
@@ -151,9 +139,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         $viewHelper->validateArguments();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function validateArgumentsAcceptsAllObjectsImplemtingArrayAccessAsAnArray(): void
     {
         $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['prepareArguments'], [], '', false);
@@ -163,9 +149,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         $viewHelper->validateArguments();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function validateArgumentsCallsTheRightValidators(): void
     {
         $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['prepareArguments'], [], '', false);
@@ -180,9 +164,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         $viewHelper->validateArguments();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function validateArgumentsCallsTheRightValidatorsAndThrowsExceptionIfValidationIsWrong(): void
     {
         $this->expectException(\InvalidArgumentException::class);
@@ -198,9 +180,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         $viewHelper->validateArguments();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function initializeArgumentsAndRenderCallsTheCorrectSequenceOfMethods(): void
     {
         $calls = [];
@@ -222,9 +202,7 @@ final class AbstractViewHelperTest extends UnitTestCase
         self::assertSame(['validateArguments', 'initialize', 'callRenderMethod'], $calls);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function setRenderingContextShouldSetInnerVariables(): void
     {
         $templateVariableContainer = $this->createStub(TemplateVariableContainer::class);

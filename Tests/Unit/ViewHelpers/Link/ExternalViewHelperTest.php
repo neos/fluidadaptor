@@ -13,7 +13,9 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Link;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Link\ExternalViewHelper;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
@@ -21,7 +23,7 @@ require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Link\EmailViewHelper
  */
-final class ExternalViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase
+final class ExternalViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Link\EmailViewHelper
@@ -31,13 +33,11 @@ final class ExternalViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Link\ExternalViewHelper::class, ['renderChildren']);
+        $this->viewHelper = $this->getAccessibleMock(ExternalViewHelper::class, ['renderChildren']);
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsTagNameAndAttributesAndContent()
     {
         $mockTagBuilder = $this->createMock(TagBuilder::class, ['setTagName', 'addAttribute', 'setContent']);
@@ -52,9 +52,7 @@ final class ExternalViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderAddsHttpPrefixIfSpecifiedUriDoesNotContainScheme()
     {
         $mockTagBuilder = $this->createMock(TagBuilder::class, ['setTagName', 'addAttribute', 'setContent']);
@@ -69,9 +67,7 @@ final class ExternalViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderAddsSpecifiedSchemeIfUriDoesNotContainScheme()
     {
         $mockTagBuilder = $this->createMock(TagBuilder::class, ['setTagName', 'addAttribute', 'setContent']);
@@ -86,9 +82,7 @@ final class ExternalViewHelperTest extends \Neos\FluidAdaptor\Tests\Unit\ViewHel
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderDoesNotAddEmptyScheme()
     {
         $mockTagBuilder = $this->createMock(TagBuilder::class, ['setTagName', 'addAttribute', 'setContent']);

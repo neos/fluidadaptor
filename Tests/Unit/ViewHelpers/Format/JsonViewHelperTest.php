@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
+use Neos\FluidAdaptor\ViewHelpers\Format\JsonViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -31,13 +34,11 @@ final class JsonViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\JsonViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(JsonViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperConvertsSimpleAssociativeArrayGivenAsChildren()
     {
         $this->viewHelper
@@ -50,9 +51,7 @@ final class JsonViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('{"foo":"bar"}', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperConvertsSimpleAssociativeArrayGivenAsDataArgument()
     {
         $this->viewHelper
@@ -64,9 +63,7 @@ final class JsonViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('{"foo":"bar"}', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperOutputsArrayOnIndexedArrayInputAndObjectIfSetSo()
     {
         $this->viewHelper
@@ -79,9 +76,7 @@ final class JsonViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('{"0":"foo","1":"bar","2":42}', $this->viewHelper->render());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperEscapesGreaterThanLowerThanCharacters()
     {
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => ['<foo>', 'bar', 'elephant > mouse']]);

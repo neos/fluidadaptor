@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\View;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Uri;
 use Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException;
@@ -435,8 +437,6 @@ final class TemplatePathsTest extends UnitTestCase
     }
 
     /**
-     * @test
-     * @dataProvider expandGenericPathPatternDataProvider()
      *
      * @param string $package
      * @param string $subPackage
@@ -453,6 +453,8 @@ final class TemplatePathsTest extends UnitTestCase
      * @param string $pattern
      * @param string $expectedResult
      */
+    #[DataProvider('expandGenericPathPatternDataProvider')]
+    #[Test]
     public function expandGenericPathPatternTests($package, $subPackage, $controller, $format, $templateRootPath, ?array $templateRootPaths, $partialRootPath, ?array $partialRootPaths, $layoutRootPath, ?array $layoutRootPaths, $bubbleControllerAndSubpackage, $formatIsOptional, $pattern, $expectedResult)
     {
         $options = [];
@@ -490,9 +492,7 @@ final class TemplatePathsTest extends UnitTestCase
         self::assertEquals($expectedResult, $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function expandGenericPathPatternWorksWithBubblingDisabledAndFormatNotOptional()
     {
         $options = [
@@ -511,9 +511,7 @@ final class TemplatePathsTest extends UnitTestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function expandGenericPathPatternWorksWithSubpackageAndBubblingDisabledAndFormatNotOptional()
     {
         $options = [
@@ -535,9 +533,7 @@ final class TemplatePathsTest extends UnitTestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function expandGenericPathPatternWorksWithSubpackageAndBubblingDisabledAndFormatOptional()
     {
         $options = [
@@ -560,9 +556,7 @@ final class TemplatePathsTest extends UnitTestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function expandGenericPathPatternWorksWithSubpackageAndBubblingEnabledAndFormatOptional()
     {
         $options = [
@@ -589,9 +583,7 @@ final class TemplatePathsTest extends UnitTestCase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function pathToPartialIsResolvedCorrectly()
     {
         vfsStreamWrapper::register();
@@ -612,9 +604,7 @@ final class TemplatePathsTest extends UnitTestCase
         self::assertSame('contentsOfSomePartial', $templatePaths->getPartialSource('SomePartial'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getTemplateSourceChecksDifferentPathPatternsAndReturnsTheFirstPathWhichExists()
     {
         vfsStreamWrapper::register();
@@ -642,9 +632,7 @@ final class TemplatePathsTest extends UnitTestCase
         self::assertSame('contentsOfMyCoolAction', $templatePaths->getTemplateSource('', 'myCoolAction'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getTemplatePathAndFilenameThrowsExceptionIfNoPathCanBeResolved()
     {
         $this->expectException(InvalidTemplateResourceException::class);
@@ -669,9 +657,7 @@ final class TemplatePathsTest extends UnitTestCase
         $templatePaths->getTemplateSource('', 'myCoolAction');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getTemplatePathAndFilenameThrowsExceptionIfResolvedPathPointsToADirectory()
     {
         $this->expectException(InvalidTemplateResourceException::class);
@@ -697,9 +683,7 @@ final class TemplatePathsTest extends UnitTestCase
         $templatePaths->getTemplateSource('', 'myCoolAction');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function resolveTemplatePathAndFilenameReturnsTheExplicitlyConfiguredTemplatePathAndFilename()
     {
         vfsStreamWrapper::register();
@@ -711,9 +695,7 @@ final class TemplatePathsTest extends UnitTestCase
         self::assertSame('contentsOfMyCoolAction', $templatePaths->_call('getTemplateSource'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getLayoutPathAndFilenameThrowsExceptionIfNoPathCanBeResolved()
     {
         $this->expectException(InvalidTemplateResourceException::class);
@@ -738,9 +720,7 @@ final class TemplatePathsTest extends UnitTestCase
         $templatePaths->getLayoutSource();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getLayoutPathAndFilenameThrowsExceptionIfResolvedPathPointsToADirectory()
     {
         $this->expectException(InvalidTemplateResourceException::class);
@@ -766,9 +746,7 @@ final class TemplatePathsTest extends UnitTestCase
         $templatePaths->getLayoutSource('SomeLayout');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getPartialPathAndFilenameThrowsExceptionIfNoPathCanBeResolved()
     {
         $this->expectException(InvalidTemplateResourceException::class);
@@ -793,9 +771,7 @@ final class TemplatePathsTest extends UnitTestCase
         $templatePaths->getPartialSource('SomePartial');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getPartialPathAndFilenameThrowsExceptionIfResolvedPathPointsToADirectory()
     {
         $this->expectException(InvalidTemplateResourceException::class);

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\View;
 
+use Neos\Flow\Mvc\ActionRequest;
+use PHPUnit\Framework\Attributes\Test;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -41,7 +44,7 @@ final class TemplateViewTest extends UnitTestCase
         $controllerObjectName = 'Neos\\' . $packageKey . '\\' . ($subPackageKey != $subPackageKey . '\\' ? : '') . 'Controller\\' . $controllerName . 'Controller';
 
         $httpRequest = new ServerRequest('GET', new Uri('http://robertlemke.com/blog'));
-        $mockRequest = $this->createMock(\Neos\Flow\Mvc\ActionRequest::class, [], [$httpRequest]);
+        $mockRequest = $this->createMock(ActionRequest::class, [], [$httpRequest]);
         $mockRequest->method('getControllerPackageKey')->willReturn(($packageKey));
         $mockRequest->method('getControllerSubPackageKey')->willReturn(($subPackageKey));
         $mockRequest->method('getControllerName')->willReturn(($controllerName));
@@ -49,15 +52,13 @@ final class TemplateViewTest extends UnitTestCase
         $mockRequest->method('getFormat')->willReturn(($format));
 
         /** @var $mockControllerContext ControllerContext */
-        $mockControllerContext = $this->createMock(\Neos\Flow\Mvc\Controller\ControllerContext::class, ['getRequest'], [], '', false);
+        $mockControllerContext = $this->createMock(ControllerContext::class, ['getRequest'], [], '', false);
         $mockControllerContext->method('getRequest')->willReturn(($mockRequest));
 
         return $mockControllerContext;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getTemplateRootPathsReturnsUserSpecifiedTemplatePaths()
     {
         $templateView = new TemplateView();
@@ -69,9 +70,7 @@ final class TemplateViewTest extends UnitTestCase
         self::assertEquals($templateRootPaths, $actual, 'A set template root path was not returned correctly.');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getPartialRootPathsReturnsUserSpecifiedPartialPath()
     {
         $templateView = new TemplateView();
@@ -83,9 +82,7 @@ final class TemplateViewTest extends UnitTestCase
         self::assertEquals($partialRootPaths, $actual, 'A set partial root path was not returned correctly.');
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getLayoutRootPathsReturnsUserSpecifiedPartialPaths()
     {
         $templateView = new TemplateView();

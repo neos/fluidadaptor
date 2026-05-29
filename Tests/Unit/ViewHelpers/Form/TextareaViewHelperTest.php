@@ -13,7 +13,9 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\FluidAdaptor\ViewHelpers\Form\TextareaViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+use Neos\FluidAdaptor\ViewHelpers\Fixtures\EmptySyntaxTreeNode;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
@@ -34,15 +36,13 @@ final class TextareaViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getAccessibleMock(\Neos\FluidAdaptor\ViewHelpers\Form\TextareaViewHelper::class, ['setErrorClassAttribute', 'registerFieldNameForFormTokenGeneration']);
+        $this->viewHelper = $this->getAccessibleMock(TextareaViewHelper::class, ['setErrorClassAttribute', 'registerFieldNameForFormTokenGeneration']);
         $this->arguments['name'] = '';
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
         $this->viewHelper->initializeArguments();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsTagName()
     {
         $mockTagBuilder = $this->createMock(TagBuilder::class);
@@ -53,9 +53,7 @@ final class TextareaViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCorrectlySetsNameAttributeAndContent()
     {
         $mockTagBuilder = $this->createMock(TagBuilder::class);
@@ -71,23 +69,19 @@ final class TextareaViewHelperTest extends ViewHelperBaseTestcase
         ];
         $this->viewHelper->setArguments($arguments);
 
-        $this->viewHelper->setViewHelperNode(new \Neos\FluidAdaptor\ViewHelpers\Fixtures\EmptySyntaxTreeNode());
+        $this->viewHelper->setViewHelperNode(new EmptySyntaxTreeNode());
         $this->viewHelper->initialize();
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderCallsSetErrorClassAttribute()
     {
         $this->viewHelper->expects($this->once())->method('setErrorClassAttribute');
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function renderEscapesTextareaContent()
     {
         $mockTagBuilder = $this->createMock(TagBuilder::class);
@@ -103,7 +97,7 @@ final class TextareaViewHelperTest extends ViewHelperBaseTestcase
         ];
         $this->viewHelper->setArguments($arguments);
 
-        $this->viewHelper->setViewHelperNode(new \Neos\FluidAdaptor\ViewHelpers\Fixtures\EmptySyntaxTreeNode());
+        $this->viewHelper->setViewHelperNode(new EmptySyntaxTreeNode());
         $this->viewHelper->initialize();
         $this->viewHelper->render();
     }

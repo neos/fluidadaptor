@@ -13,7 +13,13 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+use Neos\FluidAdaptor\Core\ViewHelper\Exception\InvalidVariableException;
+use Neos\Flow\I18n\Locale;
+use Neos\Flow\I18n\Formatter\DatetimeFormatter;
+use Neos\Flow\I18n\Configuration;
+use Neos\Flow\I18n\Service;
 use Neos\FluidAdaptor\Core\ViewHelper\Exception;
 use Neos\Flow\I18n;
 
@@ -31,12 +37,10 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\DateViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(DateViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperFormatsDateCorrectly()
     {
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['date' => new \DateTime('1980-12-13')]);
@@ -44,9 +48,7 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('1980-12-13', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperFormatsDateStringCorrectly()
     {
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['date' => '1980-12-13']);
@@ -54,9 +56,7 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('1980-12-13', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRespectsCustomFormat()
     {
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['date' => new \DateTime('1980-02-01'), 'format' => 'd.m.Y']);
@@ -64,9 +64,7 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('01.02.1980', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperReturnsEmptyStringIfNULLIsGiven()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((null));
@@ -75,9 +73,7 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperThrowsExceptionIfDateStringCantBeParsed()
     {
         $this->expectException(Exception::class);
@@ -85,9 +81,7 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
         $actualResult = $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperUsesChildNodesIfDateAttributeIsNotSpecified()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((new \DateTime('1980-12-13')));
@@ -96,9 +90,7 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('1980-12-13', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function dateArgumentHasPriorityOverChildNodes()
     {
         $this->viewHelper->expects($this->never())->method('renderChildren');
@@ -107,26 +99,22 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('1980-12-12', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperThrowsExceptionIfInvalidLocaleIdentifierIsGiven()
     {
-        $this->expectException(Exception\InvalidVariableException::class);
+        $this->expectException(InvalidVariableException::class);
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['date' => new \DateTime(), 'forceLocale' => '123-not-existing-locale']);
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperCallsDateTimeFormatterWithCorrectlyBuiltConfigurationArguments()
     {
         $dateTime = new \DateTime();
-        $locale = new I18n\Locale('de');
+        $locale = new Locale('de');
         $formatType = 'date';
 
-        $mockDatetimeFormatter = $this->getMockBuilder(\Neos\Flow\I18n\Formatter\DatetimeFormatter::class)->onlyMethods(['format'])->getMock();
+        $mockDatetimeFormatter = $this->getMockBuilder(DatetimeFormatter::class)->onlyMethods(['format'])->getMock();
         $mockDatetimeFormatter
             ->expects($this->once())
             ->method('format')
@@ -140,18 +128,16 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperFetchesCurrentLocaleViaI18nService()
     {
-        $localizationConfiguration = new I18n\Configuration('de_DE');
+        $localizationConfiguration = new Configuration('de_DE');
 
-        $mockLocalizationService = $this->getMockBuilder(\Neos\Flow\I18n\Service::class)->onlyMethods(['getConfiguration'])->getMock();
+        $mockLocalizationService = $this->getMockBuilder(Service::class)->onlyMethods(['getConfiguration'])->getMock();
         $mockLocalizationService->expects($this->once())->method('getConfiguration')->willReturn(($localizationConfiguration));
         $this->inject($this->viewHelper, 'localizationService', $mockLocalizationService);
 
-        $mockDatetimeFormatter = $this->getMockBuilder(\Neos\Flow\I18n\Formatter\DatetimeFormatter::class)->onlyMethods(['format'])->getMock();
+        $mockDatetimeFormatter = $this->getMockBuilder(DatetimeFormatter::class)->onlyMethods(['format'])->getMock();
         $mockDatetimeFormatter->expects($this->once())->method('format');
         $this->inject($this->viewHelper, 'datetimeFormatter', $mockDatetimeFormatter);
 
@@ -159,19 +145,17 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperConvertsI18nExceptionsIntoViewHelperExceptions()
     {
         $this->expectException(Exception::class);
-        $localizationConfiguration = new I18n\Configuration('de_DE');
+        $localizationConfiguration = new Configuration('de_DE');
 
-        $mockLocalizationService = $this->getMockBuilder(\Neos\Flow\I18n\Service::class)->onlyMethods(['getConfiguration'])->getMock();
+        $mockLocalizationService = $this->getMockBuilder(Service::class)->onlyMethods(['getConfiguration'])->getMock();
         $mockLocalizationService->expects($this->once())->method('getConfiguration')->willReturn(($localizationConfiguration));
         $this->inject($this->viewHelper, 'localizationService', $mockLocalizationService);
 
-        $mockDatetimeFormatter = $this->getMockBuilder(\Neos\Flow\I18n\Formatter\DatetimeFormatter::class)->onlyMethods(['format'])->getMock();
+        $mockDatetimeFormatter = $this->getMockBuilder(DatetimeFormatter::class)->onlyMethods(['format'])->getMock();
         $mockDatetimeFormatter->expects($this->once())->method('format')->willThrowException(new I18n\Exception());
         $this->inject($this->viewHelper, 'datetimeFormatter', $mockDatetimeFormatter);
 
@@ -179,16 +163,14 @@ final class DateViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperCallsDateTimeFormatterWithCustomFormat()
     {
         $dateTime = new \DateTime();
-        $locale = new I18n\Locale('de');
+        $locale = new Locale('de');
         $cldrFormatString = 'MM';
 
-        $mockDatetimeFormatter = $this->getMockBuilder(\Neos\Flow\I18n\Formatter\DatetimeFormatter::class)->onlyMethods(['formatDateTimeWithCustomPattern'])->getMock();
+        $mockDatetimeFormatter = $this->getMockBuilder(DatetimeFormatter::class)->onlyMethods(['formatDateTimeWithCustomPattern'])->getMock();
         $mockDatetimeFormatter
             ->expects($this->once())
             ->method('formatDateTimeWithCustomPattern')

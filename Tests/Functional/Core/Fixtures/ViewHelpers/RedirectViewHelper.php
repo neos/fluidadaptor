@@ -10,7 +10,7 @@ namespace Neos\FluidAdaptor\Tests\Functional\Core\Fixtures\ViewHelpers;
  * information, please view the LICENSE file which was distributed with this
  * source code.
  */
-
+use Neos\FluidAdaptor\Tests\Functional\Core\Fixtures\ViewHelpers\Controller\RedirectController;
 use Neos\Flow\Annotations as Flow;
 use Neos\FluidAdaptor\Core\Widget\AbstractWidgetViewHelper;
 
@@ -21,7 +21,7 @@ class RedirectViewHelper extends AbstractWidgetViewHelper
 {
     /**
      * @Flow\Inject
-     * @var \Neos\FluidAdaptor\Tests\Functional\Core\Fixtures\ViewHelpers\Controller\RedirectController
+     * @var RedirectController
      */
     protected $controller;
 

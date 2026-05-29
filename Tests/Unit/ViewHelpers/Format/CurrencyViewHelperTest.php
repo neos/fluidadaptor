@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
+use Neos\FluidAdaptor\ViewHelpers\Format\CurrencyViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+use Neos\Flow\I18n\Formatter\NumberFormatter;
+use Neos\Flow\I18n\Configuration;
+use Neos\Flow\I18n\Service;
+
 /*
  * This file is part of the Neos.FluidAdaptor package.
  *
@@ -31,12 +37,10 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\CurrencyViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(CurrencyViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRoundsFloatCorrectly()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((123.456));
@@ -45,9 +49,7 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('123,46', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRendersCurrencySign()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((123));
@@ -56,9 +58,7 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('123,00 foo', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRespectsDecimalSeparator()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((12345));
@@ -67,9 +67,7 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('12.345|00', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRespectsThousandsSeparator()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((12345));
@@ -78,9 +76,7 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('12|345,00', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRendersNullValues()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((null));
@@ -89,9 +85,7 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('0,00', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRendersNegativeAmounts()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((-123.456));
@@ -100,12 +94,10 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('-123,46', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperUsesNumberFormatterOnGivenLocale()
     {
-        $mockNumberFormatter = $this->getMockBuilder(\Neos\Flow\I18n\Formatter\NumberFormatter::class)->onlyMethods(['formatCurrencyNumber'])->getMock();
+        $mockNumberFormatter = $this->getMockBuilder(NumberFormatter::class)->onlyMethods(['formatCurrencyNumber'])->getMock();
         $mockNumberFormatter->expects($this->once())->method('formatCurrencyNumber');
         $this->inject($this->viewHelper, 'numberFormatter', $mockNumberFormatter);
 
@@ -113,18 +105,16 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperFetchesCurrentLocaleViaI18nService()
     {
-        $localizationConfiguration = new \Neos\Flow\I18n\Configuration('de_DE');
+        $localizationConfiguration = new Configuration('de_DE');
 
-        $mockLocalizationService = $this->getMockBuilder(\Neos\Flow\I18n\Service::class)->onlyMethods(['getConfiguration'])->getMock();
+        $mockLocalizationService = $this->getMockBuilder(Service::class)->onlyMethods(['getConfiguration'])->getMock();
         $mockLocalizationService->expects($this->once())->method('getConfiguration')->willReturn(($localizationConfiguration));
         $this->inject($this->viewHelper, 'localizationService', $mockLocalizationService);
 
-        $mockNumberFormatter = $this->getMockBuilder(\Neos\Flow\I18n\Formatter\NumberFormatter::class)->onlyMethods(['formatCurrencyNumber'])->getMock();
+        $mockNumberFormatter = $this->getMockBuilder(NumberFormatter::class)->onlyMethods(['formatCurrencyNumber'])->getMock();
         $mockNumberFormatter->expects($this->once())->method('formatCurrencyNumber');
         $this->inject($this->viewHelper, 'numberFormatter', $mockNumberFormatter);
 
@@ -134,15 +124,13 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperThrowsExceptionIfLocaleIsUsedWithoutExplicitCurrencySign()
     {
         $this->expectException(InvalidVariableException::class);
-        $localizationConfiguration = new \Neos\Flow\I18n\Configuration('de_DE');
+        $localizationConfiguration = new Configuration('de_DE');
 
-        $mockLocalizationService = $this->getMockBuilder(\Neos\Flow\I18n\Service::class)->onlyMethods(['getConfiguration'])->getMock();
+        $mockLocalizationService = $this->getMockBuilder(Service::class)->onlyMethods(['getConfiguration'])->getMock();
         $mockLocalizationService->expects($this->once())->method('getConfiguration')->willReturn(($localizationConfiguration));
         $this->inject($this->viewHelper, 'localizationService', $mockLocalizationService);
 
@@ -151,19 +139,17 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperConvertsI18nExceptionsIntoViewHelperExceptions()
     {
         $this->expectException(Exception::class);
-        $localizationConfiguration = new \Neos\Flow\I18n\Configuration('de_DE');
+        $localizationConfiguration = new Configuration('de_DE');
 
-        $mockLocalizationService = $this->getMockBuilder(\Neos\Flow\I18n\Service::class)->onlyMethods(['getConfiguration'])->getMock();
+        $mockLocalizationService = $this->getMockBuilder(Service::class)->onlyMethods(['getConfiguration'])->getMock();
         $mockLocalizationService->expects($this->once())->method('getConfiguration')->willReturn(($localizationConfiguration));
         $this->inject($this->viewHelper, 'localizationService', $mockLocalizationService);
 
-        $mockNumberFormatter = $this->getMockBuilder(\Neos\Flow\I18n\Formatter\NumberFormatter::class)->onlyMethods(['formatCurrencyNumber'])->getMock();
+        $mockNumberFormatter = $this->getMockBuilder(NumberFormatter::class)->onlyMethods(['formatCurrencyNumber'])->getMock();
         $mockNumberFormatter->expects($this->once())->method('formatCurrencyNumber')->willThrowException(new \Neos\Flow\I18n\Exception());
         $this->inject($this->viewHelper, 'numberFormatter', $mockNumberFormatter);
 
@@ -172,9 +158,7 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         $this->viewHelper->render();
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRespectsPrependCurrencyValue()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((12345));
@@ -183,9 +167,7 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('€ 12.345,00', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRespectsSeperateCurrencyValue()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((12345));
@@ -194,9 +176,7 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('12.345,00€', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperRespectsCustomDecimalPlaces()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((12345));
@@ -205,9 +185,7 @@ final class CurrencyViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('12.345,0000 €', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function doNotAppendEmptySpaceIfNoCurrencySignIsSet()
     {
         $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn((12345));
