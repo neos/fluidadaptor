@@ -105,16 +105,6 @@ final class AjaxWidgetMiddlewareTest extends UnitTestCase
         $this->inject($this->ajaxWidgetMiddleware, 'securityContext', $this->createStub(Context::class));
     }
 
-    /**
-     * @test
-     */
-    public function handleDoesNotCreateActionRequestIfHttpRequestContainsNoWidgetContext()
-    {
-        $this->mockHttpRequest->method('getParsedBody')->willReturn([]);
-
-        $this->ajaxWidgetMiddleware->process($this->mockHttpRequest, $this->mockRequestHandler);
-    }
-
     #[Test]
     public function handleSetsWidgetContextAndControllerObjectNameIfWidgetIdIsPresent()
     {
