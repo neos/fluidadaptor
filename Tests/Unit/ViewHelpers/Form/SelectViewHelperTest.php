@@ -446,7 +446,12 @@ final class SelectViewHelperTest extends ViewHelperBaseTestcase
         $this->tagBuilder->expects($this->once())->method('setContent')->with('<option value="fakeUUID">fakeUUID</option>' . chr(10));
         $this->tagBuilder->expects($this->once())->method('render');
 
-        $user = new UserDomainClass(1, 'Ingmar', 'Schlecht');
+        // Plain domain object without __toString — the view helper should fall back to the UUID.
+        $user = new class {
+            public int $id = 1;
+            public string $firstName = 'Ingmar';
+            public string $lastName = 'Schlecht';
+        };
 
         $this->arguments['options'] = [
             $user
@@ -491,7 +496,12 @@ final class SelectViewHelperTest extends ViewHelperBaseTestcase
         $mockPersistenceManager->method('getIdentifierByObject')->willReturn((null));
         $this->viewHelper->injectPersistenceManager($mockPersistenceManager);
 
-        $user = new UserDomainClass(1, 'Ingmar', 'Schlecht');
+        // Object lacking __toString — combined with the null persistence identifier,
+        // the view helper has no way to derive a value and must raise the exception.
+        $user = new class {
+            public string $firstName = 'Ingmar';
+            public string $lastName = 'Schlecht';
+        };
 
         $this->arguments['options'] = [
             $user

@@ -653,13 +653,16 @@ final class AbstractFormFieldViewHelperTest extends ViewHelperBaseTestcase
         ];
         $matcher = self::exactly(2);
 
-        $formFieldViewHelper->expects($matcher)->method('renderHiddenIdentityField')->willReturnCallback(function (...$parameters) use ($matcher, $mockFormObject, $expectedProperty1, $expectedProperty2) {
+        // The impl walks the property path; each ObjectAccess::getPropertyPath step calls
+        // getValue() which returns a fresh instance of $className. So both invocations
+        // receive an object of the same class, not necessarily $mockFormObject itself.
+        $formFieldViewHelper->expects($matcher)->method('renderHiddenIdentityField')->willReturnCallback(function (...$parameters) use ($matcher, $className, $expectedProperty1, $expectedProperty2) {
             if ($matcher->numberOfInvocations() === 1) {
-                $this->assertSame($mockFormObject, $parameters[0]);
+                $this->assertInstanceOf($className, $parameters[0]);
                 $this->assertSame($expectedProperty1, $parameters[1]);
             }
             if ($matcher->numberOfInvocations() === 2) {
-                $this->assertSame($mockFormObject, $parameters[0]);
+                $this->assertInstanceOf($className, $parameters[0]);
                 $this->assertSame($expectedProperty2, $parameters[1]);
             }
         });

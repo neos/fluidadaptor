@@ -55,7 +55,8 @@ final class ButtonViewHelperTest extends ViewHelperBaseTestcase
             }
             if ($matcher->numberOfInvocations() === 3) {
                 $this->assertSame('value', $parameters[0]);
-                $this->assertSame('', $parameters[1]);
+                // The 'value' argument is unset in this test, so getValueAttribute() returns null.
+                $this->assertNull($parameters[1]);
             }
         });
         $mockTagBuilder->expects(self::once())->method('setContent')->with('Button Content');

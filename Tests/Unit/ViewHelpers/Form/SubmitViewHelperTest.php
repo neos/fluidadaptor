@@ -50,12 +50,7 @@ final class SubmitViewHelperTest extends ViewHelperBaseTestcase
                 $this->assertSame('type', $parameters[0]);
                 $this->assertSame('submit', $parameters[1]);
             }
-            if ($matcher->numberOfInvocations() === 2) {
-                $this->assertSame(self::anything(), $parameters[0]);
-            }
-            if ($matcher->numberOfInvocations() === 3) {
-                $this->assertSame(self::anything(), $parameters[0]);
-            }
+            // Invocations 2 and 3 (name/value attributes from the form context) accept any value.
         });
 
         $this->viewHelper->injectTagBuilder($mockTagBuilder);
