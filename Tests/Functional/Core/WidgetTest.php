@@ -78,7 +78,7 @@ final class WidgetTest extends FunctionalTestCase
     public function ifIncludedInAForViewHelperTheWidgetsKeepTheirDifferentContext(): void
     {
         $response = $this->browser->request('http://localhost/test/widget/ajaxtest/forIndex');
-        [$_, $confirmation, $ajaxWidgetUri, $_, $_, $_, $secondConfirmation, $secondAjaxWidgetUri, ] = explode(chr(10), $response->getBody());
+        [$_, $confirmation, $ajaxWidgetUri, $_, $_, $_, $secondConfirmation, $secondAjaxWidgetUri, ] = explode(chr(10), $response->getBody()->getContents());
         self::assertSame('SomeAjaxController::indexAction(option1: "first0", option2: "second0")', \trim($confirmation));
         self::assertSame('SomeAjaxController::indexAction(option1: "first1", option2: "second1")', \trim($secondConfirmation));
 
