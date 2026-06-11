@@ -131,7 +131,7 @@ class NamespaceDetectionTemplateProcessor extends FluidNamespaceDetectionTemplat
         foreach ($splitTemplate as $templateElement) {
             if (preg_match(Patterns::$SCAN_PATTERN_TEMPLATE_VIEWHELPERTAG, $templateElement, $matchedVariables) > 0) {
                 if (!$viewHelperResolver->isNamespaceValidOrIgnored($matchedVariables['NamespaceIdentifier'])) {
-                    throw new UnknownNamespaceException('Unkown Namespace: ' . htmlspecialchars($matchedVariables[0]));
+                    throw new UnknownNamespaceException('Unknown Namespace: ' . htmlspecialchars($matchedVariables[0]));
                 }
                 continue;
             }
