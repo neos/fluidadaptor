@@ -281,7 +281,7 @@ class StandaloneViewTest extends FunctionalTestCase
     /**
      * Tests the wrong interceptor behavior described in ticket FLOW-430
      * Basically the rendering should be consistent regardless of cache flushes,
-     * but due to the way the interceptor configuration was build the second second
+     * but due to the way the interceptor configuration was build the second
      * rendering was bound to fail, this should never happen.
      *
      * @test
