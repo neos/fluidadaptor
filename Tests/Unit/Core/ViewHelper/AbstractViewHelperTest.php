@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\ViewHelper;
 
 /*
@@ -175,7 +176,7 @@ class AbstractViewHelperTest extends UnitTestCase
     {
         $viewHelper = $this->getAccessibleMock(AbstractViewHelper::class, ['render', 'prepareArguments'], [], '', false);
 
-        $viewHelper->setArguments(['test' => new \ArrayObject]);
+        $viewHelper->setArguments(['test' => new \ArrayObject()]);
         $viewHelper->expects(self::once())->method('prepareArguments')->willReturn(['test' => new ArgumentDefinition('test', 'array', false, 'documentation')]);
         $viewHelper->validateArguments();
     }

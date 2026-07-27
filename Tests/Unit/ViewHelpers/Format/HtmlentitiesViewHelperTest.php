@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -15,9 +16,9 @@ require_once(__DIR__ . '/../Fixtures/UserWithoutToString.php');
 require_once(__DIR__ . '/../Fixtures/UserWithToString.php');
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
+use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use Neos\FluidAdaptor\ViewHelpers\Fixtures\UserWithoutToString;
 use Neos\FluidAdaptor\ViewHelpers\Fixtures\UserWithToString;
-use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\HtmlentitiesViewHelper

@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -11,8 +12,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
  * source code.
  */
 
-use Neos\FluidAdaptor\Core\ViewHelper\Exception;
 use Neos\Flow\I18n;
+use Neos\FluidAdaptor\Core\ViewHelper\Exception;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 

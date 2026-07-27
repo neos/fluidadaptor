@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
 
 /*
@@ -19,8 +20,8 @@ use Neos\Flow\ObjectManagement\ObjectManagerInterface;
 use Neos\Flow\Security\Context;
 use Neos\Flow\Security\Cryptography\HashService;
 use Neos\Flow\Tests\UnitTestCase;
-use Neos\FluidAdaptor\Core\Widget\AjaxWidgetMiddleware;
 use Neos\FluidAdaptor\Core\Widget\AjaxWidgetContextHolder;
+use Neos\FluidAdaptor\Core\Widget\AjaxWidgetMiddleware;
 use Neos\FluidAdaptor\Core\Widget\WidgetContext;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

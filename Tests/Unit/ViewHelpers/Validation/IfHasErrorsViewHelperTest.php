@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
 
 /*
@@ -13,8 +14,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
 
 use Neos\Error\Messages\Error;
 use Neos\Error\Messages\Result;
-use Neos\FluidAdaptor\ViewHelpers\Validation\IfHasErrorsViewHelper;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Validation\IfHasErrorsViewHelper;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
@@ -41,7 +42,7 @@ class IfHasErrorsViewHelperTest extends ViewHelperBaseTestcase
      */
     public function returnsAndRendersThenChildIfResultsHaveErrors()
     {
-        $result = new Result;
+        $result = new Result();
         $result->addError(new Error('I am an error', 1386163707));
 
         $this->request->expects(self::once())->method('getInternalArgument')->with('__submittedArgumentValidationResults')->will(self::returnValue($result));
