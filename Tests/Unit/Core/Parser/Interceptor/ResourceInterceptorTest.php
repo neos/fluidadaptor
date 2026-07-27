@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\Parser\Interceptor;
 
 /*
@@ -11,9 +12,9 @@ namespace Neos\FluidAdaptor\Tests\Unit\Core\Parser\Interceptor;
  * source code.
  */
 
+use Neos\Flow\Tests\UnitTestCase;
 use Neos\FluidAdaptor\Core\Parser\Interceptor\ResourceInterceptor;
 use Neos\FluidAdaptor\Core\Parser\SyntaxTree\ResourceUriNode;
-use Neos\Flow\Tests\UnitTestCase;
 use TYPO3Fluid\Fluid\Core\Parser\InterceptorInterface;
 use TYPO3Fluid\Fluid\Core\Parser\ParsingState;
 use TYPO3Fluid\Fluid\Core\Parser\SyntaxTree\RootNode;

@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\Core\Widget;
 
 /*

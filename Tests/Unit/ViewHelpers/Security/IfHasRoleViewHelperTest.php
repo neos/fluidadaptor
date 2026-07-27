@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
 
 /*
@@ -12,14 +13,14 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
  */
 
 use GuzzleHttp\Psr7\ServerRequest;
-use Neos\Flow\Reflection\ReflectionService;
-use Neos\FluidAdaptor\Core\Rendering\RenderingContext;
 use Neos\Flow\ObjectManagement\ObjectManagerInterface;
+use Neos\Flow\Reflection\ReflectionService;
 use Neos\Flow\Security\Context;
 use Neos\Flow\Security\Policy\PolicyService;
 use Neos\Flow\Security\Policy\Role;
-use Neos\FluidAdaptor\ViewHelpers\Security\IfHasRoleViewHelper;
+use Neos\FluidAdaptor\Core\Rendering\RenderingContext;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Security\IfHasRoleViewHelper;
 
 /**
  * Test case for IfHasRoleViewHelper

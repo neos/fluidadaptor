@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 /*
@@ -12,12 +13,12 @@ namespace Neos\FluidAdaptor\Tests\Unit\View;
  */
 
 
-use Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException;
-use org\bovigo\vfs\vfsStreamWrapper;
 use Neos\Flow\Mvc\ActionRequest;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Tests\UnitTestCase;
+use Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException;
 use Neos\FluidAdaptor\View\StandaloneView;
+use org\bovigo\vfs\vfsStreamWrapper;
 
 /**
  * Testcase for the StandaloneView

@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -14,8 +15,8 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
 use GuzzleHttp\Psr7\Uri;
-use Neos\FluidAdaptor\ViewHelpers\Format\UrlencodeViewHelper;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Format\UrlencodeViewHelper;
 
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\UrlencodeViewHelper

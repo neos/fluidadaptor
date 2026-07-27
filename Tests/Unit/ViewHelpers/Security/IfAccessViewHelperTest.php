@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
 
 /*
@@ -11,11 +12,11 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Security;
  * source code.
  */
 
-use Neos\FluidAdaptor\Core\Rendering\RenderingContext;
 use Neos\Flow\ObjectManagement\ObjectManagerInterface;
 use Neos\Flow\Security\Authorization\PrivilegeManagerInterface;
-use Neos\FluidAdaptor\ViewHelpers\Security\IfAccessViewHelper;
+use Neos\FluidAdaptor\Core\Rendering\RenderingContext;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Security\IfAccessViewHelper;
 
 /**
  * Testcase for IfAccessViewHelper

@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Form;
 
 /*
@@ -15,10 +16,10 @@ use Neos\Error\Messages\Result;
 use Neos\Flow\Persistence\PersistenceManagerInterface;
 use Neos\Flow\Property\PropertyMapper;
 use Neos\Flow\ResourceManagement\PersistentResource;
-use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 use Neos\FluidAdaptor\ViewHelpers\Fixtures\EmptySyntaxTreeNode;
 use Neos\FluidAdaptor\ViewHelpers\Form\UploadViewHelper;
 use Neos\FluidAdaptor\ViewHelpers\FormViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\TagBuilder;
 
 require_once(__DIR__ . '/Fixtures/EmptySyntaxTreeNode.php');
 require_once(__DIR__ . '/Fixtures/Fixture_UserDomainClass.php');

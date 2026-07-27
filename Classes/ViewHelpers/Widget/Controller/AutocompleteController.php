@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\ViewHelpers\Widget\Controller;
 
 /*
@@ -11,9 +12,9 @@ namespace Neos\FluidAdaptor\ViewHelpers\Widget\Controller;
  * source code.
  */
 
-use Neos\Utility\ObjectAccess;
-use Neos\Utility\Arrays;
 use Neos\FluidAdaptor\Core\Widget\AbstractWidgetController;
+use Neos\Utility\Arrays;
+use Neos\Utility\ObjectAccess;
 
 /**
  * Controller for the auto-complete widget

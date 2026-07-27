@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\ViewHelpers\Widget\Controller;
 
 /*
@@ -12,8 +13,8 @@ namespace Neos\FluidAdaptor\ViewHelpers\Widget\Controller;
  */
 
 use Neos\Flow\Persistence\QueryResultInterface;
-use Neos\Utility\Arrays;
 use Neos\FluidAdaptor\Core\Widget\AbstractWidgetController;
+use Neos\Utility\Arrays;
 
 /**
  * Controller for the paginate widget

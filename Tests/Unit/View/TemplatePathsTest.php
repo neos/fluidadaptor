@@ -1,14 +1,15 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Uri;
-use Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException;
-use org\bovigo\vfs\vfsStreamWrapper;
 use Neos\Flow\Mvc\ActionRequest;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Tests\UnitTestCase;
+use Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException;
 use Neos\FluidAdaptor\View\TemplatePaths;
+use org\bovigo\vfs\vfsStreamWrapper;
 
 /**
  *

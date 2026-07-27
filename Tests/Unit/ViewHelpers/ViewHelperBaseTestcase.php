@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
 
 /*
@@ -12,9 +13,9 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers;
  */
 
 use GuzzleHttp\Psr7\Uri;
-use Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer;
 use Neos\FluidAdaptor\Core\ViewHelper\AbstractTagBasedViewHelper;
 use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
+use Neos\FluidAdaptor\Core\ViewHelper\TemplateVariableContainer;
 use Neos\Http\Factories\ServerRequestFactory;
 use Neos\Http\Factories\UriFactory;
 use PHPUnit\Framework\MockObject\MockObject;
