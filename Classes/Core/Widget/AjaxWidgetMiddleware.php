@@ -94,7 +94,7 @@ class AjaxWidgetMiddleware implements MiddlewareInterface
      * @throws \Neos\Flow\Security\Exception\InvalidArgumentForHashGenerationException
      * @throws \Neos\Flow\Security\Exception\InvalidHashException
      */
-    protected function extractWidgetContext(ServerRequestInterface $httpRequest):? WidgetContext
+    protected function extractWidgetContext(ServerRequestInterface $httpRequest): ?WidgetContext
     {
         $arguments = $httpRequest->getQueryParams();
         $parsedBody  = $httpRequest->getParsedBody();

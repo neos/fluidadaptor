@@ -42,7 +42,7 @@ class IfHasErrorsViewHelperTest extends ViewHelperBaseTestcase
      */
     public function returnsAndRendersThenChildIfResultsHaveErrors()
     {
-        $result = new Result;
+        $result = new Result();
         $result->addError(new Error('I am an error', 1386163707));
 
         $this->request->expects(self::once())->method('getInternalArgument')->with('__submittedArgumentValidationResults')->will(self::returnValue($result));

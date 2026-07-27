@@ -64,7 +64,7 @@ class AutocompleteController extends AbstractWidgetController
             );
         }
         if (isset($this->configuration['limit'])) {
-            $query->setLimit((integer)$this->configuration['limit']);
+            $query->setLimit((int)$this->configuration['limit']);
         }
 
         $results = $query->execute();
