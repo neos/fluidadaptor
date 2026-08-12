@@ -1,5 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
+
+use Neos\FluidAdaptor\ViewHelpers\Format\Nl2brViewHelper;
+use PHPUnit\Framework\Attributes\Test;
 
 /*
  * This file is part of the Neos.FluidAdaptor package.
@@ -18,7 +24,7 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\Nl2brViewHelper
  */
-class Nl2brViewHelperTest extends ViewHelperBaseTestcase
+final class Nl2brViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Format\Nl2brViewHelper
@@ -28,38 +34,32 @@ class Nl2brViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\Nl2brViewHelper::class)->setMethods(['renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(Nl2brViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperDoesNotModifyTextWithoutLineBreaks()
     {
-        $this->viewHelper->expects(self::once())->method('renderChildren')->will(self::returnValue('<p class="bodytext">Some Text without line breaks</p>'));
+        $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn(('<p class="bodytext">Some Text without line breaks</p>'));
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
         $actualResult = $this->viewHelper->render();
         self::assertEquals('<p class="bodytext">Some Text without line breaks</p>', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperConvertsLineBreaksToBRTags()
     {
-        $this->viewHelper->expects(self::once())->method('renderChildren')->will(self::returnValue('Line 1' . chr(10) . 'Line 2'));
+        $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn(('Line 1' . chr(10) . 'Line 2'));
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
         $actualResult = $this->viewHelper->render();
         self::assertEquals('Line 1<br />' . chr(10) . 'Line 2', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperConvertsWindowsLineBreaksToBRTags()
     {
-        $this->viewHelper->expects(self::once())->method('renderChildren')->will(self::returnValue('Line 1' . chr(13) . chr(10) . 'Line 2'));
+        $this->viewHelper->expects($this->once())->method('renderChildren')->willReturn(('Line 1' . chr(13) . chr(10) . 'Line 2'));
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
         $actualResult = $this->viewHelper->render();
         self::assertEquals('Line 1<br />' . chr(13) . chr(10) . 'Line 2', $actualResult);
