@@ -1,5 +1,12 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
+
+use Neos\FluidAdaptor\ViewHelpers\Format\CropViewHelper;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /*
  * This file is part of the Neos.FluidAdaptor package.
@@ -18,23 +25,21 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\CropViewHelper
  */
-class CropViewHelperTest extends ViewHelperBaseTestcase
+final class CropViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
-     * @var \Neos\FluidAdaptor\ViewHelpers\Format\CropViewHelper|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Neos\FluidAdaptor\ViewHelpers\Format\CropViewHelper|MockObject
      */
     protected $viewHelper;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\CropViewHelper::class)->setMethods(['renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(CropViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperDoesNotCropTextIfMaxCharactersIsLargerThanNumberOfCharacters()
     {
         $this->simulateViewHelperChildNodeContent($this->viewHelper, 'some text');
@@ -43,9 +48,7 @@ class CropViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('some text', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperAppendsEllipsisToTruncatedText()
     {
         $this->simulateViewHelperChildNodeContent($this->viewHelper, 'some text');
@@ -54,9 +57,7 @@ class CropViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('some ...', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperAppendsCustomSuffix()
     {
         $this->simulateViewHelperChildNodeContent($this->viewHelper, 'some text');
@@ -65,9 +66,7 @@ class CropViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('som[custom suffix]', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperAppendsSuffixEvenIfResultingTextIsLongerThanMaxCharacters()
     {
         $this->simulateViewHelperChildNodeContent($this->viewHelper, 'some text');
@@ -76,34 +75,28 @@ class CropViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('some tex...', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperUsesProvidedValueInsteadOfRenderingChildren()
     {
-        $this->viewHelper->expects(self::never())->method('renderChildren');
+        $this->viewHelper->expects($this->never())->method('renderChildren');
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['maxCharacters' => 8, 'append' => '...', 'value' => 'some text']);
         $actualResult = $this->viewHelper->render();
         self::assertEquals('some tex...', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperDoesNotFallbackToRenderChildNodesIfEmptyValueArgumentIsProvided()
     {
-        $this->viewHelper->expects(self::never())->method('renderChildren');
+        $this->viewHelper->expects($this->never())->method('renderChildren');
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['maxCharacters' => 8, 'append' => '...', 'value' => '']);
         $actualResult = $this->viewHelper->render();
         self::assertEquals('', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperHandlesMultiByteValuesCorrectly()
     {
-        $this->viewHelper->expects(self::never())->method('renderChildren');
+        $this->viewHelper->expects($this->never())->method('renderChildren');
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['maxCharacters' => 3, 'append' => '...', 'value' => 'Äßütest']);
         $actualResult = $this->viewHelper->render();
         self::assertEquals('Äßü...', $actualResult);

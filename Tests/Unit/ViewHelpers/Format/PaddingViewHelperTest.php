@@ -1,5 +1,11 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
+
+use Neos\FluidAdaptor\ViewHelpers\Format\PaddingViewHelper;
+use PHPUnit\Framework\Attributes\Test;
 
 /*
  * This file is part of the Neos.FluidAdaptor package.
@@ -18,7 +24,7 @@ use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 /**
  * Test for Neos\FluidAdaptor\ViewHelpers\Format\PaddingViewHelper
  */
-class PaddingViewHelperTest extends ViewHelperBaseTestcase
+final class PaddingViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Format\PaddingViewHelper
@@ -28,13 +34,11 @@ class PaddingViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\PaddingViewHelper::class)->setMethods(['renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(PaddingViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringsArePaddedWithBlanksByDefault()
     {
         $this->simulateViewHelperChildNodeContent($this->viewHelper, 'foo');
@@ -43,9 +47,7 @@ class PaddingViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('foo       ', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function paddingStringCanBeSpecified()
     {
         $this->simulateViewHelperChildNodeContent($this->viewHelper, 'foo');
@@ -54,9 +56,7 @@ class PaddingViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('foo-=-=-=-', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function stringIsNotTruncatedIfPadLengthIsBelowStringLength()
     {
         $this->simulateViewHelperChildNodeContent($this->viewHelper, 'some long string');
@@ -65,9 +65,7 @@ class PaddingViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('some long string', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function integersArePaddedCorrectly()
     {
         $this->simulateViewHelperChildNodeContent($this->viewHelper, 123);
