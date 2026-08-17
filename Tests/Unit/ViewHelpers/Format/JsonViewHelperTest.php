@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 /*
@@ -14,12 +16,14 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
+use Neos\FluidAdaptor\ViewHelpers\Format\JsonViewHelper;
+use PHPUnit\Framework\Attributes\Test;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\JsonViewHelper
  */
-class JsonViewHelperTest extends ViewHelperBaseTestcase
+final class JsonViewHelperTest extends ViewHelperBaseTestcase
 {
     /**
      * @var \Neos\FluidAdaptor\ViewHelpers\Format\JsonViewHelper
@@ -29,32 +33,28 @@ class JsonViewHelperTest extends ViewHelperBaseTestcase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->viewHelper = $this->getMockBuilder(\Neos\FluidAdaptor\ViewHelpers\Format\JsonViewHelper::class)->setMethods(['renderChildren'])->getMock();
+        $this->viewHelper = $this->getMockBuilder(JsonViewHelper::class)->onlyMethods(['renderChildren'])->getMock();
         $this->injectDependenciesIntoViewHelper($this->viewHelper);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperConvertsSimpleAssociativeArrayGivenAsChildren()
     {
         $this->viewHelper
-                ->expects(self::once())
+                ->expects($this->once())
                 ->method('renderChildren')
-                ->will(self::returnValue(['foo' => 'bar']));
+                ->willReturn((['foo' => 'bar']));
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
         $actualResult = $this->viewHelper->render();
         self::assertEquals('{"foo":"bar"}', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperConvertsSimpleAssociativeArrayGivenAsDataArgument()
     {
         $this->viewHelper
-                ->expects(self::never())
+                ->expects($this->never())
                 ->method('renderChildren');
 
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => ['foo' => 'bar']]);
@@ -62,15 +62,12 @@ class JsonViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('{"foo":"bar"}', $actualResult);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperOutputsArrayOnIndexedArrayInputAndObjectIfSetSo()
     {
         $this->viewHelper
-                ->expects(self::any())
                 ->method('renderChildren')
-                ->will(self::returnValue(['foo', 'bar', 42]));
+                ->willReturn((['foo', 'bar', 42]));
         $this->viewHelper = $this->prepareArguments($this->viewHelper, []);
         self::assertEquals('["foo","bar",42]', $this->viewHelper->render());
 
@@ -78,9 +75,7 @@ class JsonViewHelperTest extends ViewHelperBaseTestcase
         self::assertEquals('{"0":"foo","1":"bar","2":42}', $this->viewHelper->render());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function viewHelperEscapesGreaterThanLowerThanCharacters()
     {
         $this->viewHelper = $this->prepareArguments($this->viewHelper, ['value' => ['<foo>', 'bar', 'elephant > mouse']]);

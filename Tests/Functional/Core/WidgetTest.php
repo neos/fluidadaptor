@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Neos\FluidAdaptor\Tests\Functional\Core;
 
 /*
@@ -12,12 +14,13 @@ namespace Neos\FluidAdaptor\Tests\Functional\Core;
  * source code.
  */
 
+use PHPUnit\Framework\Attributes\Test;
 use Neos\Flow\Tests\FunctionalTestCase;
 
 /**
  * Testcase for the widget mechanism
  */
-class WidgetTest extends FunctionalTestCase
+final class WidgetTest extends FunctionalTestCase
 {
     /**
      * Additional setup: Routes
@@ -44,9 +47,8 @@ class WidgetTest extends FunctionalTestCase
      * the AJAX widget in its template. The indexAction renders that template which
      * in turn lets the "someAjax" widget call the indexAction of its own controller
      * (SomeAjaxController).
-     *
-     * @test
      */
+    #[Test]
     public function ifIncludedInATemplateTheWidgetReturnsResultOfItsOwnIndexAction(): void
     {
         $response = $this->browser->request('http://localhost/test/widget/ajaxtest');
@@ -61,9 +63,8 @@ class WidgetTest extends FunctionalTestCase
      * sending a request (from outside) to the widget, calling the ajaxAction().
      *
      * We send a request to this URI and check if the AJAX widget was really invoked.
-     *
-     * @test
      */
+    #[Test]
     public function theGeneratedUriLeadsToASpecificActionOfTheAjaxController(): void
     {
         $response = $this->browser->request('http://localhost/test/widget/ajaxtest');
@@ -73,26 +74,22 @@ class WidgetTest extends FunctionalTestCase
         self::assertSame('SomeAjaxController::ajaxAction("value1", "value2")', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function ifIncludedInAForViewHelperTheWidgetsKeepTheirDifferentContext(): void
     {
         $response = $this->browser->request('http://localhost/test/widget/ajaxtest/forIndex');
-        [$_, $confirmation, $ajaxWidgetUri, $_, $_, $_, $secondConfirmation, $secondAjaxWidgetUri, ] = explode(chr(10), $response->getBody());
+        [$_, $confirmation, $ajaxWidgetUri, $_, $_, $_, $secondConfirmation, $secondAjaxWidgetUri, ] = explode(chr(10), $response->getBody()->getContents());
         self::assertSame('SomeAjaxController::indexAction(option1: "first0", option2: "second0")', \trim($confirmation));
         self::assertSame('SomeAjaxController::indexAction(option1: "first1", option2: "second1")', \trim($secondConfirmation));
 
-        self::assertNotEquals($ajaxWidgetUri, $secondAjaxWidgetUri);
+        self::assertNotSame($ajaxWidgetUri, $secondAjaxWidgetUri);
         $response = $this->browser->request('http://localhost/' . $ajaxWidgetUri);
         self::assertSame('SomeAjaxController::ajaxAction("first0", "second0")', trim($response->getBody()->getContents()));
         $response = $this->browser->request('http://localhost/' . $secondAjaxWidgetUri);
         self::assertSame('SomeAjaxController::ajaxAction("first1", "second1")', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function redirectWithoutDelayAndNoParameterImmediatelyRedirectsToTargetAction(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -102,9 +99,7 @@ class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter"></div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function redirectWithoutDelayAndWithParameterImmediatelyRedirectsToTargetAction(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -113,9 +108,7 @@ class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter">foo, via redirect</div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function redirectWithDelayAndNoParameterOutputsRefreshMetaHeader(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -132,9 +125,7 @@ class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter"></div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function redirectWithDelayAndWithParameterOutputsRefreshMetaHeader(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -151,9 +142,7 @@ class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter">bar, via redirect</div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function redirectToDifferentControllerThrowsException(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -164,9 +153,7 @@ class WidgetTest extends FunctionalTestCase
         self::assertSame('1380284579', $response->getHeaderLine('X-Flow-ExceptionCode'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function forwardWithoutParameterTriggersTargetAction(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -176,9 +163,7 @@ class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter"></div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function forwardWithParameterTriggersTargetAction(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -188,9 +173,7 @@ class WidgetTest extends FunctionalTestCase
         self::assertSame('<div id="parameter">baz, via forward</div>', trim($response->getBody()->getContents()));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function forwardToDifferentControllerThrowsException(): void
     {
         $this->browser->request('http://localhost/test/widget/redirecttest');
@@ -201,9 +184,7 @@ class WidgetTest extends FunctionalTestCase
         self::assertSame('1380284579', $response->getHeaderLine('X-Flow-ExceptionCode'));
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function aCustomViewResponseIsRespectedInAjaxContext(): void
     {
         $response = $this->browser->request('http://localhost/test/widget/ajaxtest');

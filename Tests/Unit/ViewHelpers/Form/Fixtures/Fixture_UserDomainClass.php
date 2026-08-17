@@ -77,4 +77,9 @@ class UserDomainClass
             'value3',
         ]);
     }
+
+    public function __toString(): string
+    {
+        return sprintf('%s %s', $this->firstName, $this->lastName);
+    }
 }
