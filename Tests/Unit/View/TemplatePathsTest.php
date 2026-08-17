@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Neos\FluidAdaptor\Tests\Unit\View;
 
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Test;
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Uri;
 use Neos\Flow\Mvc\ActionRequest;
@@ -14,6 +12,8 @@ use Neos\Flow\Tests\UnitTestCase;
 use Neos\FluidAdaptor\View\Exception\InvalidTemplateResourceException;
 use Neos\FluidAdaptor\View\TemplatePaths;
 use org\bovigo\vfs\vfsStreamWrapper;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  *

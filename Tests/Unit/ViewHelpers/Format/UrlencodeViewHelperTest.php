@@ -16,10 +16,10 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
-use PHPUnit\Framework\Attributes\Test;
 use GuzzleHttp\Psr7\Uri;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
 use Neos\FluidAdaptor\ViewHelpers\Format\UrlencodeViewHelper;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\UrlencodeViewHelper

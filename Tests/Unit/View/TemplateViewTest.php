@@ -16,13 +16,13 @@ namespace Neos\FluidAdaptor\Tests\Unit\View;
 
 include_once(__DIR__ . '/Fixtures/TemplateViewFixture.php');
 
-use Neos\Flow\Mvc\ActionRequest;
-use PHPUnit\Framework\Attributes\Test;
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Uri;
+use Neos\Flow\Mvc\ActionRequest;
 use Neos\Flow\Mvc\Controller\ControllerContext;
 use Neos\Flow\Tests\UnitTestCase;
 use Neos\FluidAdaptor\View\TemplateView;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Testcase for the TemplateView

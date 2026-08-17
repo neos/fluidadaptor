@@ -16,15 +16,15 @@ namespace Neos\FluidAdaptor\Tests\Unit\ViewHelpers\Format;
 
 require_once(__DIR__ . '/../ViewHelperBaseTestcase.php');
 
-use Neos\FluidAdaptor\ViewHelpers\Format\BytesViewHelper;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\Attributes\Test;
 use Neos\Flow\I18n\Configuration;
 use Neos\Flow\I18n\Exception as I18nException;
 use Neos\Flow\I18n\Formatter\NumberFormatter;
 use Neos\Flow\I18n\Service;
 use Neos\FluidAdaptor\Core\ViewHelper\Exception as ViewHelperException;
 use Neos\FluidAdaptor\Tests\Unit\ViewHelpers\ViewHelperBaseTestcase;
+use Neos\FluidAdaptor\ViewHelpers\Format\BytesViewHelper;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Test for \Neos\FluidAdaptor\ViewHelpers\Format\BytesViewHelper

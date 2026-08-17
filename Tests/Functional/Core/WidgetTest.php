@@ -14,8 +14,8 @@ namespace Neos\FluidAdaptor\Tests\Functional\Core;
  * source code.
  */
 
-use PHPUnit\Framework\Attributes\Test;
 use Neos\Flow\Tests\FunctionalTestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 /**
  * Testcase for the widget mechanism
