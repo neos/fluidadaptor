@@ -41,7 +41,7 @@ use Neos\FluidAdaptor\ViewHelpers\Form\AbstractFormViewHelper;
  * <form method="GET" action="...">...</form>
  * </output>
  *
- * <code title="Form with a sepcified encoding type">
+ * <code title="Form with a specified encoding type">
  * <f:form action=".." controller="..." package="..." enctype="multipart/form-data">...</f:form>
  * </code>
  * <output>
