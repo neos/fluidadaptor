@@ -1,4 +1,5 @@
 <?php
+
 namespace Neos\FluidAdaptor\ViewHelpers\Uri;
 
 /*
@@ -14,8 +15,8 @@ namespace Neos\FluidAdaptor\ViewHelpers\Uri;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\I18n\Service;
 use Neos\Flow\ResourceManagement\Exception;
-use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Flow\ResourceManagement\PersistentResource;
+use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\FluidAdaptor\Core\Rendering\FlowAwareRenderingContextInterface;
 use Neos\FluidAdaptor\Core\ViewHelper\AbstractViewHelper;
 use Neos\FluidAdaptor\Core\ViewHelper\Exception\InvalidVariableException;
